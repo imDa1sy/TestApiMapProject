@@ -1,0 +1,6 @@
+spring:
+#==============================DATABASE CONFIG==================================  
+  data:
+      mongodb.host: localhost
+      mongodb.port: 27017  
+      mongodb.database: Biodeseuri

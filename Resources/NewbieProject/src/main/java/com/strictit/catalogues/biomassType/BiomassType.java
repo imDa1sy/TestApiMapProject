@@ -10,5 +10,23 @@ package com.strictit.catalogues.biomassType;
  * @author Nenad
  */
 public class BiomassType {
+    private String _id;
+    private String BiomassType;
+
+    public String getId() {
+        return _id;
+    }
+
+    public void setId(String _id) {
+        this._id = _id;
+    }
+
+    public String getBiomassType() {
+        return BiomassType;
+    }
+
+    public void setBiomassType(String BiomassType) {
+        this.BiomassType = BiomassType;
+    }
     
 }
