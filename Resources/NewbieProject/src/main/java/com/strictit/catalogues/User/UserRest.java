@@ -5,6 +5,7 @@
  */
 package com.strictit.catalogues.User;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -33,12 +34,13 @@ public class UserRest {
 //=========================== GET METHODS ======================================
     @GetMapping(path = "/getallusers")
     public List<User> getAllUsers() {
-        System.out.println("");
+       
+        List<User> userList = userRepository.findAll();
 
-        return userRepository.findAll();
+        return userList;
     }
 
-    @GetMapping(path = "getuserbyid/{id}")
+    @GetMapping(path = "/getuserbyid/{id}")
     public ResponseEntity getUserById(@PathVariable String id) {
 
         return userRepository.findById(id).map(oneUser
@@ -74,7 +76,7 @@ public class UserRest {
     }
 
 //========================== DELETE METHODS ====================================    
-    @DeleteMapping(path = "removeuser/{id}")
+    @DeleteMapping(path = "/removeuser/{id}")
     public ResponseEntity removeUser(@PathVariable String id) {
 
         return userRepository.findById(id).map(deletedUser -> {
