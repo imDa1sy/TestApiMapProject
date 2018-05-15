@@ -5,28 +5,40 @@
  */
 package com.strictit.catalogues.biomassType;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 /**
  *
  * @author Nenad
  */
+@Document(collection = "BiomassType")
 public class BiomassType {
-    private String _id;
-    private String BiomassType;
+    
+    @Id
+    private String id;
+    
+    private String biomassType;
 
     public String getId() {
-        return _id;
+        return id;
     }
 
     public void setId(String _id) {
-        this._id = _id;
+        this.id = _id;
     }
 
     public String getBiomassType() {
-        return BiomassType;
+        return biomassType;
     }
 
     public void setBiomassType(String BiomassType) {
-        this.BiomassType = BiomassType;
+        this.biomassType = BiomassType;
+    }
+
+    @Override
+    public String toString() {
+        return "BiomassType{" + "_id=" + id + ", BiomassType=" + biomassType + '}';
     }
     
 }

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.strictit.catalogues.biomassOwner;
+package com.strictit.catalogues.User;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
@@ -11,6 +11,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
  *
  * @author Nenad
  */
-public interface BiomassOwnerRepository extends MongoRepository<BiomassOwner, String> {
-        
+public interface UserRepository extends MongoRepository<User, String> {
+    
 }

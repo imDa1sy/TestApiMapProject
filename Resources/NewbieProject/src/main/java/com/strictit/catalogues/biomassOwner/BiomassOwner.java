@@ -6,28 +6,30 @@
 package com.strictit.catalogues.biomassOwner;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  *
  * @author Nenad
  */
+@Document(collection = "BiomassOwner")
 public class BiomassOwner {
     
     @Id
-    private String _id;
+    private String id;
     
     private String firstName;
     private String lastName;
-    private String Location;
+    private String location;
     private String biowasteTypeOutput;
     private Contact contact;
 
     public String getId() {
-        return _id;
+        return id;
     }
 
     public void setId(String _id) {
-        this._id = _id;
+        this.id = _id;
     }
 
     public String getFirstName() {
@@ -47,11 +49,11 @@ public class BiomassOwner {
     }
 
     public String getLocation() {
-        return Location;
+        return location;
     }
 
-    public void setLocation(String Location) {
-        this.Location = Location;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public String getBiowasteTypeOutput() {
@@ -72,8 +74,10 @@ public class BiomassOwner {
 
     @Override
     public String toString() {
-        return "BiomassOwner{" + "_id=" + _id + ", firstName=" + firstName + ", lastName=" + lastName + ", Location=" + Location + ", biowasteTypeOutput=" + biowasteTypeOutput + ", contact=" + contact + '}';
+        return "BiomassOwner{" + "_id=" + id + ", firstName=" + firstName + 
+                                  ", lastName=" + lastName + ", location=" + location + 
+                                  ", biowasteTypeOutput=" + biowasteTypeOutput + 
+                                  ", contact=" + contact + '}';
     }
-    
-    
+   
 }
