@@ -32,7 +32,7 @@ public class Biowaste_transation_data
     public String getId() {
         return Id;
     }
-
+  
     public void setId(String Id) {
         this.Id = Id;
     }
