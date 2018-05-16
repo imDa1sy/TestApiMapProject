@@ -5,10 +5,17 @@
  */
 package com.strictit.catalogues.biowasteDataInput;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
+
 /**
  *
  * @author daisy
  */
-public class BiowasteDataInput {
+
+@Document(collection = "BiowasteDataInput")
+
+public class BiowasteDataInput 
+{
     
 }
