@@ -82,7 +82,7 @@ public class UserRest {
         return userRepository.findById(id).map(deletedUser -> {
 
             userRepository.deleteById(id);
-            System.out.println("User with id= '" + deletedUser.getId() + "'");
+            System.out.println("User with id= '" + deletedUser.getId() + "' deleted!");
 
             return ResponseEntity.ok().build();
         }).orElse(ResponseEntity.notFound().build());
