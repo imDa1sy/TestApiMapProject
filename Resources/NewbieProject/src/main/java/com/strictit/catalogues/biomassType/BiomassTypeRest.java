@@ -77,7 +77,7 @@ public class BiomassTypeRest {
         return biomassTypeRepository.findById(id).map(deleteType -> {
 
             biomassTypeRepository.deleteById(id);
-            System.out.println("Removed Biomass Type with type= '" + deleteType.getBiomassType() + "'");
+            System.out.println("Removed Biomass Type with type= '" + deleteType.getBiomassType() + "' deleted!");
             return ResponseEntity.ok().build();
         }).orElse(ResponseEntity.notFound().build());
     }

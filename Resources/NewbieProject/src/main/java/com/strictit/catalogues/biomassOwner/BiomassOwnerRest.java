@@ -89,7 +89,7 @@ public class BiomassOwnerRest {
                 .map(deletedOwner -> {
 
                     biomassOwnerRepository.deleteById(id);
-                    System.out.println("Removed biomass Owner '" + deletedOwner.getFirstName() + "'");
+                    System.out.println("Removed biomass Owner '" + deletedOwner.getFirstName() + "' deleted!");
                     return ResponseEntity.ok().body(deletedOwner.getId());
 
                 }).orElse(ResponseEntity.notFound().build());
