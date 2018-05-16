@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 C:\Users\Nenad\Documents\GitHub\TestApiMapProject\Resources\NewbieProject\src\main\java\com\strictit\catalogues\biomassOwner\BiomassOwnerRepository.java
 C:\Users\Nenad\Documents\GitHub\TestApiMapProject\Resources\NewbieProject\src\main\java\com\strictit\catalogues\biomassOwner\Contact.java
 C:\Users\Nenad\Documents\GitHub\TestApiMapProject\Resources\NewbieProject\src\main\java\com\strictit\catalogues\User\User.java
@@ -11,3 +12,18 @@ C:\Users\Nenad\Documents\GitHub\TestApiMapProject\Resources\NewbieProject\src\ma
 C:\Users\Nenad\Documents\GitHub\TestApiMapProject\Resources\NewbieProject\src\main\java\com\strictit\catalogues\biomassOwner\BiomassOwnerRest.java
 C:\Users\Nenad\Documents\GitHub\TestApiMapProject\Resources\NewbieProject\src\main\java\com\strictit\catalogues\biomassType\BiomassTypeRest.java
 C:\Users\Nenad\Documents\GitHub\TestApiMapProject\Resources\NewbieProject\src\main\java\com\strictit\config\SwaggerConfig.java
+=======
+C:\Users\daisy\Documents\GitHub\TestApiMapProject\Resources\NewbieProject\src\main\java\com\strictit\catalogues\User\UserRepository.java
+C:\Users\daisy\Documents\GitHub\TestApiMapProject\Resources\NewbieProject\src\main\java\com\strictit\catalogues\biomassType\BiomassTypeRepository.java
+C:\Users\daisy\Documents\GitHub\TestApiMapProject\Resources\NewbieProject\src\main\java\com\strictit\catalogues\biomassType\BiomassType.java
+C:\Users\daisy\Documents\GitHub\TestApiMapProject\Resources\NewbieProject\src\main\java\com\strictit\catalogues\User\UserRest.java
+C:\Users\daisy\Documents\GitHub\TestApiMapProject\Resources\NewbieProject\src\main\java\com\strictit\NewbieProjectApplication.java
+C:\Users\daisy\Documents\GitHub\TestApiMapProject\Resources\NewbieProject\src\main\java\com\strictit\catalogues\biomassOwner\BiomassOwner.java
+C:\Users\daisy\Documents\GitHub\TestApiMapProject\Resources\NewbieProject\src\main\java\com\strictit\config\SwaggerConfig.java
+C:\Users\daisy\Documents\GitHub\TestApiMapProject\Resources\NewbieProject\src\main\java\com\strictit\catalogues\biowaste_transation_data\Biowaste_transation_data.java
+C:\Users\daisy\Documents\GitHub\TestApiMapProject\Resources\NewbieProject\src\main\java\com\strictit\catalogues\biomassOwner\BiomassOwnerRest.java
+C:\Users\daisy\Documents\GitHub\TestApiMapProject\Resources\NewbieProject\src\main\java\com\strictit\catalogues\biomassOwner\BiomassOwnerRepository.java
+C:\Users\daisy\Documents\GitHub\TestApiMapProject\Resources\NewbieProject\src\main\java\com\strictit\catalogues\biomassOwner\Contact.java
+C:\Users\daisy\Documents\GitHub\TestApiMapProject\Resources\NewbieProject\src\main\java\com\strictit\catalogues\User\User.java
+C:\Users\daisy\Documents\GitHub\TestApiMapProject\Resources\NewbieProject\src\main\java\com\strictit\catalogues\biomassType\BiomassTypeRest.java
+>>>>>>> e9243db511ad6962556b03a806971bda19e4c615
