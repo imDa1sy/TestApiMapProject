@@ -1,4 +1,4 @@
-package com.strictit.NewbieProject;
+package com.strictit;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
