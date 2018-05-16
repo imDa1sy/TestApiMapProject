@@ -36,11 +36,10 @@ public class BiomassOwnerRest {
     //========================= GET METHODS ====================================
     @GetMapping(path = "/getallbiomassowners")
     public List<BiomassOwner> getAllBiomassOwners() {
-        // HttpHeaders responseHeaders = new HttpHeaders();
-
-        System.out.println(biomassOwnerRepository.findAll());
-
-        return biomassOwnerRepository.findAll();
+        
+        List<BiomassOwner> biomassOwnerList = biomassOwnerRepository.findAll();
+        
+        return biomassOwnerList;
     }
 
     @GetMapping(path = "/getbiomassownerbyid/{id}")
@@ -62,7 +61,7 @@ public class BiomassOwnerRest {
     }
 
     //======================= UPDATE METHODS ===================================
-    @PutMapping(path = "updatebiomassowner/{id}")
+    @PutMapping(path = "/updatebiomassowner/{id}")
     public ResponseEntity updateBiomassOwner(@PathVariable String id, @RequestBody BiomassOwner bmo) {
 
         return biomassOwnerRepository.findById(id)
