@@ -7,7 +7,6 @@ package com.strictit.catalogues.biomassType;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -34,8 +33,10 @@ public class BiomassTypeRest {
     //=========================== GET METHODS ==================================
     @GetMapping(path = "/getallbiomasstypes")
     public List<BiomassType> getAllBiomassTypes() {
-        System.out.println(biomassTypeRepository.findAll());
-        return biomassTypeRepository.findAll();
+        
+      List<BiomassType> biomassTypeList = biomassTypeRepository.findAll();
+      
+        return biomassTypeList;
     }
 
     @GetMapping(path = "/getbiomasstypebyid/{id}")
@@ -72,8 +73,7 @@ public class BiomassTypeRest {
     //========================== DELETE METHODS ================================
     @DeleteMapping(path = "/removebiomasstype/{id}")
     public ResponseEntity removeBiomassType(@PathVariable String id) {
-        System.out.println("Biomass Type Deleted!");
-
+      
         return biomassTypeRepository.findById(id).map(deleteType -> {
 
             biomassTypeRepository.deleteById(id);
