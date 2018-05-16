@@ -1,9 +1,13 @@
 com\strictit\catalogues\biomassOwner\BiomassOwnerRepository.class
 com\strictit\NewbieProjectApplication.class
-com\strictit\catalogues\biomassType\BiomassTypeRest.class
 com\strictit\catalogues\biomassOwner\BiomassOwnerRest.class
+com\strictit\catalogues\User\UserRepository.class
+com\strictit\catalogues\biomassOwner\BiomassOwner.class
+com\strictit\catalogues\biomassType\BiomassTypeRepository.class
+com\strictit\catalogues\biomassType\BiomassTypeRest.class
 com\strictit\catalogues\User\User.class
 com\strictit\catalogues\biowaste_transation_data\Biowaste_transation_data.class
+com\strictit\config\SwaggerConfig.class
 com\strictit\catalogues\biomassType\BiomassType.class
-com\strictit\catalogues\biomassOwner\BiomassOwner.class
+com\strictit\catalogues\User\UserRest.class
 com\strictit\catalogues\biomassOwner\Contact.class
