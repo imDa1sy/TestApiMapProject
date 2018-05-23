@@ -1,34 +1,31 @@
-
-<div class="container" style="text-align:center">
- <a href="http://localhost:8080/swagger-ui.html"><button >swagger ui</button></a>
-    <h2>Owner retrieved from DB: </h2>
-  <table class="table table-hover" >
-      <thead>
-          <tr>
-              <th>id</th>
-              <th>first name</th>
-              <th>last name</th>
-              <th>location</th>
-              <th>bio waste type</th>
-              <th>contact</th>
-          </tr>
-      </thead>
-      <tbody *ngFor="let li of list">
-          <tr>
-              <td> {{li.id}}</td>
-              <td> {{li.firstName}}</td>
-              <td>{{li.lastName}}</td>
-              <td>{{li.location}}</td>
-              <td>{{li.biowasteTypeOutput}}</td>
-              <td> contact 1:{{li.contact.number1}}<br>
-                 contact 2:{{li.contact.number2}}<br>
-                 email address:{{li.contact.ownerEmail}}</td>
+<div>
+  <a [routerLink]="['/biodeseuri']" >
+     <img class="logo" src="../assets/biodeseuri.jpg" alt="">
+  </a>
+  <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+        </div>
+    
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+           
+          <ul class="nav navbar-nav">
              
-             </tr>
-    </table>
-  
-  
- 
- 
+              <li routerLinkActive="active"><a [routerLink]="['/biodeseuri']" > INTRO </a></li>
+              <li routerLinkActive="active"><a [routerLink]="['/biodeseuri/benefits-for-moldova']" > BENEFITS FOR MOLDOVA </a></li>
+              <li routerLinkActive="active"><a [routerLink]="['/biodeseuri/procedure-and-services-for-farmers']"> PROCEDURE AND SERVICES FOR FARMERS </a></li>
+              <li routerLinkActive="active"><a [routerLink]="['/biodeseuri/new-energy-from-waste']"> NEW ENERGY FROM WASTE </a></li>
+              <li routerLinkActive="active"><a [routerLink]="['/biodeseuri/case-study']"> CASE STUDY </a></li>
+              
+          </ul>
+        </div>
+      </div>
+    </nav>
+     <router-outlet></router-outlet>
 </div>
-

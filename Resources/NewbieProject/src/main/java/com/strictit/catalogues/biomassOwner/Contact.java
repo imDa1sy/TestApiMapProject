@@ -10,25 +10,33 @@ package com.strictit.catalogues.biomassOwner;
  * @author Nenad
  */
 public class Contact {
-    private int number1;
-    private int number2;
+    private String mobile1;
+    private String mobile2;
+    private String address;
     private String ownerEmail;
-  //private String Address;
 
-    public int getNumber1() {
-        return number1;
+    public String getMobile1() {
+        return mobile1;
     }
 
-    public void setNumber1(int number1) {
-        this.number1 = number1;
+    public void setMobile1(String mobile1) {
+        this.mobile1 = mobile1;
     }
 
-    public int getNumber2() {
-        return number2;
+    public String getMobile2() {
+        return mobile2;
     }
 
-    public void setNumber2(int number2) {
-        this.number2 = number2;
+    public void setMobile2(String mobile2) {
+        this.mobile2 = mobile2;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getOwnerEmail() {
@@ -38,6 +46,6 @@ public class Contact {
     public void setOwnerEmail(String ownerEmail) {
         this.ownerEmail = ownerEmail;
     }
-   
+    
     
 }
