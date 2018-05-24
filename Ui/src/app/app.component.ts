@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Http, Response } from '@angular/http';
 
 @Component({
   selector: 'app-root',
@@ -7,15 +6,5 @@ import { Http, Response } from '@angular/http';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  
-  list:BiomassOwner;
-  constructor(private http:Http){
-    this.http.get('http://localhost:8080/api/getallbiomassowners')
-    .subscribe((res:Response)=>{
-
-         this.list=res.json();
-         console.log(this.list);
-    });
-  }
-
+  title = 'app';
 }

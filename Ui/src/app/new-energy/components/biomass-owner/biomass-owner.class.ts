@@ -5,8 +5,9 @@ class BiomassOwner{
     location : string;
     biowasteTypeOutput : string;
     contact : {
-        number1 : number;
-        number2 : number;
+        mobile1 : string;
+        mobile2 : string;
+        address : string;
         ownerEmail : string;
     }
 }
