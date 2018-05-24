@@ -5,49 +5,86 @@
  */
 package com.strictit.catalogues.User;
 
-import com.mongodb.DB;
-import com.mongodb.DBCollection;
-import com.mongodb.DBCursor;
-import com.mongodb.Mongo;
-import com.mongodb.MongoClient;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import org.springframework.http.HttpStatus;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
  *
- * @author qa
+ * @author Nenad
  */
 @RestController
 @RequestMapping("/api")
+@CrossOrigin("*")
 public class UserRest {
-    
-    private Mongo mongoClient = new MongoClient("localhost", 27017);
-    private DB db = mongoClient.getDB("test");
-    private List components;
-    
-    public void loadUsers(){
-        DBCollection col = db.getCollection("user");
-        components = new ArrayList();
-        DBCursor cursor = col.find();
-        while (cursor.hasNext()) {
-            components.add(cursor.next());
-        }
+
+    @Autowired
+    UserRepository userRepository;
+
+//=========================== GET METHODS ======================================
+    @GetMapping(path = "/getallusers")
+    public List<User> getAllUsers() {
+       
+        List<User> userList = userRepository.findAll();
+
+        return userList;
     }
-    
-    @RequestMapping(path = "/getAllUsers")
-    @ResponseBody
-    public ResponseEntity<?> getAllUsers(){
-        loadUsers();
-        System.out.println(components);
-        return new ResponseEntity<>(components.toString(), HttpStatus.OK);  
+
+    @GetMapping(path = "/getuserbyid/{id}")
+    public ResponseEntity getUserById(@PathVariable String id) {
+
+        return userRepository.findById(id).map(oneUser
+                -> ResponseEntity.ok().body(oneUser))
+                .orElse(ResponseEntity.notFound().build());
     }
-    
+
+//========================== INSERT METHODS ====================================
+    @PostMapping(path = "/insertuser")
+    public User insertUser(@RequestBody User user) {
+
+        System.out.println("User inserted!");
+
+        return userRepository.save(user);
+    }
+
+//========================== UPDATE METHODS ====================================
+    @PutMapping(path = "/updateuser/{id}")
+    public ResponseEntity updateUser(@PathVariable String id, @RequestBody User user) {
+
+        return userRepository.findById(id).map(updateData -> {
+            updateData.setRole(user.getRole());
+            updateData.setUserName(user.getUserName());
+            updateData.setPassword(user.getPassword());
+            updateData.setUserEmail(user.getUserEmail());
+
+            User updatedUser = userRepository.save(updateData);
+            System.out.println("User with id=' " + updateData.getId() + "' updated!");
+
+            return ResponseEntity.ok().body(updatedUser);
+        }).orElse(ResponseEntity.notFound().build());
+
+    }
+
+//========================== DELETE METHODS ====================================    
+    @DeleteMapping(path = "/removeuser/{id}")
+    public ResponseEntity removeUser(@PathVariable String id) {
+
+        return userRepository.findById(id).map(deletedUser -> {
+
+            userRepository.deleteById(id);
+            System.out.println("User with id= '" + deletedUser.getId() + "' deleted!");
+
+            return ResponseEntity.ok().build();
+        }).orElse(ResponseEntity.notFound().build());
+    }
 }

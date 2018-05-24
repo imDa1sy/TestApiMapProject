@@ -5,35 +5,46 @@
  */
 package com.strictit.catalogues.User;
 
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  *
  * @author Nenad
  */
-
-
+@Document(collection = "User")
 public class User {
     
-    private String Role;
-    private String username;
+    @Id
+    private String id;
+    
+    private String role;
+    private String userName;
     private String password;
-    private String usermail;
+    private String userEmail;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getRole() {
-        return Role;
+        return role;
     }
 
-    public void setRole(String Role) {
-        this.Role = Role;
+    public void setRole(String role) {
+        this.role = role;
     }
 
-    public String getUsername() {
-        return username;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getPassword() {
@@ -44,14 +55,20 @@ public class User {
         this.password = password;
     }
 
-    public String getUsermail() {
-        return usermail;
+    public String getUserEmail() {
+        return userEmail;
     }
 
-    public void setUsermail(String usermail) {
-        this.usermail = usermail;
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" + "id=" + id + ", role=" + role + ", userName=" + 
+                userName + ", password=" + password + ", userEmail=" + 
+                userEmail + '}';
     }
     
+    
 }
-
-

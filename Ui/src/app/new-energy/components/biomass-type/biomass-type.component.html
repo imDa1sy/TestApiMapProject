@@ -1,0 +1,29 @@
+<div class="containers">
+    <h2>
+      <mat-icon color="accent">info</mat-icon> Biomass Types
+    </h2>
+    
+    <hr>
+    <mat-form-field>
+      <input placeholder="Search" matInput #input (keyup)='searchElements(input.value)'>
+    </mat-form-field>
+    <div class="example-container mat-elevation-z8">
+    
+      <mat-table #table [dataSource]="dataSource" matSort>
+        <!--ng-container matColumnDef="id">
+          <mat-header-cell *matHeaderCellDef mat-sort-header matTooltip="Sort by id asc or desc"> Id </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+        </ng-container-->
+    
+        <ng-container matColumnDef="biomassType">
+          <mat-header-cell *matHeaderCellDef mat-sort-header matTooltip="Sort by biomass Type asc or desc"> Biomass Type </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.biomassType}} </mat-cell>
+        </ng-container>
+    
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+      <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]">
+      </mat-paginator>
+    </div>
+    </div>
