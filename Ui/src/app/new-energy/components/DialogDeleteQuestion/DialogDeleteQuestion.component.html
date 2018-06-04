@@ -1,0 +1,29 @@
+<form  #contentForm="ngForm">
+  <div>
+      <mat-toolbar color="primary">
+      <h2>
+         <mat-icon color="warn">remove</mat-icon>
+          <span translate="waste-type-remove-10">Delete {{data?.text}}</span>
+      </h2>
+    </mat-toolbar> 
+     <hr>
+     <h1 mat-dialog-title translate="waste-type-remove-11"> Are you sure you want to Delete {{data?.text}} ?</h1>
+    </div>
+    <div mat-dialog-actions >
+          <button align="left" mat-raised-button color="accent" cdkFocusInitial
+                  (click)="onNoClick()"
+                  matTooltip="Cancel">  
+                  <span translate="waste-type-remove-12"> Cancel  </span>   
+              <mat-icon>close</mat-icon>
+          </button>
+          &nbsp;&nbsp;
+        <button 
+                  mat-raised-button  color="warn" 
+                  [mat-dialog-close]="true"
+                  (click)="DeleteAndClose()"
+                  matTooltip="Delete"> 
+                  <span translate="waste-type-remove-13">  Delete </span>        
+            <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+  </form>

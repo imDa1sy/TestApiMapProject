@@ -1,0 +1,78 @@
+<div class="containers">
+  <h2>
+    <mat-icon color="accent">info</mat-icon> <span translate="new_energy-BM-User-header">Waste User</span>
+  </h2>
+  <button *ngIf="ROLE == 'ROLE_ADMIN'" mat-raised-button color="accent" (click)="newWasteUser()">
+      <mat-icon>add</mat-icon>
+    </button>
+  <hr>
+  <mat-form-field>
+    <input placeholder="Search" matInput #input (keyup)='searchElements(input.value)'>
+  </mat-form-field>
+  <div class="example-container mat-elevation-z8">
+
+    <mat-table #table [dataSource]="dataSource" matSort>
+
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef mat-sort-header matTooltip="Sort by Name asc or desc"> <span translate="new_energy-BM-Owner-Table-el1">Name</span> </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="surName">
+        <mat-header-cell *matHeaderCellDef mat-sort-header matTooltip="Sort by surName asc or desc"> <span translate="new_energy-BM-Owner-Table-el2">SurName </span></mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.surName}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="companyName">
+        <mat-header-cell *matHeaderCellDef mat-sort-header matTooltip="Sort by company Name asc or desc"><span translate="new_energy-BM-Owner-Table-el3"> Company name</span> </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.companyName}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="address">
+        <mat-header-cell *matHeaderCellDef mat-sort-header matTooltip="Sort by address Type Output name asc or desc"><span translate="new_energy-BM-Owner-Table-el4"> Address</span> </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.address}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="contact">
+        <mat-header-cell *matHeaderCellDef><span translate="new_energy-BM-Owner-Table-el5"> Contact</span> </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <table>
+            <tr>
+              <td>
+                Telephone: {{element.contact.telephone}}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Mobile: {{element.contact.mobile}}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                e-mail: {{element.contact.email}}
+              </td>
+            </tr>
+          </table>
+        </mat-cell>
+
+      </ng-container>
+      <ng-container matColumnDef="actionsColumn">
+          <mat-header-cell *matHeaderCellDef matTooltip="Manage content">
+              <span translate="new_energy-BM-Owner-Table-el7"> Actions </span>     
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <button mat-button (click)="editWasteUser(row)" color="accent"  matTooltip="Edit">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-button (click)="deleteWasteUser(row.id)" color="warn" matTooltip="Delete">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+    <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]">
+    </mat-paginator>
+  </div>
+</div>

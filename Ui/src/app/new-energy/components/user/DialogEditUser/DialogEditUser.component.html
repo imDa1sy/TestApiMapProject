@@ -1,0 +1,57 @@
+<mat-toolbar color="primary">
+  <h2>
+    <mat-icon color="accent">create</mat-icon>
+    <span>User</span>
+  </h2>
+</mat-toolbar>
+<form #newUserForm="ngForm">
+  <div class="example-container">
+    <hr>
+      <mat-form-field >
+        <mat-label>Name</mat-label>
+        <input matInput [(ngModel)]="data?.localUser.userName" [disabled]="!data?.enableUsername" name="userName" #userName="ngModel" maxlength="30">
+        
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Role</mat-label>
+        <mat-select [(ngModel)]="data?.localUser.role" required 
+        name="role" 
+        #role="ngModel">
+            <div [hidden]="role.valid || role.pristine" class="alert alert-danger">
+                Role is required!
+            </div>
+            <mat-option>--</mat-option>
+            <mat-option value="ROLE_WASTE_OWNER">WASTE OWNER</mat-option>
+            <mat-option value="ROLE_WASTE_USER">WASTE USER</mat-option>
+     </mat-select>
+        </mat-form-field>
+    <mat-form-field>
+      <mat-label >Password</mat-label>
+      <input matInput type="password" [(ngModel)]="data?.localUser.password" required name="password" #password="ngModel" maxlength="30" #passwordCount>
+      <mat-hint align="end">{{ passwordCount.value.length }} / 30</mat-hint>
+    </mat-form-field>
+    <div [hidden]="password.valid || password.pristine" class="alert alert-danger" >
+      Password is required!
+    </div>
+    <mat-form-field>
+      <mat-label >Confirm Password</mat-label>
+      <input matInput type="password" [(ngModel)]="data?.localUser.Confirmpassword" required name="Confirmpassword" #password="ngModel" maxlength="30" #confirmpasswordCount>
+      <mat-hint align="end">{{ confirmpasswordCount.value.length }} / 30</mat-hint>
+    </mat-form-field>
+    <div [hidden]="password.valid || password.pristine" class="alert alert-danger" >
+      Password not match!
+    </div>  
+    <hr>
+  </div>
+  <div mat-dialog-actions align="end">
+    <button mat-raised-button color="warn" (click)="onNoClick()" matTooltip="Close">
+      <mat-icon>close</mat-icon>
+    </button>
+
+    &nbsp; &nbsp;
+    <button color="accent" [disabled]="!newUserForm.form.valid" mat-raised-button [mat-dialog-close]="true" 
+     (click)="SaveAndClose()">
+      <mat-icon>done</mat-icon>
+    </button>
+  </div>
+</form>

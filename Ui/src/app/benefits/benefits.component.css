@@ -18,3 +18,7 @@ p {
     border: 20px  solid white;
     background-color:#e5fad1;
   }
+  #energyc {
+    background-color:#e5fad1; 
+    padding: 5%;
+  }

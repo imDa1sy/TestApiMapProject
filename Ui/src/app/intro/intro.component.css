@@ -4,7 +4,11 @@ p {
     text-align: justify;
     font-family: 'Alegreya Sans';
 }
-
+#info-flag{
+    background-color:#e5fad1; 
+    font: italic; 
+    width: 491px;
+}
 .imgIntro {
     width:auto;
     height:auto;
