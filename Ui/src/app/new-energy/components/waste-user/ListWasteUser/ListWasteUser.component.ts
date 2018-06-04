@@ -90,7 +90,11 @@ export class ListWasteUserComponent implements OnInit {
     let dialogRef = this.dialog.open(DialogEditWasteUserComponent, {
      // disableClose: true,
       autoFocus: true,
-      width: '600px', height: '550px', data: { "id": null ,"localWasteUser":localWasteUserAdd}
+      width: '600px', height: '550px', data: {
+         "id": null ,
+         "localWasteUser":localWasteUserAdd
+         
+        }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result != null) {
@@ -99,7 +103,7 @@ export class ListWasteUserComponent implements OnInit {
     });
   }
   editWasteUser(elementData) {
-   /*_wasteOwnerService load data and pass it in data object witch is then injected in 
+   /*_wasteOwnerService load data and pass it in data object which is then injected in 
     DialogEditWasteOwnerComponent to handle it.
    */
     this._wasteUserService.load(elementData.id).subscribe(data => {
@@ -112,7 +116,8 @@ export class ListWasteUserComponent implements OnInit {
       width: '600px', height: '550px',
       data: {
         "id": elementData.id,
-        "localWasteUser":this.localWasteUserToEdit
+        "localWasteUser":this.localWasteUserToEdit,
+        "edit":true
       }
     });
   

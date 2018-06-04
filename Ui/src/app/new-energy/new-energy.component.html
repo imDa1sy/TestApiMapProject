@@ -66,7 +66,10 @@
       <span translate="new_energy-WasteDataEntry">Waste Data entry</span>
     </button>
   </span></li>
-
+  <li> <span *ngIf="ROLE == 'ROLE_WASTE_OWNER'">
+    <!--button mat-menu-item translate="new_energy-button11">Add Waste data entry</button-->
+    <button mat-button [routerLink]="['map-view']" ><span translate="new_energy-MapView"> MAP VIEW</span></button>
+</span></li>
   <li><button mat-raised-button routerLink="login" *ngIf="!isLoggedIn">Login</button></li>
     <li><button mat-button (click)="onLogout()" *ngIf="isLoggedIn">
     <span translate="new_energy-Logout">LOGOUT</span>

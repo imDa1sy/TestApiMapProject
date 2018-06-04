@@ -10,9 +10,11 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
+import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 import java.util.ArrayList;
 import java.util.List;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.stereotype.Service;
@@ -46,15 +48,19 @@ public class Locations extends ArrayList<Location> {
       and is called by loadByWasteOwnerId and loadByUserId**/
         DBCollection collection = database.getCollection("Locations");
 
-        BasicDBObject searchQuery = new BasicDBObject();
+        DBObject searchQuery = new BasicDBObject();
         searchQuery.put(field, id);
 
         DBCursor cursor = collection.find(searchQuery);
         Gson gson = new Gson();
         while (cursor.hasNext()) {
-            this.add(gson.fromJson(cursor.next().toString(), Location.class));
-
-        }
+            BasicDBObject theObj =  (BasicDBObject) cursor.next();
+          
+             Location temp =gson.fromJson(theObj.toString(), Location.class);
+             temp.setMyId(theObj.getObjectId("_id").toString());
+             this.add(temp);
+             
+         }
         return this.size();
     }
 

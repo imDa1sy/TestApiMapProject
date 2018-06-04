@@ -8,6 +8,7 @@ import { DialogEditWasteOwnerComponent } from '../DialogEditWasteOwner/DialogEdi
 import { DialogDeleteQuestionComponent } from '../../DialogDeleteQuestion/DialogDeleteQuestion.component';
 import { WasteOwnerService } from '../WasteOwner.service';
 import { WasteOwner } from '../WasteOwner.class';
+import { Router } from '@angular/router';
 
 
 
@@ -35,7 +36,8 @@ export class ListWasteOwnerComponent implements OnInit {
     private authService: AuthService,
     public dialog: MatDialog,
     public snackBar: MatSnackBar,
-    private _wasteOwnerService: WasteOwnerService) {
+    private _wasteOwnerService: WasteOwnerService,
+    private router : Router) {
 
     this.authService.bSubject.subscribe((value) => {
       this.ROLE = value;
@@ -90,7 +92,10 @@ export class ListWasteOwnerComponent implements OnInit {
     let dialogRef = this.dialog.open(DialogEditWasteOwnerComponent, {
      // disableClose: true,
       autoFocus: true,
-      width: '600px', height: '550px', data: { "id": null ,"localWasteOwner":localWasteOwnerAdd}
+      width: '600px', height: '550px', data: { 
+        "id": null ,
+        "localWasteOwner":localWasteOwnerAdd
+    }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result != null) {
@@ -98,8 +103,13 @@ export class ListWasteOwnerComponent implements OnInit {
       }
     });
   }
+  mapView(id){
+    //_wasteOwnerService setter ownerIdToMap set unique owners id and then its used in mapView components
+    this._wasteOwnerService.ownerIdToMap=id;
+    this.router.navigate(['biodeseuri/new-energy-from-waste/map-view']);
+  }
   editWasteOwner(elementData) {
-   /*_wasteOwnerService load data and pass it in data object witch is then injected in 
+   /*_wasteOwnerService load data and pass it in data object which is then injected in 
     DialogEditWasteOwnerComponent to handle it.
    */
     this._wasteOwnerService.load(elementData.id).subscribe(data => {
@@ -112,7 +122,8 @@ export class ListWasteOwnerComponent implements OnInit {
       width: '600px', height: '550px',
       data: {
         "id": elementData.id,
-        "localWasteOwner":this.localWasteOwnerToEdit
+        "localWasteOwner":this.localWasteOwnerToEdit,
+        "edit":true
       }
     });
   

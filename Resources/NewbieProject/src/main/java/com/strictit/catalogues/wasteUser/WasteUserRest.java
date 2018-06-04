@@ -5,6 +5,7 @@
  */
 package com.strictit.catalogues.wasteUser;
 
+import com.strictit.catalogues.User.PasswordHash;
 import com.strictit.catalogues.User.User;
 import com.strictit.catalogues.User.UserRepository;
 import com.strictit.catalogues.locations.Location;
@@ -35,12 +36,15 @@ public class WasteUserRest {
 
     @Autowired
     WasteUserRepository wasteUserRepository;
-    
+
     @Autowired
     LocationRepository locationRepository;
-    
+
     @Autowired
     UserRepository userRepository;
+    
+    @Autowired
+    PasswordHash PasswordHash;
 
     //========================= GET METHODS ====================================
     @GetMapping(path = "/getallwasteusers")
@@ -54,7 +58,7 @@ public class WasteUserRest {
     @GetMapping(path = "/getwasteuserbyid/{id}")
     public ResponseEntity getWasteUserById(@PathVariable String id) {
 
-         WasteUser wasteUser = new WasteUser();
+        WasteUser wasteUser = new WasteUser();
         Optional<WasteUserData> wasteUserData = wasteUserRepository.findById(id);
         //TODO if not found then return ResponseEntity not found!
         wasteUser.setWasteUserData(wasteUserData.orElse(new WasteUserData()));
@@ -67,7 +71,7 @@ public class WasteUserRest {
     //======================= UPDATE-INSERT METHODS ===================================
     @PutMapping(path = "/updatewasteuser/{id}")
     public ResponseEntity updateWasteUser(@PathVariable String id, @RequestBody WasteUser wu) {
- if (id.equalsIgnoreCase("null")) {
+        if (id.equalsIgnoreCase("null")) {
             WasteUserData wasteUserDataInserted = wasteUserRepository.save(wu.getWasteUserData());
 
             for (Location loc : wu.getLocations()) {
@@ -77,6 +81,7 @@ public class WasteUserRest {
 
             for (User user : wu.getUsers()) {
                 user.setWasteUserId(wasteUserDataInserted.getId());
+                user.setPassword(PasswordHash.hashPassword(user.getPassword()));
                 userRepository.save(user);
             }
 
@@ -88,15 +93,23 @@ public class WasteUserRest {
                         WasteUserData wasteOwnerUpdated = wasteUserRepository.save(updateData);
                         return ResponseEntity.ok().body(wasteOwnerUpdated);
                     });
-            //   List<Location> retreivedLocations= locationRepository.findByWasteOwnerId(id);
 
-            for (Location loc : wu.getLocations()) {
-                locationRepository.findById(loc.getId()).map(mapper -> {
-                    mapper=loc;
-                    return locationRepository.save(mapper);
+            for (Location location : wu.getLocations()) {
+
+                locationRepository.findById(location.getMyId()).map(locationUpdate -> {
+
+                    locationUpdate.setDescription(location.getDescription());
+                    locationUpdate.setLatitude(location.getLatitude());
+                    locationUpdate.setLongitude(location.getLongitude());
+                    locationUpdate.setWasteOwnerId(location.getWasteOwnerId());
+
+                    Location locationUpdated = locationRepository.save(locationUpdate);
+
+                    return ResponseEntity.ok().body(locationUpdated);
                 });
 
             }
+
         }
         return null;
     }
@@ -107,11 +120,11 @@ public class WasteUserRest {
     public ResponseEntity<?> removeWasteUser(@PathVariable String id) {
 
         return wasteUserRepository.findById(id)
-                .map(deletedOwner -> {
+                .map(deletedUser -> {
 
                     wasteUserRepository.deleteById(id);
-                    System.out.println("Removed waste user '" + deletedOwner.getName() + "' deleted!");
-                    return ResponseEntity.ok().body(deletedOwner.getId());
+                    System.out.println("Removed waste user '" + deletedUser.getName() + "' deleted!");
+                    return ResponseEntity.ok().body(deletedUser.getId());
 
                 }).orElse(ResponseEntity.notFound().build());
 

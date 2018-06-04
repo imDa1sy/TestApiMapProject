@@ -6,6 +6,7 @@
 package com.strictit.catalogues.locations;
 
 import java.util.List;
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -17,14 +18,14 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Location {
 
     @Id
-    private String id;
+   private String myId;
     
     private String wasteOwnerId;
     private String wasteUserId;
     private int sortNum;
     private String description;
-    private String latitude;
-    private String longitude;
+    private double latitude;
+    private double longitude;
 
     public String getWasteUserId() {
         return wasteUserId;
@@ -34,13 +35,22 @@ public class Location {
         this.wasteUserId = wasteUserId;
     }
 
-    public String getId() {
-        return id;
+    public String getMyId() {
+        return myId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setMyId(String myId) {
+        this.myId = myId;
     }
+
+  
+
+    @Override
+    public String toString() {
+        return "Location{" + "myId=" + myId + ", wasteOwnerId=" + wasteOwnerId + ", wasteUserId=" + wasteUserId + ", sortNum=" + sortNum + ", description=" + description + ", latitude=" + latitude + ", longitude=" + longitude + '}';
+    }
+
+   
 
     public String getWasteOwnerId() {
         return wasteOwnerId;
@@ -66,25 +76,24 @@ public class Location {
         this.description = description;
     }
 
-    public String getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(String latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
-    public String getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(String longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 
-    @Override
-    public String toString() {
-        return "Location{" + "id=" + id + ", wasteOwnerId=" + wasteOwnerId + ", sortNum=" + sortNum + ", description=" + description + ", latitude=" + latitude + ", longitude=" + longitude + '}';
-    }
+   
+
+
 
 }

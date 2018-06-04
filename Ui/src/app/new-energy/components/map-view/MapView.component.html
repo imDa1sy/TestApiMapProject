@@ -1,3 +1,9 @@
 <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" (mapClick)='onChoseLocation($event)'>
-  <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
+    <div *ngFor="let i of localOwnerLocations">
+        <agm-marker [latitude]="i.latitude" [longitude]="i.longitude"></agm-marker>
+      </div>
 </agm-map>
+<div *ngFor="let i of localOwnerLocations">
+  lat {{i.latitude}}
+   long {{i.longitude}}
+</div>

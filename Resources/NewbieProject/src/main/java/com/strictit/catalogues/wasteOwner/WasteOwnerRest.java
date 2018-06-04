@@ -5,12 +5,16 @@
  */
 package com.strictit.catalogues.wasteOwner;
 
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
+import com.strictit.catalogues.User.PasswordHash;
 import com.strictit.catalogues.User.User;
 import com.strictit.catalogues.User.UserRepository;
 import com.strictit.catalogues.locations.Location;
 import com.strictit.catalogues.locations.LocationRepository;
 import java.util.List;
 import java.util.Optional;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -40,6 +44,9 @@ public class WasteOwnerRest {
 
     @Autowired
     UserRepository userRepository;
+    
+   @Autowired
+    PasswordHash PasswordHash;
 
     //========================= GET METHODS ====================================
     @GetMapping(path = "/getallwasteowners")
@@ -59,7 +66,8 @@ public class WasteOwnerRest {
         wasteOwner.setWasteOwnerData(wasteOwnerData.orElse(new WasteOwnerData()));
         // Load all locations from database by owner id
         wasteOwner.getLocations().loadByWasteOwnerId(id);
-        wasteOwner.getUsers().loadByWasteOwnerId(id);
+       
+       // wasteOwner.getUsers().loadByWasteOwnerId(id);
         return ResponseEntity.ok().body(wasteOwner);
 
     }
@@ -78,6 +86,7 @@ public class WasteOwnerRest {
 
             for (User user : wob.getUsers()) {
                 user.setWasteOwnerId(wasteOwnerDataInserted.getId());
+                user.setPassword(PasswordHash.hashPassword(user.getPassword()));
                 userRepository.save(user);
             }
 
@@ -89,24 +98,24 @@ public class WasteOwnerRest {
                         WasteOwnerData wasteOwnerUpdated = wasteOwnerRepository.save(updateData);
                         return ResponseEntity.ok().body(wasteOwnerUpdated);
                     });
-            //   List<Location> retreivedLocations= locationRepository.findByWasteOwnerId(id);
 
             for (Location location : wob.getLocations()) {
-                locationRepository.findById(location.getId()).map(locationUpdate -> {
-                    locationUpdate = location;
-                     locationRepository.save(locationUpdate);
-                    return ResponseEntity.ok().body(locationUpdate);
+               
+ 
+                locationRepository.findById(location.getMyId()).map(locationUpdate -> {
+
+                    locationUpdate.setDescription(location.getDescription());
+                    locationUpdate.setLatitude(location.getLatitude());
+                    locationUpdate.setLongitude(location.getLongitude());
+                    locationUpdate.setWasteOwnerId(location.getWasteOwnerId());
+
+                    Location locationUpdated = locationRepository.save(locationUpdate);
+
+                    return ResponseEntity.ok().body(locationUpdated);
                 });
 
             }
-            for (User user : wob.getUsers()) {
-                userRepository.findById(user.getId()).map(userUpdate -> {
-                    userUpdate = user;
-                    userRepository.save(userUpdate);
-                     return ResponseEntity.ok().body(userUpdate);
-                });
-
-            }
+          
         }
         return null;
     }

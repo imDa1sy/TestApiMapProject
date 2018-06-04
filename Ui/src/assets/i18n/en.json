@@ -118,7 +118,7 @@
    "new-waste-owner-mobile":"Mobile",
    "new-waste-owner-req-mobile":"Mobile is required!",
    "new-waste-owner-email":"E-mail",
-   "new-waste-owner-req-email":"Email is required and format should be 'john@doe.com'",
+   "new-waste-owner-req-email":"Email is required and format should be 'email@example.com'",
    "new-waste-owner-locations":"Locations",
    "new-waste-owner-locationN":"Location {{i+1}}",
    "new-waste-owner-description":"Description",

@@ -118,7 +118,7 @@
    "new-waste-owner-mobile":"Mobil",
    "new-waste-owner-req-mobile":"Mobil este necesar!",
    "new-waste-owner-email":"E-mail",
-   "new-waste-owner-req-email":"E-mailul este necesar și formatul trebuie să fie ' john@doe.com '",
+   "new-waste-owner-req-email":"E-mailul este necesar și formatul trebuie să fie 'email@example.com'",
    "new-waste-owner-locations":"Locaţii",
    "new-waste-owner-locationN":"Locaţii {{i+1}}",
    "new-waste-owner-description":"Descriere",

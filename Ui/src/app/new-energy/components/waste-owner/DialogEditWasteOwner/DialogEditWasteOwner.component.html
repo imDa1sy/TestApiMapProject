@@ -72,7 +72,7 @@
 
     </mat-form-field>
     <div [hidden]="email.valid || email.pristine" class="alert alert-danger" translate="new-waste-owner-req-email">
-      Email is required and format should be 'john@doe.com'
+      Email is required and format should be 'email@example.com'
     </div>
     <hr>
     <mat-label translate="new-waste-owner-locations">Locations</mat-label>
@@ -120,13 +120,15 @@
       </div>
     </div>
     <hr>
+    <div *ngIf="!data.edit == true">
     <mat-label translate="new-waste-owner-users">Users</mat-label>
     <div align="right">
       <button type="button" mat-mini-fab (click)="addUsers()">
         <mat-icon>add</mat-icon>
       </button>
     </div>
-    <div class="example-container" *ngFor="let field of data.localWasteOwner?.users; let i = index">
+  
+    <div  class="example-container" *ngFor="let field of data.localWasteOwner?.users; let i = index">
       <mat-label translate="new-waste-owner-userN">User {{i+1}}</mat-label>
       <mat-form-field>
         <mat-label translate="new-waste-owner-username">Username</mat-label>
@@ -167,6 +169,7 @@
         </button>
       </div>
     </div>
+  </div>
     <hr>
 
     <hr>

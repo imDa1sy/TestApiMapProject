@@ -7,7 +7,7 @@ import { WasteOwner } from "./WasteOwner.class";
 @Injectable()
 export class WasteOwnerService {
     //=============================ATTRIBUTES======================================
-  
+    private _ownerIdToMap: string;
     constructor(private http: HttpClient) { }
 
     //==============================METHODS=======================================
@@ -19,5 +19,12 @@ export class WasteOwnerService {
     load(id): Observable<WasteOwner> {
         
         return this.http.get<WasteOwner>('http://'+restConfig.Host+':'+restConfig.Port+'/api/getwasteownerbyid/'+id);
+    }
+   
+    get ownerIdToMap():string {
+        return this._ownerIdToMap;
+    }
+    set ownerIdToMap(ownerIdToMap:string) {
+        this._ownerIdToMap = ownerIdToMap;
     }
 }

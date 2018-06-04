@@ -12,8 +12,8 @@ export class WasteOwner {
 export class Location {
     id: string;
     description: string;
-    latitude: string;
-    longitude: string;
+    latitude: string; //change to number
+    longitude: string; //change to number
 }
 
 export class WasteOwnerData {

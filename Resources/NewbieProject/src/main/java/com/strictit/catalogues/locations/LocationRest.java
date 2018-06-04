@@ -39,11 +39,11 @@ public class LocationRest {
         }
 
         @GetMapping(path = "/getlocationbyid/{id}")
-        public ResponseEntity getLocationById(@PathVariable String id) {
-
-            return locationRepository.findById(id).map(oneUser
-                    -> ResponseEntity.ok().body(oneUser))
-                    .orElse(ResponseEntity.notFound().build());
+        public List<Location> getLocationById(@PathVariable String id) {
+            List<Location> locationsList = locationRepository.findByWasteOwnerId(id);
+           
+                    return locationsList;
+                   
         }
 
      
@@ -70,10 +70,10 @@ public class LocationRest {
         @DeleteMapping(path = "/removelocation/{id}")
         public ResponseEntity removeLocation(@PathVariable String id) {
 
-            return locationRepository.findById(id).map(deletedUser -> {
+            return locationRepository.findById(id).map(deleteLocation -> {
 
                 locationRepository.deleteById(id);
-                System.out.println("Location with id= '" + deletedUser.getId() + "' deleted!");
+                System.out.println("Location  deleted!");
 
                 return ResponseEntity.ok().build();
             }).orElse(ResponseEntity.notFound().build());
