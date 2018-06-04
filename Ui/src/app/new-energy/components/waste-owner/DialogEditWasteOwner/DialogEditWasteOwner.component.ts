@@ -26,6 +26,7 @@ export class DialogEditWasteOwnerComponent implements OnInit {
   }
   addLocations() {
     this.data.localWasteOwner.locations.push({
+      "myId":'null',
       "sortNum":this.data.localWasteOwner.locations.length,
       "description": '',
       "latitude": '',

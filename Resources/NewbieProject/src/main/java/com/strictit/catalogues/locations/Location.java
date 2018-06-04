@@ -18,14 +18,23 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Location {
 
     @Id
-   private String myId;
-    
+    private String id;
+    private String myId;
+
     private String wasteOwnerId;
     private String wasteUserId;
     private int sortNum;
     private String description;
     private double latitude;
     private double longitude;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getWasteUserId() {
         return wasteUserId;
@@ -43,14 +52,10 @@ public class Location {
         this.myId = myId;
     }
 
-  
-
     @Override
     public String toString() {
         return "Location{" + "myId=" + myId + ", wasteOwnerId=" + wasteOwnerId + ", wasteUserId=" + wasteUserId + ", sortNum=" + sortNum + ", description=" + description + ", latitude=" + latitude + ", longitude=" + longitude + '}';
     }
-
-   
 
     public String getWasteOwnerId() {
         return wasteOwnerId;
@@ -91,9 +96,5 @@ public class Location {
     public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
-
-   
-
-
 
 }

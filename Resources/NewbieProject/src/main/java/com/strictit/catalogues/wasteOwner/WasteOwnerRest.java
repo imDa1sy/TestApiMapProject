@@ -44,8 +44,8 @@ public class WasteOwnerRest {
 
     @Autowired
     UserRepository userRepository;
-    
-   @Autowired
+
+    @Autowired
     PasswordHash PasswordHash;
 
     //========================= GET METHODS ====================================
@@ -66,8 +66,8 @@ public class WasteOwnerRest {
         wasteOwner.setWasteOwnerData(wasteOwnerData.orElse(new WasteOwnerData()));
         // Load all locations from database by owner id
         wasteOwner.getLocations().loadByWasteOwnerId(id);
-       
-       // wasteOwner.getUsers().loadByWasteOwnerId(id);
+
+        // wasteOwner.getUsers().loadByWasteOwnerId(id);
         return ResponseEntity.ok().body(wasteOwner);
 
     }
@@ -76,22 +76,18 @@ public class WasteOwnerRest {
     @PutMapping(path = "/updatewasteowner/{id}")
     public ResponseEntity updateWasteOwner(@PathVariable String id, @RequestBody WasteOwner wob) {
 
+        // if waste owner does not exists
+        // insert him
+        String tempOwnerId;
         if (id.equalsIgnoreCase("null")) {
             WasteOwnerData wasteOwnerDataInserted = wasteOwnerRepository.save(wob.getWasteOwnerData());
-
-            for (Location loc : wob.getLocations()) {
-                loc.setWasteOwnerId(wasteOwnerDataInserted.getId());
-                locationRepository.save(loc);
-            }
-
-            for (User user : wob.getUsers()) {
-                user.setWasteOwnerId(wasteOwnerDataInserted.getId());
-                user.setPassword(PasswordHash.hashPassword(user.getPassword()));
-                userRepository.save(user);
-            }
-
-            return ResponseEntity.ok().body(wasteOwnerDataInserted);
+            // store the new id into a temp variable for setting the location and users owner id
+            tempOwnerId = wasteOwnerDataInserted.getId();
         } else {
+            // we already have a waste owner...update amd only save his locations and users
+            // store the existing id into a temp variable for setting the location and users owner id
+            tempOwnerId = id;
+
             wasteOwnerRepository.findById(id)
                     .map(updateData -> {
                         updateData = wob.getWasteOwnerData();
@@ -99,31 +95,38 @@ public class WasteOwnerRest {
                         return ResponseEntity.ok().body(wasteOwnerUpdated);
                     });
 
-            for (Location location : wob.getLocations()) {
-               
- 
-                locationRepository.findById(location.getMyId()).map(locationUpdate -> {
+        }
 
+        for (Location location : wob.getLocations()) {
+            if (location.getMyId().equalsIgnoreCase("null")) {
+                location.setWasteOwnerId(tempOwnerId);
+                locationRepository.save(location);
+            } else {
+                locationRepository.findById(location.getMyId()).map(locationUpdate -> {
                     locationUpdate.setDescription(location.getDescription());
                     locationUpdate.setLatitude(location.getLatitude());
                     locationUpdate.setLongitude(location.getLongitude());
-                    locationUpdate.setWasteOwnerId(location.getWasteOwnerId());
+                    locationUpdate.setWasteOwnerId(tempOwnerId);
 
                     Location locationUpdated = locationRepository.save(locationUpdate);
 
                     return ResponseEntity.ok().body(locationUpdated);
                 });
-
             }
-          
+
         }
-        return null;
+        if(id.equalsIgnoreCase("null")){
+            return ResponseEntity.ok().body(null);
+        }else{
+            return ResponseEntity.ok().body(null);
+        }
+
     }
 
     //========================== DELETE METHODS ==================================
     @DeleteMapping(path = "/removewasteowner/{id}")
-    @ResponseBody
-    public ResponseEntity<?> removeWasteOwner(@PathVariable String id) {
+        @ResponseBody
+        public ResponseEntity<?> removeWasteOwner(@PathVariable String id) {
 
         return wasteOwnerRepository.findById(id)
                 .map(deletedOwner -> {
