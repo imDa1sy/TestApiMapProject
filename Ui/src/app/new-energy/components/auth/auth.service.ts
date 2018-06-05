@@ -25,7 +25,7 @@ export class AuthService {
     login(user: User) {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
-
+      //call rest api to autenticate user 
         this.http.post('http://' + restConfig.Host + ':' + restConfig.Port + '/api/authenticate',
             JSON.stringify({
                 userName: user.userName,

@@ -7,7 +7,7 @@ package com.strictit.catalogues.wasteUser;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
+import com.strictit.catalogues.contact.Contact;
 @Document(collection = "WasteUserData")
 public class WasteUserData {
 

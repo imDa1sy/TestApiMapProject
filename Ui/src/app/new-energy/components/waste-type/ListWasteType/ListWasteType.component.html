@@ -1,6 +1,6 @@
 <div class="containers">
     <h2>
-      <mat-icon color="accent">info</mat-icon> <span translate="new_energy-W-Type-header">Waste Types</span>
+      <mat-icon color="accent">info</mat-icon> <span translate="new_energy-waste-types-header">Waste Types</span>
     </h2>
     <button *ngIf="ROLE == 'ROLE_ADMIN'" mat-raised-button color="accent" (click)="NewWasteType()">
       <mat-icon>add</mat-icon>
@@ -12,24 +12,20 @@
     <div class="example-container mat-elevation-z8">
     
       <mat-table #table [dataSource]="dataSource" matSort>
-        <!--ng-container matColumnDef="id">
-          <mat-header-cell *matHeaderCellDef mat-sort-header matTooltip="Sort by id asc or desc"> Id </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
-        </ng-container-->
-    
         <ng-container matColumnDef="wasteType">
           <mat-header-cell *matHeaderCellDef mat-sort-header matTooltip="Sort by waste Type asc or desc"> 
-            <span translate="new_energy-W-Type-Table-el10">Waste Type</span> </mat-header-cell>
+            <span translate="new_energy-waste-type-header">Waste Type</span> </mat-header-cell>
           <mat-cell *matCellDef="let element"> {{element.wasteType}} </mat-cell>
         </ng-container>
         <ng-container matColumnDef="wasteColor">
         <mat-header-cell *matHeaderCellDef > 
-            <span translate="new_energy-W-Type-Table-el12">Waste Color</span> </mat-header-cell>
-          <mat-cell *matCellDef="let element"> <input type="color" value="{{element.color}}" disabled> </mat-cell>
+            <span translate="new_energy-color">Waste pin Color</span> </mat-header-cell>
+          <mat-cell *matCellDef="let element"> <input type="color" value="{{element.color}}" disabled> 
+          </mat-cell>
         </ng-container>
         <ng-container matColumnDef="actionsColumn">
             <mat-header-cell *matHeaderCellDef matTooltip="Manage content">
-                <span translate="new_energy-W-Type-Table-el11"> Actions </span>     
+                <span translate="new_energy-actions"> Actions </span>     
             </mat-header-cell>
             <mat-cell *matCellDef="let row">
               <button mat-button (click)="editWasteType(row)" color="accent" matTooltip="Edit">

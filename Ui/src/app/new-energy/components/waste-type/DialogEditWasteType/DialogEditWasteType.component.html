@@ -1,7 +1,7 @@
  <mat-toolbar color="primary">
       <h2>
         <mat-icon color="accent">create</mat-icon>
-        <span translate="new-waste-type-d10">Waste type</span>
+        <span translate="new_energy-waste-type-header">Waste type</span>
       </h2>
     </mat-toolbar>
     <form #modelForm="ngForm">
@@ -9,30 +9,33 @@
         <hr>
   
         <mat-form-field>
-          <mat-label translate="new-waste-type-d11">Waste Type</mat-label>
-          <input matInput [(ngModel)]="data.wasteType" required name="wasteType" #wasteType="ngModel" maxlength="30" #wasteTypeCount>
-          <mat-hint align="end">{{ wasteTypeCount.value.length }} / 30</mat-hint>
+          <mat-label translate="new_energy-type">Waste Type</mat-label>
+          <input matInput
+                 [(ngModel)]="data.wasteType"
+                  name="wasteType" #wasteType="ngModel" 
+                  maxlength="32" 
+                  required >
         </mat-form-field>
-        <div [hidden]="wasteType.valid || wasteType.pristine" class="alert alert-danger" translate="new-waste-type-d12">
+        <div [hidden]="wasteType.valid || wasteType.pristine" class="alert alert-danger"
+             translate="new_energy-form-req-type">
           Waste type is required!
         </div>
-        <mat-form-field style="width: 10%">
-            <mat-label translate="new-waste-type-d13">Waste type color</mat-label>
-            <input matInput type="color" [(ngModel)]="data.color" required name="color" #color="ngModel" >
-           
+        <mat-form-field style="width: 20%">
+            <mat-label translate="new_energy-color">Waste pin color</mat-label>
+            <input matInput type="color" 
+                   [(ngModel)]="data.color" name="color" #color="ngModel" 
+                   required > 
           </mat-form-field>
-  
       </div>
       <div mat-dialog-actions align="end">
-          <button mat-raised-button color="warn" (click)="onNoClick()">
-              <mat-icon>close</mat-icon>
-          </button>
-          &nbsp; &nbsp;
-          &nbsp; &nbsp;
-          <button color="accent" [disabled]="!modelForm.form.valid"
-                 (click)="SaveAndClose()"
-                 mat-raised-button [mat-dialog-close]="true">
+        <button color="accent" [disabled]="!modelForm.form.valid"
+               (click)="SaveAndClose()"
+               mat-raised-button [mat-dialog-close]="true">
               <mat-icon>done</mat-icon>
-          </button>
+        </button>
+        &nbsp; &nbsp;
+        <button mat-raised-button color="warn" (click)="onNoClick()">
+              <mat-icon>close</mat-icon>
+        </button>  
     </div>
-    </form>
+</form>

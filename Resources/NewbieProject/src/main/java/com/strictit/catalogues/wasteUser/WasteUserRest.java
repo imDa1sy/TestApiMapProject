@@ -71,49 +71,53 @@ public class WasteUserRest {
     //======================= UPDATE-INSERT METHODS ===================================
     @PutMapping(path = "/updatewasteuser/{id}")
     public ResponseEntity updateWasteUser(@PathVariable String id, @RequestBody WasteUser wu) {
+      
+        // if waste user does not exists
+        // insert him
+        String tempUserId;
         if (id.equalsIgnoreCase("null")) {
             WasteUserData wasteUserDataInserted = wasteUserRepository.save(wu.getWasteUserData());
-
-            for (Location loc : wu.getLocations()) {
-                loc.setWasteUserId(wasteUserDataInserted.getId());
-                locationRepository.save(loc);
-            }
-
-            for (User user : wu.getUsers()) {
-                user.setWasteUserId(wasteUserDataInserted.getId());
-                user.setPassword(PasswordHash.hashPassword(user.getPassword()));
-                userRepository.save(user);
-            }
-
-            return ResponseEntity.ok().body(wasteUserDataInserted);
+            // store the new id into a temp variable for setting the location and users user id
+            tempUserId = wasteUserDataInserted.getId();
         } else {
+            // we already have a waste userr...update amd only save his locations and users
+            // store the existing id into a temp variable for setting the location and users owner id
+            tempUserId = id;
+
             wasteUserRepository.findById(id)
                     .map(updateData -> {
                         updateData = wu.getWasteUserData();
-                        WasteUserData wasteOwnerUpdated = wasteUserRepository.save(updateData);
-                        return ResponseEntity.ok().body(wasteOwnerUpdated);
+                        WasteUserData wasteUserUpdated = wasteUserRepository.save(updateData);
+                        return ResponseEntity.ok().body(wasteUserUpdated);
                     });
 
-            for (Location location : wu.getLocations()) {
+        }
 
+        for (Location location : wu.getLocations()) {
+            if (location.getMyId().equalsIgnoreCase("null")) {
+                location.setWasteUserId(tempUserId);
+                locationRepository.save(location);
+            } else {
                 locationRepository.findById(location.getMyId()).map(locationUpdate -> {
-
                     locationUpdate.setDescription(location.getDescription());
                     locationUpdate.setLatitude(location.getLatitude());
                     locationUpdate.setLongitude(location.getLongitude());
-                    locationUpdate.setWasteOwnerId(location.getWasteOwnerId());
+                    locationUpdate.setWasteUserId(tempUserId);
 
                     Location locationUpdated = locationRepository.save(locationUpdate);
 
                     return ResponseEntity.ok().body(locationUpdated);
                 });
-
             }
 
         }
-        return null;
-    }
+        if(id.equalsIgnoreCase("null")){
+            return ResponseEntity.ok().body(null);
+        }else{
+            return ResponseEntity.ok().body(null);
+        }
 
+    }
     //========================== DELETE METHODS ==================================
     @DeleteMapping(path = "/removewasteuser/{id}")
     @ResponseBody

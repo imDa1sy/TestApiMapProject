@@ -19,6 +19,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  *
  * @author Nenad
  */
+/*
 @EnableSwagger2
 @Configuration
 public class SwaggerConfig {
@@ -43,3 +44,4 @@ public class SwaggerConfig {
         return apiInfo;
     }
 }
+*/

@@ -67,6 +67,8 @@ export class ListWasteUserComponent implements OnInit {
     this.refresh();
   }
   newWasteUser() {
+    // This is object model used in dialogEditWasteUser when creation new Waste user 
+    //and is sended in data object
     let localWasteUserAdd={
       wasteUserData:{
         name: '',
@@ -80,6 +82,7 @@ export class ListWasteUserComponent implements OnInit {
       }
     },
     locations:[{
+      myId: 'null',
       description:'',
       latitude:'',
       logitude:''

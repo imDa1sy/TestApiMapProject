@@ -25,6 +25,7 @@ export class DialogEditWasteUserComponent implements OnInit {
   }
   addUsers() {
     this.data.localWasteUser.users.push({
+      "myId":'null',
       "role": "ROLE_WASTE_USER",
       "userName": "",
       "password": "",
