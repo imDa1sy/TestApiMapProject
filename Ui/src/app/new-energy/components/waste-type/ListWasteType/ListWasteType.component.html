@@ -1,0 +1,50 @@
+<div class="containers">
+    <h2>
+      <mat-icon color="accent">info</mat-icon> <span translate="new_energy-W-Type-header">Waste Types</span>
+    </h2>
+    <button *ngIf="ROLE == 'ROLE_ADMIN'" mat-raised-button color="accent" (click)="NewWasteType()">
+      <mat-icon>add</mat-icon>
+    </button>
+    <hr>
+    <mat-form-field>
+      <input placeholder="Search" matInput #input (keyup)='searchElements(input.value)'>
+    </mat-form-field>
+    <div class="example-container mat-elevation-z8">
+    
+      <mat-table #table [dataSource]="dataSource" matSort>
+        <!--ng-container matColumnDef="id">
+          <mat-header-cell *matHeaderCellDef mat-sort-header matTooltip="Sort by id asc or desc"> Id </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+        </ng-container-->
+    
+        <ng-container matColumnDef="wasteType">
+          <mat-header-cell *matHeaderCellDef mat-sort-header matTooltip="Sort by waste Type asc or desc"> 
+            <span translate="new_energy-W-Type-Table-el10">Waste Type</span> </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.wasteType}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="wasteColor">
+        <mat-header-cell *matHeaderCellDef > 
+            <span translate="new_energy-W-Type-Table-el12">Waste Color</span> </mat-header-cell>
+          <mat-cell *matCellDef="let element"> <input type="color" value="{{element.color}}" disabled> </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="actionsColumn">
+            <mat-header-cell *matHeaderCellDef matTooltip="Manage content">
+                <span translate="new_energy-W-Type-Table-el11"> Actions </span>     
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              <button mat-button (click)="editWasteType(row)" color="accent" matTooltip="Edit">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-button (click)="deleteWasteType(row.id)" color="warn" matTooltip="Delete">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </mat-cell>
+          </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        
+      </mat-table>
+      <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]">
+      </mat-paginator>
+    </div>
+    </div>

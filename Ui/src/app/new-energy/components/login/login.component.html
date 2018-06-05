@@ -1,0 +1,39 @@
+<br>
+<br>
+<div class="signin-content">
+  <mat-card>
+    <mat-toolbar color="primary">
+      <h2>
+        <p translate="login-comp-text1">Please login to continue</p>
+      </h2>
+    </mat-toolbar>
+    <hr>
+    <mat-card-content>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" autocomplete="off">
+
+        <mat-form-field class="full-width-input">
+          <mat-label translate="login-comp-text10">Username</mat-label>
+          <input matInput formControlName="userName" required>
+          <mat-error *ngIf="isFieldInvalid('userName')" translate="login-comp-text11">
+              Please enter your password
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width-input">
+          <mat-label translate="login-comp-text12">Password</mat-label>
+          <input matInput type="password" formControlName="password" required>
+          <mat-error *ngIf="isFieldInvalid('password')" translate="login-comp-text13">
+              Please enter your password
+            </mat-error>
+        </mat-form-field>
+        <div *ngIf="isloggedErr$ | async" translate="login-comp-text14" class="alert alert-danger">
+          Wrong username or password!
+        </div>
+<hr>
+        <button autofocus mat-raised-button color="accent" type="submit">
+          <span translate="login-comp-button1">Login</span>
+        </button>
+        &nbsp;
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -12,23 +12,33 @@ import org.springframework.data.mongodb.core.mapping.Document;
  *
  * @author Nenad
  */
-@Document(collection = "User")
+@Document(collection = "Users")
 public class User {
-    
+
     @Id
     private String id;
-    
+    private String wasteOwnerId;
+    private String wasteUserId;
     private String role;
     private String userName;
     private String password;
-    private String userEmail;
+    private boolean authenticated;
 
+ 
     public String getId() {
         return id;
     }
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getWasteOwnerId() {
+        return wasteOwnerId;
+    }
+
+    public void setWasteOwnerId(String wasteOwnerId) {
+        this.wasteOwnerId = wasteOwnerId;
     }
 
     public String getRole() {
@@ -55,20 +65,27 @@ public class User {
         this.password = password;
     }
 
-    public String getUserEmail() {
-        return userEmail;
+    public String getWasteUserId() {
+        return wasteUserId;
     }
 
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
+    public void setWasteUserId(String wasteUserId) {
+        this.wasteUserId = wasteUserId;
+    }
+
+    public boolean isAuthenticated() {
+        return authenticated;
+    }
+
+    public void setAuthenticated(boolean authenticated) {
+        this.authenticated = authenticated;
     }
 
     @Override
     public String toString() {
-        return "User{" + "id=" + id + ", role=" + role + ", userName=" + 
-                userName + ", password=" + password + ", userEmail=" + 
-                userEmail + '}';
+        return "User{" + "id=" + id + ", wasteOwnerId=" + wasteOwnerId + ", wasteUserId=" + wasteUserId + ", role=" + role + ", userName=" + userName + ", password=" + password + '}';
     }
-    
-    
+
+  
+
 }
