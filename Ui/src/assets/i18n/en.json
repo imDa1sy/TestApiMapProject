@@ -62,7 +62,9 @@
    "new_energy-WasteDataEntry":"WASTE DATA ENTRY", 
    "new_energy-WasteUser":"WASTE USER",
    "new_energy-MapView":"MAP VIEW",
+   "new_energy-change-password":"CHANGE PASSWORD",
    "new_energy-Logout": "LOGOUT",
+   
 
 
    "new_energy-login-header":"Please login to continue",

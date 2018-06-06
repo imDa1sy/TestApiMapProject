@@ -28,7 +28,6 @@ export class DialogEditUserComponent implements OnInit {
   }
   SaveAndClose() {
 
-    console.log(this.data.localUser)
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 

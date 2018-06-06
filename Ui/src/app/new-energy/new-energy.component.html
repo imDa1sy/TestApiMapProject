@@ -36,34 +36,18 @@
       <button mat-button [routerLink]="['list-user']"><span translate="new_energy-User">USER</span></button>
 
   </span></li>
-  <li> <span *ngIf="ROLE == 'ROLE_ADMIN'">
+  <li> <span *ngIf="ROLE == 'ROLE_ADMIN' || ROLE == 'ROLE_WASTE_OWNER' || ROLE == 'ROLE_CONTENT_MNGR'">
       <button mat-button [routerLink]="['list-waste-data-entry']" > <span translate="new_energy-WasteDataEntry">WASTE DATA ENTRY</span></button>
   </span></li>
-  <li> <span *ngIf="ROLE == 'ROLE_ADMIN'">
+  <li> <span *ngIf="ROLE == 'ROLE_ADMIN' || ROLE == 'ROLE_WASTE_USER' || ROLE == 'ROLE_CONTENT_MNGR' ">
     <button mat-button [routerLink]="['map-view']" ><span translate="new_energy-MapView"> MAP VIEW</span></button>
 </span></li>
 
+<li>
+  <span *ngIf="ROLE == 'ROLE_WASTE_OWNER' || ROLE == 'ROLE_CONTENT_MNGR' || ROLE == 'ROLE_WASTE_USER' || ROLE == 'ROLE_WASTE_OWNER'"><button mat-button >
+<span translate="new_energy-change-password">CHANGE PASSWORD</span>
+</button></span></li>
 
-  
-<li><span *ngIf="ROLE == 'ROLE_WASTE_OWNER'">
-    <button mat-button [routerLink]="['list-waste-owners']">
-      <span translate="new_energy-WasteOwner">Wastes Owners</span>
-    </button>
-  </span></li>
-  <li><span *ngIf="ROLE == 'ROLE_WASTE_OWNER'">
-    <button mat-button [routerLink]="['list-waste-type']">
-      <span translate="new_energy-WasteType">Waste Type</span>
-    </button>
-  </span></li>
-
-  <li> <span *ngIf="ROLE == 'ROLE_WASTE_OWNER'">
-    <button mat-button [routerLink]="['list-waste-data-entry']">
-      <span translate="new_energy-WasteDataEntry">Waste Data entry</span>
-    </button>
-  </span></li>
-  <li> <span *ngIf="ROLE == 'ROLE_WASTE_OWNER'">
-    <button mat-button [routerLink]="['map-view']" ><span translate="new_energy-MapView"> MAP VIEW</span></button>
-</span></li>
   <li><button mat-raised-button routerLink="login" *ngIf="!isLoggedIn">Login</button></li>
     <li><button mat-button (click)="onLogout()" *ngIf="isLoggedIn">
     <span translate="new_energy-Logout">LOGOUT</span>
