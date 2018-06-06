@@ -20,6 +20,8 @@ export class DialogEditUserComponent implements OnInit {
   }
 
   ngOnInit() {
+    //password is set to empty
+    this.data.localUser.password ='';
   }
   onNoClick(): void {
     this.dialogRef.close();

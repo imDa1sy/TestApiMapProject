@@ -29,7 +29,7 @@ import {
   MatSortModule,
   MatPaginatorModule
 } from '@angular/material';
-
+import { ColorPickerModule } from 'ngx-color-picker';
 import { router } from './app.router';
 import { RouterModule } from '@angular/router';
 
@@ -44,7 +44,6 @@ import { CaseStudyComponent } from './case-study/case-study.component';
 import { LoginComponent } from './new-energy/components/login/login.component';
 import { AuthService } from './new-energy/components/auth/auth.service';
 import { AuthGuard } from './new-energy/components/auth/auth.guard';
-import { RegisterComponent } from './new-energy/components/register/register.component';
 import { DialogEditWasteTypeComponent } from './new-energy/components/waste-type/DialogEditWasteType/DialogEditWasteType.component';
 import { ListWasteTypeComponent } from './new-energy/components/waste-type/ListWasteType/ListWasteType.component';
 import { DialogDeleteQuestionComponent } from './new-energy/components/DialogDeleteQuestion/DialogDeleteQuestion.component';
@@ -79,7 +78,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     ListWasteTypeComponent,
     ListWasteUserComponent,
     LoginComponent,
-    RegisterComponent,
     DialogEditWasteOwnerComponent,
     DialogEditWasteTypeComponent,
     DialogDeleteQuestionComponent,
@@ -125,8 +123,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatGridListModule,
     MatRadioModule,
     MatSortModule,
-    MatPaginatorModule
-
+    MatPaginatorModule,
+    ColorPickerModule
   ],
   entryComponents: [ 
                      DialogDeleteQuestionComponent,

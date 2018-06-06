@@ -34,8 +34,8 @@ export class DialogEditWasteTypeComponent implements OnInit {
 
     this.http.put('http://' + restConfig.Host + ':' + restConfig.Port + '/api/updatewastetype/' + this.data.id,
       JSON.stringify({
-        wasteType: this.data.wasteType,
-        color: this.data.color
+        wasteType: this.data.localWasteType.wasteType,
+        color: this.data.localWasteType.color
       }), options).subscribe(
         (data) => {
           if (data.ok) {

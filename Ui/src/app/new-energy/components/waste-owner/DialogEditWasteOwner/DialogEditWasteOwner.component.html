@@ -24,7 +24,7 @@
         Name is required!
       </div>
 
-      &nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <mat-form-field style="width: 48%">
         <mat-label translate="new_energy-surname">SurName</mat-label>
         <input matInput
@@ -71,7 +71,7 @@
            translate="new_energy-form-req-telephone">
         Telephone is required!
       </div>
-      &nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <mat-form-field style="width: 48%">
         <mat-label translate="new_energy-mobile">Mobile</mat-label>
         <input matInput 
@@ -106,7 +106,8 @@
     </div>
     <div class="example-container" *ngFor="let field of data.localWasteOwner?.locations; let i = index">
       <mat-label><span translate="new_energy-location">Location</span> {{i+1}}</mat-label>
-      <mat-form-field>
+      <div>
+      <mat-form-field style="width: 32%">
         <mat-label translate="new_energy-description">Description</mat-label>
         <textarea matInput 
                   [(ngModel)]="data.localWasteOwner?.locations[i].description"
@@ -118,8 +119,8 @@
            translate="new_energy-form-req-description">
         Description is required!
       </div>
-      <div>
-      <mat-form-field style="width: 48%">
+      &nbsp;
+      <mat-form-field style="width: 32%">
         <mat-label translate="new_energy-latitude">Latitude</mat-label>
         <input matInput 
                [(ngModel)]="data.localWasteOwner?.locations[i].latitude"
@@ -132,8 +133,8 @@
       translate="new_energy-form-req-latitude">
         Latitude is required!
       </div>
-      &nbsp; &nbsp;
-      <mat-form-field style="width: 48%">
+      &nbsp;
+      <mat-form-field style="width: 32%">
         <mat-label translate="new_energy-longitude">Longitude</mat-label>
         <input matInput 
                [(ngModel)]="data.localWasteOwner?.locations[i].longitude" 
@@ -157,7 +158,7 @@
       </div>
     </div>
     <hr>
-    <div *ngIf="!data.edit == true">
+    <div>
     <mat-label translate="new_energy-users-header">Users</mat-label>
     <div align="right">
       <button type="button" mat-mini-fab (click)="addUsers()">
@@ -171,6 +172,7 @@
         <mat-label translate="new_energy-username">Username</mat-label>
         <input matInput 
                [(ngModel)]="data.localWasteOwner?.users[i].userName" 
+               [disabled]="!data.localWasteOwner?.users[i].enableUsername"
                name="userName{{i+1}}" #userName="ngModel" 
                minlength="5" maxlength="32" 
                required >
@@ -182,7 +184,7 @@
       <mat-form-field>
         <mat-label translate="new_energy-password">Password</mat-label>
         <input matInput 
-              [(ngModel)]="data.localWasteOwner?.users[i].password" 
+              [(ngModel)]="data.localWasteOwner?.users[i].password" type="password"
               name="password{{i+1}}" #password="ngModel" 
               minlength="8" maxlength="32"
               required >
@@ -194,7 +196,7 @@
       <mat-form-field>
         <mat-label translate="new_energy-confirmPassword">Confirm Password</mat-label>
         <input matInput 
-               [(ngModel)]="data.localWasteOwner?.users[i].confirmPassword" 
+               [(ngModel)]="data.localWasteOwner?.users[i].confirmPassword" type="password"
                name="confirmPassword{{i+1}}" 
                validateEqual="password"
                #confirmPassword="ngModel"

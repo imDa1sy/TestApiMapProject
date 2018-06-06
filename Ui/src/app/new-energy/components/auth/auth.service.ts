@@ -10,7 +10,8 @@ import { User } from '../user/User.class';
 export class AuthService {
     authenticateResponse: any;
     private loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-    bSubject = new BehaviorSubject("");
+    setRole = new BehaviorSubject("");
+    showLoginDialog = new BehaviorSubject(true);
     private loggedErr: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     loggedInAs: string;
 
@@ -21,6 +22,10 @@ export class AuthService {
         return this.loggedErr.asObservable();
     }
     constructor(private http: Http, private router: Router) { }
+
+    ngOnInit(){
+        this.showLoginDialog.next(true); // on init login dialog is showed
+    }
 
     login(user: User) {
         let headers = new Headers({ 'Content-Type': 'application/json' });
@@ -36,24 +41,26 @@ export class AuthService {
                     if (this.authenticateResponse != null) {
                         if (this.authenticateResponse.authenticated == true) {
 
-                            this.loggedIn.next(true);
-                            this.loggedInAs = this.authenticateResponse.userName;
-                            this.bSubject.next(this.authenticateResponse.role);
+                            this.loggedIn.next(true); //send new-energy component response to activate nav bar 
+                            this.loggedInAs = this.authenticateResponse.userName; 
+                            this.setRole.next(this.authenticateResponse.role);
+                            this.showLoginDialog.next(false); //send response to login dialog to hide login dialog
                             this.router.navigate(['biodeseuri/new-energy-from-waste/home']);
                           
                         } else {
-                            this.loggedErr.next(true);
+                            this.loggedErr.next(true); //if user is not authenticated send error to login dialog to display
                         }
                     } else {
-                        this.loggedErr.next(true);
+                        this.loggedErr.next(true); //if user is not authenticated send error to login dialog to display
                     }
 
                 });
     }
 
     logout() {
-        this.loggedIn.next(false);
+        this.loggedIn.next(false); //send new-energy component response to deactivate nav bar 
         this.loggedErr.next(false);
-        this.router.navigate(['biodeseuri/new-energy-from-waste/login']);
+        this.showLoginDialog.next(true); //send response to login dialog to show login dialog
+        this.router.navigate(['biodeseuri/new-energy-from-waste']);
     }
 }

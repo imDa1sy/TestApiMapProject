@@ -18,13 +18,14 @@ export class DialogEditWasteUserComponent implements OnInit {
     private _wastUserService: WasteUserService, ) { }
 
   ngOnInit() {
-    console.log('waste users ' + this.data)
+  
   }
   onNoClick(): void {
     this.dialogRef.close();
   }
   addUsers() {
     this.data.localWasteUser.users.push({
+      "enableUsername":true,  
       "myId":'null',
       "role": "ROLE_WASTE_USER",
       "userName": "",

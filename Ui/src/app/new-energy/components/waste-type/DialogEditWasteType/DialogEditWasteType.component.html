@@ -11,7 +11,7 @@
         <mat-form-field>
           <mat-label translate="new_energy-type">Waste Type</mat-label>
           <input matInput
-                 [(ngModel)]="data.wasteType"
+                 [(ngModel)]="data?.localWasteType.wasteType"
                   name="wasteType" #wasteType="ngModel" 
                   maxlength="32" 
                   required >
@@ -21,9 +21,8 @@
           Waste type is required!
         </div>
         <mat-form-field style="width: 20%">
-            <mat-label translate="new_energy-color">Waste pin color</mat-label>
             <input matInput type="color" 
-                   [(ngModel)]="data.color" name="color" #color="ngModel" 
+                   [(ngModel)]="data?.localWasteType.color" name="color" #color="ngModel" 
                    required > 
           </mat-form-field>
       </div>

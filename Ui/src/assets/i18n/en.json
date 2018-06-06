@@ -55,7 +55,7 @@
 
    "new_energy-Login": "LOGIN",
    "new_energy-Home":"HOME",
-   "new_energy-Logged":"Logged in as,",
+   "new_energy-Logged":"Logged in as:",
    "new_energy-WasteOwner":"WASTE OWNER",
    "new_energy-WasteType":"WASTE TYPE",
    "new_energy-User":"USER",
@@ -121,7 +121,10 @@
 
     "new_energy-delete":"Delete",
     "new_energy-question-dialog":"Are you sure you want to Delete ",
-    "new_energy-cancel":"Cancel"
+    "new_energy-cancel":"Cancel",
+
+    "new_energy-role-admin":"ADMINISTRATOR",
+    "new_energy-role-manager":"CONTENT MANAGER"
 
   
 }

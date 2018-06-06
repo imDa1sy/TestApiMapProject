@@ -55,7 +55,7 @@
 
     "new_energy-Login": "LOGARE",
     "new_energy-Home":"ACASĂ",
-    "new_energy-Logged":"Conectat ca,",
+    "new_energy-Logged":"Conectat ca:",
     "new_energy-WasteOwner":"DEȘEURUL",
     "new_energy-WasteType":"TIPUL DEȘEURILOR",
     "new_energy-User":"UTILIZATOR",
@@ -121,7 +121,10 @@
 
     "new_energy-delete":"Șterge",
     "new_energy-question-dialog":"Ești sigur că vrei să ștergi",
-    "new_energy-cancel":"Anulare"
+    "new_energy-cancel":"Anulare",
+
+    "new_energy-role-admin":"ADMINISTRATOR",
+    "new_energy-role-manager":"MANAGER DE CONTINUT"
 
   
    }

@@ -15,15 +15,19 @@ import { DialogEditWasteUserComponent } from './components/waste-user/DialogEdit
 export class NewEnergyComponent implements OnInit {
   isLoggedIn$: Observable<boolean>;
   ROLE: string;
-
-  constructor(private authService: AuthService, private dialog: MatDialog, ) { }
+  showLoginDialog;
+  constructor(private authService: AuthService, private dialog: MatDialog ) { }
 
   ngOnInit() {
-    this.isLoggedIn$ = this.authService.isLoggedIn;
-    this.authService.bSubject.subscribe((value) => {
-      this.ROLE = value;
+    this.isLoggedIn$ = this.authService.isLoggedIn; //on init  isLogedIn$ get response if should show nav bar 
+   
+    this.authService.setRole.subscribe((value) => {
+      this.ROLE = value; // on init role is set via set role BehaviorSubject from auth service
     });
-
+    this.authService.showLoginDialog.subscribe((value) => {
+      this.showLoginDialog = value; // on init showLoginDialog is set via set showLoginDialog BehaviorSubject from auth service
+     
+    });
   }
 
   onLogout() {

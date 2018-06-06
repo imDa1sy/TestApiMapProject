@@ -8,7 +8,6 @@ import { CaseStudyComponent } from './case-study/case-study.component';
 
 import { LoginComponent } from './new-energy/components/login/login.component';
 import { AuthGuard } from './new-energy/components/auth/auth.guard';
-import { RegisterComponent } from './new-energy/components/register/register.component';
 import { ListWasteTypeComponent } from './new-energy/components/waste-type/ListWasteType/ListWasteType.component';
 import { ListWasteOwnerComponent } from './new-energy/components/waste-owner/ListWasteOwner/ListWasteOwner.component';
 import { ListUserComponent } from './new-energy/components/user/ListUser/ListUser.component';
@@ -25,8 +24,7 @@ export const router : Routes = [
       { path : 'biodeseuri/procedure-and-services-for-farmers' , component: ProcedureAndServicesComponent },
       { path : 'biodeseuri/new-energy-from-waste' , component: NewEnergyComponent,
         children : [ 
-          { path : 'login', component : LoginComponent },
-          { path : 'register', component : RegisterComponent},
+         // { path : 'login', component : LoginComponent },
           { path : 'home',component : HomeComponent,canActivate: [AuthGuard]},
           { path : 'list-waste-owners',component : ListWasteOwnerComponent,canActivate: [AuthGuard]},
           { path : 'list-waste-users', component : ListWasteUserComponent,canActivate: [AuthGuard]},

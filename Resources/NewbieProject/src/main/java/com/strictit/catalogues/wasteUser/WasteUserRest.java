@@ -62,8 +62,9 @@ public class WasteUserRest {
         Optional<WasteUserData> wasteUserData = wasteUserRepository.findById(id);
         //TODO if not found then return ResponseEntity not found!
         wasteUser.setWasteUserData(wasteUserData.orElse(new WasteUserData()));
-        // Load all locations from database by owner id
+        // Load all locations from database by user id
         wasteUser.getLocations().loadByWasteUserId(id);
+        //Load all users from database by user id
         wasteUser.getUsers().loadByWasteUserId(id);
         return ResponseEntity.ok().body(wasteUser);
     }
@@ -110,6 +111,24 @@ public class WasteUserRest {
                 });
             }
 
+        }
+         for(User user:wu.getUsers()){
+            if(user.getMyId().equalsIgnoreCase("null")){
+                user.setWasteUserId(tempUserId);
+                user.setPassword(PasswordHash.hashPassword(user.getPassword()));
+                userRepository.save(user);
+            }else{
+                 userRepository.findById(user.getMyId()).map(userUpdate -> {
+                    userUpdate.setUserName(user.getUserName());
+                    userUpdate.setPassword(PasswordHash.hashPassword(user.getPassword()));
+                    userUpdate.setRole(user.getRole());
+                    userUpdate.setWasteUserId(user.getWasteUserId());
+
+                    User userUpdated = userRepository.save(userUpdate);
+
+                    return ResponseEntity.ok().body(userUpdated);
+                });
+            }
         }
         if(id.equalsIgnoreCase("null")){
             return ResponseEntity.ok().body(null);

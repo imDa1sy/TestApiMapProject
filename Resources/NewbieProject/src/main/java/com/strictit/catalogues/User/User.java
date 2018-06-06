@@ -17,6 +17,8 @@ public class User {
 
     @Id
     private String id;
+    
+    private String myId;
     private String wasteOwnerId;
     private String wasteUserId;
     private String role;
@@ -31,6 +33,14 @@ public class User {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getMyId() {
+        return myId;
+    }
+
+    public void setMyId(String myId) {
+        this.myId = myId;
     }
 
     public String getWasteOwnerId() {
@@ -83,9 +93,8 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" + "id=" + id + ", wasteOwnerId=" + wasteOwnerId + ", wasteUserId=" + wasteUserId + ", role=" + role + ", userName=" + userName + ", password=" + password + '}';
+        return "User{" + "id=" + id + ", myId=" + myId + ", wasteOwnerId=" + wasteOwnerId + ", wasteUserId=" + wasteUserId + ", role=" + role + ", userName=" + userName + ", password=" + password + ", authenticated=" + authenticated + '}';
     }
 
   
-
 }

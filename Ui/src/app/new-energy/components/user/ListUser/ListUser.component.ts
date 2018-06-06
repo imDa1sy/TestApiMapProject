@@ -31,7 +31,7 @@ export class ListUserComponent implements OnInit {
    public dialog: MatDialog,
    public snackBar: MatSnackBar,
    private authService: AuthService) {
-   this.authService.bSubject.subscribe((value) => {
+   this.authService.setRole.subscribe((value) => {
 
      this.ROLE = value;
      if (value == 'ROLE_WASTE_OWNER') {

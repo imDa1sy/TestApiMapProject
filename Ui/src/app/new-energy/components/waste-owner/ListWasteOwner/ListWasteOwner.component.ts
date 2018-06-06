@@ -39,7 +39,7 @@ export class ListWasteOwnerComponent implements OnInit {
     private _wasteOwnerService: WasteOwnerService,
     private router : Router) {
 
-    this.authService.bSubject.subscribe((value) => {
+    this.authService.setRole.subscribe((value) => {
       this.ROLE = value;
       if (value == 'ROLE_WASTE_OWNER') {
         this.displayedColumns = [ 'name','surName','companyName',
@@ -92,9 +92,10 @@ export class ListWasteOwnerComponent implements OnInit {
     let dialogRef = this.dialog.open(DialogEditWasteOwnerComponent, {
      // disableClose: true,
       autoFocus: true,
-      width: '600px', height: '550px', data: { 
+      width: '800px', height: '550px', data: { 
         "id": null ,
-        "localWasteOwner":localWasteOwnerAdd
+        "localWasteOwner":localWasteOwnerAdd,
+        "enableUsername":true,
     }
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -119,11 +120,12 @@ export class ListWasteOwnerComponent implements OnInit {
     let dialogRef = this.dialog.open(DialogEditWasteOwnerComponent, {
      // disableClose: true,
       autoFocus: true,
-      width: '600px', height: '550px',
+      width: '800px', height: '550px',
       data: {
         "id": elementData.id,
         "localWasteOwner":this.localWasteOwnerToEdit,
-        "edit":true
+        "edit":true,
+        "enableUsername":false,   
       }
     });
   

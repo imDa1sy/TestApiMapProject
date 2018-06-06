@@ -39,8 +39,9 @@ export class DialogEditWasteOwnerComponent implements OnInit {
     this.data.localWasteOwner.locations.splice(this.data.localWasteOwner.locations.indexOf(item), 1);
   }
   addUsers() {
-   
     this.data.localWasteOwner.users.push({
+      "enableUsername":true,   
+      "myId":'null',
       "role": "ROLE_WASTE_OWNER",
       "userName": "",
       "password": "" ,
@@ -54,9 +55,7 @@ export class DialogEditWasteOwnerComponent implements OnInit {
   }
  
   ngOnInit() {
-
-    console.log(this.data)
-  
+ 
   }
 
   SaveAndClose() {

@@ -18,4 +18,8 @@ export class WasteTypeService {
     getData(): Observable<WasteType[]> {
         return this.http.get<WasteType[]>('http://'+restConfig.Host+':'+restConfig.Port+'/api/getallwastetypes');
     }
+    load(id): Observable<WasteType> {
+        
+        return this.http.get<WasteType>('http://'+restConfig.Host+':'+restConfig.Port+'/api/getwastetypebyid/'+id);
+    }
 }

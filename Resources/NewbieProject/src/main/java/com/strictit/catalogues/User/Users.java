@@ -50,9 +50,13 @@ public class Users extends ArrayList<User> {
         DBCursor cursor = collection.find(searchQuery);
         Gson gson = new Gson();
         while (cursor.hasNext()) {
-            this.add(gson.fromJson(cursor.next().toString(), User.class));
-
-        }
+            BasicDBObject theObj =  (BasicDBObject) cursor.next();
+          
+             User temp =gson.fromJson(theObj.toString(), User.class);
+             temp.setMyId(theObj.getObjectId("_id").toString());
+             this.add(temp);
+             
+         }
         return this.size();
     }
 

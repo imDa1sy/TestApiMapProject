@@ -66,8 +66,8 @@ public class WasteOwnerRest {
         wasteOwner.setWasteOwnerData(wasteOwnerData.orElse(new WasteOwnerData()));
         // Load all locations from database by owner id
         wasteOwner.getLocations().loadByWasteOwnerId(id);
-
-        // wasteOwner.getUsers().loadByWasteOwnerId(id);
+        //load all users from database by user id 
+        wasteOwner.getUsers().loadByWasteOwnerId(id);
         return ResponseEntity.ok().body(wasteOwner);
 
     }
@@ -114,6 +114,24 @@ public class WasteOwnerRest {
                 });
             }
 
+        }
+        for(User user:wob.getUsers()){
+            if(user.getMyId().equalsIgnoreCase("null")){
+                user.setWasteOwnerId(tempOwnerId);
+                user.setPassword(PasswordHash.hashPassword(user.getPassword()));
+                userRepository.save(user);
+            }else{
+                 userRepository.findById(user.getMyId()).map(userUpdate -> {
+                    userUpdate.setUserName(user.getUserName());
+                    userUpdate.setPassword(PasswordHash.hashPassword(user.getPassword()));
+                    userUpdate.setRole(user.getRole());
+                    userUpdate.setWasteOwnerId(user.getWasteOwnerId());
+
+                    User userUpdated = userRepository.save(userUpdate);
+
+                    return ResponseEntity.ok().body(userUpdated);
+                });
+            }
         }
         if(id.equalsIgnoreCase("null")){
             return ResponseEntity.ok().body(null);
