@@ -97,6 +97,7 @@ export class ListWasteUserComponent implements OnInit {
          "id": null ,
          "localWasteUser":localWasteUserAdd,
          "enableUsername":true, 
+         "enableAddUser":true
          
         }
     });
@@ -123,6 +124,7 @@ export class ListWasteUserComponent implements OnInit {
         "localWasteUser":this.localWasteUserToEdit,
         "edit":true,
         "enableUsername":false, 
+        "enableAddUser":false
       }
     });
   

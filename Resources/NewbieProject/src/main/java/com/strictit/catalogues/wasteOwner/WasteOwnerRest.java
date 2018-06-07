@@ -100,9 +100,12 @@ public class WasteOwnerRest {
         for (Location location : wob.getLocations()) {
             if (location.getMyId().equalsIgnoreCase("null")) {
                 location.setWasteOwnerId(tempOwnerId);
+                location.setActive(location.isActive());
                 locationRepository.save(location);
             } else {
                 locationRepository.findById(location.getMyId()).map(locationUpdate -> {
+                    
+                    locationUpdate.setActive(location.isActive());
                     locationUpdate.setDescription(location.getDescription());
                     locationUpdate.setLatitude(location.getLatitude());
                     locationUpdate.setLongitude(location.getLongitude());
@@ -121,11 +124,11 @@ public class WasteOwnerRest {
                 user.setPassword(PasswordHash.hashPassword(user.getPassword()));
                 userRepository.save(user);
             }else{
+                // In current version update user is not available from waste owner update form
+                // only can be displayed to get overview of his users.
+                
                  userRepository.findById(user.getMyId()).map(userUpdate -> {
-                    userUpdate.setUserName(user.getUserName());
-                    userUpdate.setPassword(PasswordHash.hashPassword(user.getPassword()));
-                    userUpdate.setRole(user.getRole());
-                    userUpdate.setWasteOwnerId(user.getWasteOwnerId());
+                             userUpdate.setActive(user.isActive());
 
                     User userUpdated = userRepository.save(userUpdate);
 

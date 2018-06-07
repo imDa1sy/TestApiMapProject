@@ -45,13 +45,13 @@ export class ListUserComponent implements OnInit {
 
  //============================ METHODS =============================================             
  refresh() {
-   this._userService.getData().subscribe(
+   this._userService.loadAllActiveUsers().subscribe(
      data => {
        this.userList = data;
        this.dataSource.data = this.userList;
+   
      });
    this.changeDetectorRefs.detectChanges();
-
  }
 
  searchElements(search: string = "") {
@@ -69,8 +69,9 @@ export class ListUserComponent implements OnInit {
 
   let localUserAdd={
     userName: '',
-    password: '',
-    role: ''
+    password: '', //representation of user class to used when creating new user from DialogEditUser
+    role: '',
+    active:true
 
   }
    let dialogRef = this.dialog.open(DialogEditUserComponent, {

@@ -42,7 +42,7 @@ public class WasteUserRest {
 
     @Autowired
     UserRepository userRepository;
-    
+
     @Autowired
     PasswordHash PasswordHash;
 
@@ -72,7 +72,7 @@ public class WasteUserRest {
     //======================= UPDATE-INSERT METHODS ===================================
     @PutMapping(path = "/updatewasteuser/{id}")
     public ResponseEntity updateWasteUser(@PathVariable String id, @RequestBody WasteUser wu) {
-      
+
         // if waste user does not exists
         // insert him
         String tempUserId;
@@ -112,17 +112,17 @@ public class WasteUserRest {
             }
 
         }
-         for(User user:wu.getUsers()){
-            if(user.getMyId().equalsIgnoreCase("null")){
+        for (User user : wu.getUsers()) {
+            if (user.getMyId().equalsIgnoreCase("null")) {
                 user.setWasteUserId(tempUserId);
                 user.setPassword(PasswordHash.hashPassword(user.getPassword()));
                 userRepository.save(user);
-            }else{
-                 userRepository.findById(user.getMyId()).map(userUpdate -> {
-                    userUpdate.setUserName(user.getUserName());
-                    userUpdate.setPassword(PasswordHash.hashPassword(user.getPassword()));
-                    userUpdate.setRole(user.getRole());
-                    userUpdate.setWasteUserId(user.getWasteUserId());
+            } else {
+                // In current version update user is not available from waste user update form
+                // only can be displayed to get overview of his users.
+
+                userRepository.findById(user.getMyId()).map(userUpdate -> {
+                    userUpdate.setActive(user.isActive());
 
                     User userUpdated = userRepository.save(userUpdate);
 
@@ -130,13 +130,14 @@ public class WasteUserRest {
                 });
             }
         }
-        if(id.equalsIgnoreCase("null")){
+        if (id.equalsIgnoreCase("null")) {
             return ResponseEntity.ok().body(null);
-        }else{
+        } else {
             return ResponseEntity.ok().body(null);
         }
 
     }
+
     //========================== DELETE METHODS ==================================
     @DeleteMapping(path = "/removewasteuser/{id}")
     @ResponseBody

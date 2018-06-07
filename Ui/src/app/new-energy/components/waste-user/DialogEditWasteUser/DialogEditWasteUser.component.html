@@ -139,7 +139,7 @@
       </div>
       </div>
     <hr>
-    <!--div>
+    <div>
     <mat-label translate="new_energy-users-header">Users</mat-label>
     <div align="right">
       <button type="button" mat-mini-fab (click)="addUsers()">
@@ -147,7 +147,9 @@
       </button>
     </div>
     <div class="example-container" *ngFor="let field of data.localWasteUser?.users; let i = index">
-      <mat-label><span translate="new_energy-user-header">User</span> {{i+1}}</mat-label>
+      <!-- here is checked if user is active  show it else is hidden-->
+        <div class="example-container" *ngIf="data.localWasteUser?.users[i].active">
+      <mat-label><span translate="new_energy-user-header">User</span></mat-label>
       <mat-form-field>
         <mat-label translate="new_energy-username">Username</mat-label>
         <input matInput 
@@ -161,6 +163,8 @@
            translate="new_energy-form-req-username">
         UserName is required! (minimum 5 characters)
       </div>
+      <!-- show this part only if add button is clicked else only disabled username is showed-->
+      <div class="example-container" *ngIf="data.localWasteUser?.users[i].enableAddUser">
       <mat-form-field>
         <mat-label translate="new_energy-password">Password</mat-label>
         <input matInput
@@ -187,16 +191,17 @@
            translate="new_energy-form-req-confirmPassword">
         Password mismatch!
       </div>
+      </div>
       <div align="right">
         <button type="button" align="right" color="warn" 
                 mat-mini-fab mat-raised-button class="destroy-button" 
-                (mousedown)="deleteUsers($event, item)"
-                (touchstart)="deleteLogins($event, item)">
+                (click)="deactivateUser($event, item, i)">
           <mat-icon>remove</mat-icon>
         </button>
       </div>
     </div>
-  </div-->
+    </div>
+  </div>
     <hr>
 
     <hr>

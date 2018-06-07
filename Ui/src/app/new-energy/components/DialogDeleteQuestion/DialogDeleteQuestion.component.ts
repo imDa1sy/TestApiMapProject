@@ -21,6 +21,9 @@ export class DialogDeleteQuestionComponent implements OnInit {
   }
   
   DeleteAndClose() {
+    if(this.data.entity_id == 'null'){
+
+    }else{
     this.http.delete('http://' + restConfig.Host + ':' + restConfig.Port + this.data.restName + this.data.entity_id)
       .subscribe((data) => {
         if (data.ok) {
@@ -38,4 +41,5 @@ export class DialogDeleteQuestionComponent implements OnInit {
       });
 
   }
+}
 }

@@ -29,7 +29,6 @@ import {
   MatSortModule,
   MatPaginatorModule
 } from '@angular/material';
-import { ColorPickerModule } from 'ngx-color-picker';
 import { router } from './app.router';
 import { RouterModule } from '@angular/router';
 
@@ -123,8 +122,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatGridListModule,
     MatRadioModule,
     MatSortModule,
-    MatPaginatorModule,
-    ColorPickerModule
+    MatPaginatorModule
   ],
   entryComponents: [ 
                      DialogDeleteQuestionComponent,

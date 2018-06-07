@@ -42,6 +42,13 @@ public class UserRest {
         return userList;
     }
 
+    @GetMapping(path = "/getallactiveusers")
+    public List<User> getAllActiveUsers() {
+        boolean active = true;
+        List<User> listOfActiveUsers = userRepository.findByActive(active);
+        return listOfActiveUsers;
+    }
+
     @GetMapping(path = "/getuserbyid/{id}")
     public ResponseEntity getUserById(@PathVariable String id) {
 
@@ -53,17 +60,17 @@ public class UserRest {
     @PostMapping(path = "/authenticate")
     public ResponseEntity Authenticate(@RequestBody User user) {
         return userRepository.findByUserName(user.getUserName()).map(oneUser -> {
-            
+
             User localUser = new User();
-            if (oneUser.getUserName().equals(user.getUserName()) && oneUser.getPassword().equals(PasswordHash.hashPassword(user.getPassword()))) {
- 
+            if (oneUser.getUserName().equals(user.getUserName()) && oneUser.getPassword().equals(PasswordHash.hashPassword(user.getPassword())) && oneUser.isActive()) {
+             
                 localUser.setId(oneUser.getId());
                 localUser.setUserName(oneUser.getUserName());
                 localUser.setRole(oneUser.getRole());
                 localUser.setAuthenticated(true);
-            }else{
+            } else {
                 localUser.setAuthenticated(false);
-                
+
             }
 
             return ResponseEntity.ok().body(localUser);
@@ -98,10 +105,12 @@ public class UserRest {
     @DeleteMapping(path = "/removeuser/{id}")
     public ResponseEntity removeUser(@PathVariable String id) {
 
-        return userRepository.findById(id).map(deletedUser -> {
-
-            userRepository.deleteById(id);
-            System.out.println("User with id= '" + deletedUser.getId() + "' deleted!");
+        return userRepository.findById(id).map(deactivatedUser -> {
+            //user is not deleted is flaged to 'not active' and is open here to create logic if needs
+            // to be permanently be deleted
+            deactivatedUser.setActive(false);
+            userRepository.save(deactivatedUser);
+            System.out.println("User with id= '" + deactivatedUser.getId() + "' deleted!");
 
             return ResponseEntity.ok().build();
         }).orElse(ResponseEntity.notFound().build());

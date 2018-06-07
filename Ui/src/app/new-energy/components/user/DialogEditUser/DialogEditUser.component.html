@@ -21,7 +21,8 @@
       </div>
       <mat-form-field>
         <mat-label translate="new_energy-role">Role</mat-label>
-        <mat-select [(ngModel)]="data?.localUser.role" 
+        <mat-select [(ngModel)]="data?.localUser.role"
+                    [disabled]="data?.localUser.role == 'ROLE_WASTE_OWNER' || data?.localUser.role == 'ROLE_WASTE_USER'"  
                     name="role" 
                     #role="ngModel"
                     required >
@@ -29,10 +30,12 @@
                  translate="new_energy-form-req-role">
                 Role is required!
             </div>
-            <mat-option>--</mat-option>
+            <mat-option >--</mat-option>
             <mat-option value="ROLE_ADMIN"><span translate="new_energy-role-admin">ADMINISTRATOR</span></mat-option>
             <mat-option value="ROLE_CONTENT_MNGR"><span translate="new_energy-role-manager">CONTENT MANAGER</span></mat-option>
-     </mat-select>
+            <mat-option disabled [hidden]="true" value="ROLE_WASTE_OWNER">ROLE_WASTE_OWNER</mat-option>
+            <mat-option disabled [hidden]="true" value="ROLE_WASTE_USER">ROLE_WASTE_USER</mat-option>
+          </mat-select>
         </mat-form-field>
     <mat-form-field>
       <mat-label translate="new_energy-password">Password</mat-label>

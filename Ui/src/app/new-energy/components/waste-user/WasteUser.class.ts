@@ -11,6 +11,7 @@ export class WasteUser {
 }
 export class Location {
     id: string;
+    active:boolean;
     description: string;
     latitude: string;
     longitude: string;

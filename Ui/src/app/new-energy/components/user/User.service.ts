@@ -16,9 +16,12 @@ export class UserService {
     constructor(private http: HttpClient) { }
 
     //===============================METHODS=======================================
-    // getData() method returing all waste types
-    getData(): Observable<User[]> {
+    // getData() method returing all users
+    LoadAllUsers(): Observable<User[]> {
         return this.http.get<User[]>('http://' + restConfig.Host + ':' + restConfig.Port + '/api/getallusers');
+    }
+    loadAllActiveUsers(): Observable<User[]> {
+        return this.http.get<User[]>('http://' + restConfig.Host + ':' + restConfig.Port + '/api/getallactiveusers');
     }
     load(id): Observable<User> {
 

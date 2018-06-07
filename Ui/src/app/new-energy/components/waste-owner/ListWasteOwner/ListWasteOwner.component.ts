@@ -76,8 +76,8 @@ export class ListWasteOwnerComponent implements OnInit {
     let localWasteOwnerAdd={
       wasteOwnerData:{
         name: '',
-      surName: '',
-      companyName: '',
+      surName: '',          //Creates empty representation of WasteOwner class to be used in
+      companyName: '',     // DialogEditWasteOwner to hold values of form 
       address: '',
       contact: {
           telephone: '',
@@ -96,6 +96,7 @@ export class ListWasteOwnerComponent implements OnInit {
         "id": null ,
         "localWasteOwner":localWasteOwnerAdd,
         "enableUsername":true,
+        "enableAddUser":true
     }
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -125,7 +126,8 @@ export class ListWasteOwnerComponent implements OnInit {
         "id": elementData.id,
         "localWasteOwner":this.localWasteOwnerToEdit,
         "edit":true,
-        "enableUsername":false,   
+        "enableUsername":false,
+        "enableAddUser":false   
       }
     });
   

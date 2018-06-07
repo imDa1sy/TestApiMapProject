@@ -1,9 +1,10 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar, MatDialog } from '@angular/material';
 
 import { Http, RequestOptions, Headers } from '@angular/http';
 import { restConfig } from '../../restConfig';
 import { WasteUserService } from '../WasteUser.service';
+import { DialogDeleteQuestionComponent } from '../../DialogDeleteQuestion/DialogDeleteQuestion.component';
 
 @Component({
   selector: 'app-DialogEditWasteUser',
@@ -15,29 +16,55 @@ export class DialogEditWasteUserComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<DialogEditWasteUserComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private http: Http, private snackBar: MatSnackBar,
+    public dialog: MatDialog,
     private _wastUserService: WasteUserService, ) { }
 
   ngOnInit() {
-  
+
   }
   onNoClick(): void {
     this.dialogRef.close();
   }
   addUsers() {
+    //creates new form fields in DialogEditWasteUser for creating new user
     this.data.localWasteUser.users.push({
-      "enableUsername":true,  
-      "myId":'null',
+      "enableUsername": true,
+      "enableAddUser": true,
+      "myId": 'null',
+      "active": true, //is user active
       "role": "ROLE_WASTE_USER",
       "userName": "",
       "password": "",
       // "confirmPassword":''
     });
   }
+  deactivateUser($event, item, i) {
+    let dialogRef = this.dialog.open(DialogDeleteQuestionComponent, {
+      width: '300px', height: '300px',
+      data: { "text": "User", "entity_id": 'null' }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result != null) {
+        //shink size of array of location by 1 for every method call if form is empty
+        if (this.data.localWasteUser.users[i].userName == '' || this.data.localWasteUser.users[i].password == '') {
+          $event.preventDefault();
+          $event.stopPropagation();
+          this.data.localWasteUser.users.splice(this.data.localWasteUser.users.indexOf(item), 1);
+
+        } else {
+          //set selected user active status to false if form had data
+          this.data.localWasteUser.users[i].active = false;
+
+        }
+      }
+    });
+  }
+  /*
   deleteUsers($event, item) {
     $event.preventDefault();
     $event.stopPropagation();
     this.data.localWasteUser.users.splice(this.data.localWasteUser.users.indexOf(item), 1);
-  }
+  }*/
 
 
   SaveAndClose() {

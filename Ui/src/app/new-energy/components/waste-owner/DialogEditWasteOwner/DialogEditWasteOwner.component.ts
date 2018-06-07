@@ -5,6 +5,7 @@ import { restConfig } from '../../restConfig';
 import { WasteTypeService } from '../../waste-type/Wastetype.service';
 import { WasteOwnerService } from '../WasteOwner.service';
 import { WasteOwner } from '../WasteOwner.class';
+import { DialogDeleteQuestionComponent } from '../../DialogDeleteQuestion/DialogDeleteQuestion.component';
 
 @Component({
   selector: 'app-DialogEditWasteOwner',
@@ -17,55 +18,96 @@ export class DialogEditWasteOwnerComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<DialogEditWasteOwnerComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private http: Http, private snackBar: MatSnackBar,
-    private _wasteOwnerService: WasteOwnerService ) {
-     // this.loadData();
-    }
+    public dialog: MatDialog,
+    private _wasteOwnerService: WasteOwnerService) {
+    // this.loadData();
+  }
 
   onNoClick(): void {
     this.dialogRef.close();
   }
   addLocations() {
+    //creates new form fields in DialogEditWasteUser for creating new location
     this.data.localWasteOwner.locations.push({
-      "myId":'null',
-      "sortNum":this.data.localWasteOwner.locations.length,
+      "myId": 'null',
+      "sortNum": this.data.localWasteOwner.locations.length,
+      "active": true,
       "description": '',
       "latitude": '',
       "longitude": ''
     });
   }
-  deleteLocation($event, item) {
-    $event.preventDefault();
-    $event.stopPropagation();
-    this.data.localWasteOwner.locations.splice(this.data.localWasteOwner.locations.indexOf(item), 1);
+
+  deactivateLocation($event, item, i) {
+    let dialogRef = this.dialog.open(DialogDeleteQuestionComponent, {
+      width: '300px', height: '300px',
+      data: { "text": "Location", "entity_id": 'null' }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result != null) {
+        //shink size of array of location by 1 for every method call if form is empty
+        if (this.data.localWasteOwner.locations[i].description == '' || this.data.localWasteOwner.locations[i].latitude == 0 || this.data.localWasteOwner.locations[i].longitude == 0) {
+          $event.preventDefault();
+          $event.stopPropagation();
+          this.data.localWasteOwner.locations.splice(this.data.localWasteOwner.locations.indexOf(item), 1);
+
+        } else {
+          //set selected location active status to false if form had data
+          this.data.localWasteOwner.locations[i].active = false;
+
+        }
+      }
+    });
+
   }
+
   addUsers() {
+    //creates new form fields in DialogEditWasteOwner for creating new user
     this.data.localWasteOwner.users.push({
-      "enableUsername":true,   
-      "myId":'null',
+      "enableUsername": true,
+      "enableAddUser": true,
+      "myId": 'null',
+      "active": true, //is user active
       "role": "ROLE_WASTE_OWNER",
       "userName": "",
-      "password": "" ,
-     // "confirmPassword":''
+      "password": "",
+      // "confirmPassword":''
     });
   }
-  deleteUsers($event, item) {
-    $event.preventDefault();
-    $event.stopPropagation();
-    this.data.localWasteOwner.users.splice(this.data.localWasteOwner.users.indexOf(item), 1);
+  deactivateUser($event, item, i) {
+    let dialogRef = this.dialog.open(DialogDeleteQuestionComponent, {
+      width: '300px', height: '300px',
+      data: { "text": "User", "entity_id": 'null' }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result != null) {
+        //shink size of array of location by 1 for every method call if form is empty
+        if (this.data.localWasteOwner.users[i].userName == '' || this.data.localWasteOwner.users[i].password == '') {
+          $event.preventDefault();
+          $event.stopPropagation();
+          this.data.localWasteOwner.users.splice(this.data.localWasteOwner.users.indexOf(item), 1);
+
+        } else {
+          //set selected user active status to false if form had data
+          this.data.localWasteOwner.users[i].active = false;
+
+        }
+      }
+    });
   }
- 
+
   ngOnInit() {
- 
+
   }
 
   SaveAndClose() {
 
     var wasteOwner = {
-      wasteOwnerData : this.data.localWasteOwner.wasteOwnerData,
+      wasteOwnerData: this.data.localWasteOwner.wasteOwnerData,
       locations: this.data.localWasteOwner.locations,
       users: this.data.localWasteOwner.users
     }
-    
+
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 

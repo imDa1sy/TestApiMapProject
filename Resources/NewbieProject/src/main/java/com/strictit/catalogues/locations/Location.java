@@ -20,7 +20,8 @@ public class Location {
     @Id
     private String id;
     private String myId;
-
+    
+    private boolean active;
     private String wasteOwnerId;
     private String wasteUserId;
     private int sortNum;
@@ -28,6 +29,15 @@ public class Location {
     private double latitude;
     private double longitude;
 
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    
     public String getId() {
         return id;
     }
@@ -50,11 +60,6 @@ public class Location {
 
     public void setMyId(String myId) {
         this.myId = myId;
-    }
-
-    @Override
-    public String toString() {
-        return "Location{" + "myId=" + myId + ", wasteOwnerId=" + wasteOwnerId + ", wasteUserId=" + wasteUserId + ", sortNum=" + sortNum + ", description=" + description + ", latitude=" + latitude + ", longitude=" + longitude + '}';
     }
 
     public String getWasteOwnerId() {
@@ -97,4 +102,10 @@ public class Location {
         this.longitude = longitude;
     }
 
+    @Override
+    public String toString() {
+        return "Location{" + "id=" + id + ", myId=" + myId + ", active=" + active + ", wasteOwnerId=" + wasteOwnerId + ", wasteUserId=" + wasteUserId + ", sortNum=" + sortNum + ", description=" + description + ", latitude=" + latitude + ", longitude=" + longitude + '}';
+    }
+
+    
 }
