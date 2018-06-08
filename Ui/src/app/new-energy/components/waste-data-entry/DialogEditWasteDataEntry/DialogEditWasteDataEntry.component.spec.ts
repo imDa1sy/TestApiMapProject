@@ -1,20 +1,21 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { WasteDataEntryComponent } from './WasteDataEntry.component';
+import { DialogEditWasteDataEntry } from './DialogEditWasteDataEntry.component';
 
 
-describe('WasteDataEntryComponent', () => {
-  let component: WasteDataEntryComponent;
-  let fixture: ComponentFixture<WasteDataEntryComponent>;
+
+describe('DialogEditWasteDataEntry', () => {
+  let component: DialogEditWasteDataEntry;
+  let fixture: ComponentFixture<DialogEditWasteDataEntry>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ WasteDataEntryComponent ]
+      declarations: [ DialogEditWasteDataEntry ]
     })
     .compileComponents();
   })); 
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(WasteDataEntryComponent);
+    fixture = TestBed.createComponent(DialogEditWasteDataEntry);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

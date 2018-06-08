@@ -23,8 +23,9 @@ public class WasteDataEntry {
     private String wasteLocation;
     private String wasteType;
     private double amount;
-    private Date validityDate;
-    private Date planedWasteDate;
+    private Date wasteDataSubmited;
+    private Date validityDateStart;
+    private Date validityDateEnd;
     private boolean expired;
 
     public String getId() {
@@ -67,20 +68,28 @@ public class WasteDataEntry {
         this.amount = amount;
     }
 
-    public Date getValidityDate() {
-        return validityDate;
+    public Date getWasteDataSubmited() {
+        return wasteDataSubmited;
     }
 
-    public void setValidityDate(Date validityDate) {
-        this.validityDate = validityDate;
+    public void setWasteDataSubmited(Date wasteDataSubmited) {
+        this.wasteDataSubmited = wasteDataSubmited;
     }
 
-    public Date getPlanedWasteDate() {
-        return planedWasteDate;
+    public Date getValidityDateStart() {
+        return validityDateStart;
     }
 
-    public void setPlanedWasteDate(Date planedWasteDate) {
-        this.planedWasteDate = planedWasteDate;
+    public void setValidityDateStart(Date validityDateStart) {
+        this.validityDateStart = validityDateStart;
+    }
+
+    public Date getValidityDateEnd() {
+        return validityDateEnd;
+    }
+
+    public void setValidityDateEnd(Date validityDateEnd) {
+        this.validityDateEnd = validityDateEnd;
     }
 
     public boolean isExpired() {
@@ -93,7 +102,11 @@ public class WasteDataEntry {
 
     @Override
     public String toString() {
-        return "WasteData{" + "id=" + id + ", wasteOwner=" + wasteOwner + ", wasteLocation=" + wasteLocation + ", wasteType=" + wasteType + ", amount=" + amount + ", validityDate=" + validityDate + ", planedWasteDate=" + planedWasteDate + ", expired=" + expired + '}';
+        return "WasteDataEntry{" + "id=" + id + ", wasteOwner=" + wasteOwner + ", wasteLocation=" + wasteLocation + ", wasteType=" + wasteType + ", amount=" + amount + ", wasteDataSubmited=" + wasteDataSubmited + ", validityDateStart=" + validityDateStart + ", validityDateEnd=" + validityDateEnd + ", expired=" + expired + '}';
     }
+
+  
+
+    
 
 }

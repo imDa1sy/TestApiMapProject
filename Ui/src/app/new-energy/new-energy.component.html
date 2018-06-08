@@ -57,7 +57,7 @@
         </li>
         <li>
           <span *ngIf="ROLE == 'ROLE_ADMIN' || ROLE == 'ROLE_WASTE_OWNER' || ROLE == 'ROLE_CONTENT_MNGR'">
-            <button mat-button [routerLink]="['list-waste-data-entry']">
+            <button mat-button  (click)="newWasteDataEntry()">
               <span translate="new_energy-WasteDataEntry">WASTE DATA ENTRY</span>
             </button>
           </span>

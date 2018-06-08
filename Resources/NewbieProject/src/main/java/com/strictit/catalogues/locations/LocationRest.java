@@ -26,31 +26,36 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin("*")
 public class LocationRest {
 
-        @Autowired
-        LocationRepository locationRepository;
+    @Autowired
+    LocationRepository locationRepository;
 
 //=========================== GET METHODS ======================================
-        @GetMapping(path = "/getalllocations")
-        public List<Location> getAllLocations() {
+    @GetMapping(path = "/getalllocations")
+    public List<Location> getAllLocations() {
 
-            List<Location> locationList = locationRepository.findAll();
+        List<Location> locationList = locationRepository.findAll();
 
-            return locationList;
-        }
+        return locationList;
+    }
 
-        @GetMapping(path = "/getlocationbyid/{id}")
-        public List<Location> getLocationById(@PathVariable String id) {
-            List<Location> locationsList = locationRepository.findByWasteOwnerId(id);
-           
-                    return locationsList;
-                   
-        }
+    @GetMapping(path = "/getallactivelocationsByWasteOwnerId/{wasteOwnerId}")
+    public List<Location> getAllActiveLocations(@PathVariable String wasteOwnerId) {
 
-     
+        boolean active = true;
+        List<Location> listOfActiveLocations = locationRepository.findByWasteOwnerId(wasteOwnerId);
+        return listOfActiveLocations;
+    }
 
+    @GetMapping(path = "/getlocationbyid/{id}")
+    public List<Location> getLocationById(@PathVariable String id) {
+        List<Location> locationsList = locationRepository.findByWasteOwnerId(id);
+
+        return locationsList;
+
+    }
 
 //========================== UPDATE METHODS ====================================
-      /*  @PutMapping(path = "/updatelocation/{id}")
+    /*  @PutMapping(path = "/updatelocation/{id}")
         public ResponseEntity updateLocation(@PathVariable String id, @RequestBody Location location) {
 
             return locationRepository.findById(id).map(updateData -> {
@@ -65,17 +70,17 @@ public class LocationRest {
             }).orElse(ResponseEntity.notFound().build());
 
         }
-*/
+     */
 //========================== DELETE METHODS ====================================    
-        @DeleteMapping(path = "/removelocation/{id}")
-        public ResponseEntity removeLocation(@PathVariable String id) {
+    @DeleteMapping(path = "/removelocation/{id}")
+    public ResponseEntity removeLocation(@PathVariable String id) {
 
-            return locationRepository.findById(id).map(deleteLocation -> {
+        return locationRepository.findById(id).map(deleteLocation -> {
 
-                locationRepository.deleteById(id);
-                System.out.println("Location  deleted!");
+            locationRepository.deleteById(id);
+            System.out.println("Location  deleted!");
 
-                return ResponseEntity.ok().build();
-            }).orElse(ResponseEntity.notFound().build());
-        }
+            return ResponseEntity.ok().build();
+        }).orElse(ResponseEntity.notFound().build());
     }
+}

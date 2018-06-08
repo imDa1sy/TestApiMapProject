@@ -13,8 +13,8 @@ export class Location {
     id: string;
     active:boolean;
     description: string;
-    latitude: string;
-    longitude: string;
+    latitude: number;
+    longitude: number;
 }
 
 export class WasteUserData{

@@ -65,9 +65,10 @@ public class WasteDataEntryRest {
             updateData.setWasteOwner(wd.getWasteOwner());
             updateData.setWasteLocation(wd.getWasteLocation());
             updateData.setAmount(wd.getAmount());
+            updateData.setWasteDataSubmited(wd.getWasteDataSubmited());
             updateData.setWasteType(wd.getWasteType());
-            updateData.setValidityDate(wd.getValidityDate());
-            updateData.setPlanedWasteDate(wd.getPlanedWasteDate());
+            updateData.setValidityDateStart(wd.getValidityDateStart());
+            updateData.setValidityDateEnd(wd.getValidityDateEnd());
             updateData.setExpired(wd.isExpired());
 
             System.out.println("waste data with id=' " + updateData.getId() + "' updated!");

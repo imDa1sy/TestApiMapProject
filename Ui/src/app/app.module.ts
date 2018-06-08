@@ -27,8 +27,11 @@ import {
   MatGridListModule,
   MatRadioModule,
   MatSortModule,
-  MatPaginatorModule
+  MatPaginatorModule,
+  MatDatepickerModule,
+  MatNativeDateModule
 } from '@angular/material';
+
 import { router } from './app.router';
 import { RouterModule } from '@angular/router';
 
@@ -57,8 +60,8 @@ import { WasteUserService } from './new-energy/components/waste-user/WasteUser.s
 import { UserService } from './new-energy/components/user/User.service';
 import { DialogEditUserComponent } from './new-energy/components/user/DialogEditUser/DialogEditUsercomponent';
 import { MapViewComponent } from './new-energy/components/map-view/MapView.component';
-import { WasteDataEntryComponent } from './new-energy/components/waste-data-entry/WasteDataEntry.component';
 import { HomeComponent } from './new-energy/components/home/home.component';
+import { DialogEditWasteDataEntry } from './new-energy/components/waste-data-entry/DialogEditWasteDataEntry/DialogEditWasteDataEntry.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -83,7 +86,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     DialogEditWasteUserComponent,
     DialogEditUserComponent,
     MapViewComponent,
-    WasteDataEntryComponent,
+    DialogEditWasteDataEntry,
     HomeComponent  
    
   ],
@@ -122,17 +125,20 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatGridListModule,
     MatRadioModule,
     MatSortModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   entryComponents: [ 
                      DialogDeleteQuestionComponent,
                      DialogEditWasteTypeComponent,
                      DialogEditWasteOwnerComponent,
                      DialogEditWasteUserComponent,
-                     DialogEditUserComponent
+                     DialogEditUserComponent,
+                     DialogEditWasteDataEntry
    ],
   providers: [WasteOwnerService, WasteUserService,WasteTypeService,UserService,
-    AuthService, AuthGuard],
+    AuthService, AuthGuard, MatNativeDateModule],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
