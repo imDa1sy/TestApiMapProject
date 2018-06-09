@@ -19,10 +19,11 @@
           translate="new_energy-form-req-username">
           UserName is required!
       </div>
-      <mat-form-field>
+      <!-- Here is checked if role option should be shown -->
+      <mat-form-field *ngIf="!data?.localUser.showRole && data?.localUser.role == 'ROLE_ADMIN' ">
         <mat-label translate="new_energy-role">Role</mat-label>
         <mat-select [(ngModel)]="data?.localUser.role"
-                    [disabled]="data?.localUser.role == 'ROLE_WASTE_OWNER' || data?.localUser.role == 'ROLE_WASTE_USER'"  
+                    [disabled]="data?.localUser.role == 'ROLE_WASTE_OWNER' || data?.localUser.role == 'ROLE_WASTE_USER' || data?.localUser.role == 'ROLE_CONTENT_MNGR'"   
                     name="role" 
                     #role="ngModel"
                     required >

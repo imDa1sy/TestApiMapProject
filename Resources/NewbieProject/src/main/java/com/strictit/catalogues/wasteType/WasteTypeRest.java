@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 @CrossOrigin("*")
 public class WasteTypeRest {
-
+    
     @Autowired
     WasteTypeRepository wasteTypeRepository;
 
@@ -33,14 +33,21 @@ public class WasteTypeRest {
     @GetMapping(path = "/getallwastetypes")
     public List<WasteType> getAllWasteTypes() {
         
-      List<WasteType> wasteTypeList = wasteTypeRepository.findAll();
-      
+        List<WasteType> wasteTypeList = wasteTypeRepository.findAll();
+        
         return wasteTypeList;
     }
-
+    
+    @GetMapping(path = "/getallactivewastetypes")
+    public List<WasteType> getAllActiveWasteTypes() {
+        boolean active = true;
+        List<WasteType> listOfActiveWasteTypes = wasteTypeRepository.findByActive(active);
+        return listOfActiveWasteTypes;
+    }
+    
     @GetMapping(path = "/getwastetypebyid/{id}")
     public ResponseEntity getWasteTypeById(@PathVariable String id) {
-
+        
         return wasteTypeRepository.findById(id).map(oneType
                 -> ResponseEntity.ok().body(oneType))
                 .orElse(ResponseEntity.notFound().build());
@@ -53,28 +60,25 @@ public class WasteTypeRest {
             WasteType wasteTypeInserted = wasteTypeRepository.save(wt);
             System.out.println("after insert");
             return ResponseEntity.ok().body(wasteTypeInserted);
-        }
-        else {          
-        return wasteTypeRepository.findById(id).map(updateData -> {
-            updateData.setWasteType(wt.getWasteType());
-            updateData.setName(wt.getName());
-            updateData.setColor(wt.getColor());
-            WasteType wasteTypeUpdated = wasteTypeRepository.save(updateData);
-            System.out.println("Waste type with id=' " + updateData.getId() + "' updated!");
-
-            return ResponseEntity.ok().body(wasteTypeUpdated);
-
-        }).orElse(ResponseEntity.notFound().build());
+        } else {
+            return wasteTypeRepository.findById(id).map(updateData -> {
+                updateData = wt;
+                WasteType wasteTypeUpdated = wasteTypeRepository.save(updateData);
+                System.out.println("Waste type with id=' " + updateData.getId() + "' updated!");
+                
+                return ResponseEntity.ok().body(wasteTypeUpdated);
+                
+            }).orElse(ResponseEntity.notFound().build());
         }
     }
 
     //========================== DELETE METHODS ================================
     @DeleteMapping(path = "/removewastetype/{id}")
     public ResponseEntity removeWasteType(@PathVariable String id) {
-      
+        
         return wasteTypeRepository.findById(id).map(deleteType -> {
-
-            wasteTypeRepository.deleteById(id);
+            deleteType.setActive(false);
+            wasteTypeRepository.save(deleteType);
             System.out.println("Removed Waste Type with type= '" + deleteType.getWasteType() + "' deleted!");
             return ResponseEntity.ok().build();
         }).orElse(ResponseEntity.notFound().build());

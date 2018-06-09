@@ -23,7 +23,7 @@ export class UserService {
     loadAllActiveUsers(): Observable<User[]> {
         return this.http.get<User[]>('http://' + restConfig.Host + ':' + restConfig.Port + '/api/getallactiveusers');
     }
-    load(id): Observable<User> {
+    loadUserById(id): Observable<User> {
 
         return this.http.get<User>('http://' + restConfig.Host + ':' + restConfig.Port + '/api/getuserbyid/' + id);
     }

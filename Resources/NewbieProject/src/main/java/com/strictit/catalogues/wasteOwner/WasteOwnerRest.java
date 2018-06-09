@@ -57,6 +57,13 @@ public class WasteOwnerRest {
         return wasteOwnerList;
     }
 
+    @GetMapping(path = "/getallactivewasteowners")
+    public List<WasteOwnerData> getAllActiveWasteOwners() {
+        boolean active = true;
+        List<WasteOwnerData> listOfActiveWasteOwners = wasteOwnerRepository.findByActive(active);
+        return listOfActiveWasteOwners;
+    }
+
     @GetMapping(path = "/getwasteownerbyid/{id}")
     public ResponseEntity getWasteOwnerById(@PathVariable String id) {
 
@@ -104,7 +111,7 @@ public class WasteOwnerRest {
                 locationRepository.save(location);
             } else {
                 locationRepository.findById(location.getMyId()).map(locationUpdate -> {
-                    
+
                     locationUpdate.setActive(location.isActive());
                     locationUpdate.setDescription(location.getDescription());
                     locationUpdate.setLatitude(location.getLatitude());
@@ -118,17 +125,17 @@ public class WasteOwnerRest {
             }
 
         }
-        for(User user:wob.getUsers()){
-            if(user.getMyId().equalsIgnoreCase("null")){
+        for (User user : wob.getUsers()) {
+            if (user.getMyId().equalsIgnoreCase("null")) {
                 user.setWasteOwnerId(tempOwnerId);
                 user.setPassword(PasswordHash.hashPassword(user.getPassword()));
                 userRepository.save(user);
-            }else{
+            } else {
                 // In current version update user is not available from waste owner update form
                 // only can be displayed to get overview of his users.
-                
-                 userRepository.findById(user.getMyId()).map(userUpdate -> {
-                             userUpdate.setActive(user.isActive());
+
+                userRepository.findById(user.getMyId()).map(userUpdate -> {
+                    userUpdate.setActive(user.isActive());
 
                     User userUpdated = userRepository.save(userUpdate);
 
@@ -136,9 +143,9 @@ public class WasteOwnerRest {
                 });
             }
         }
-        if(id.equalsIgnoreCase("null")){
+        if (id.equalsIgnoreCase("null")) {
             return ResponseEntity.ok().body(null);
-        }else{
+        } else {
             return ResponseEntity.ok().body(null);
         }
 
@@ -146,13 +153,13 @@ public class WasteOwnerRest {
 
     //========================== DELETE METHODS ==================================
     @DeleteMapping(path = "/removewasteowner/{id}")
-        @ResponseBody
-        public ResponseEntity<?> removeWasteOwner(@PathVariable String id) {
+    @ResponseBody
+    public ResponseEntity<?> removeWasteOwner(@PathVariable String id) {
 
         return wasteOwnerRepository.findById(id)
                 .map(deletedOwner -> {
-
-                    wasteOwnerRepository.deleteById(id);
+                    deletedOwner.setActive(false);
+                    wasteOwnerRepository.save(deletedOwner);
                     //    System.out.println("Removed waste Owner '" + deletedOwner.getName() + "' deleted!");
                     return ResponseEntity.ok().body(deletedOwner.getId());
 

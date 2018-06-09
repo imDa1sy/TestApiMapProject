@@ -17,7 +17,23 @@ export class DialogEditWasteUserComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private http: Http, private snackBar: MatSnackBar,
     public dialog: MatDialog,
-    private _wastUserService: WasteUserService, ) { }
+    private _wastUserService: WasteUserService, ) {
+
+      this.loadWasteUserData();
+     }
+
+
+    loadWasteUserData() {
+      if (this.data.id == null) {
+  
+      }
+      else {
+        this._wastUserService.loadWasteUserById(this.data.id).subscribe(data => {
+          this.data.localWasteUser = data;
+          
+        });
+      }
+    } 
 
   ngOnInit() {
 

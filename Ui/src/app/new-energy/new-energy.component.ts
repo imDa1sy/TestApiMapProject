@@ -7,6 +7,8 @@ import { DialogEditWasteTypeComponent } from './components/waste-type/DialogEdit
 import { DialogEditWasteOwnerComponent } from './components/waste-owner/DialogEditWasteOwner/DialogEditWasteOwner.component';
 import { DialogEditWasteUserComponent } from './components/waste-user/DialogEditWasteUser/DialogEditWasteUser.component';
 import { DialogEditWasteDataEntry } from './components/waste-data-entry/DialogEditWasteDataEntry/DialogEditWasteDataEntry.component';
+import { DialogEditUserComponent } from './components/user/DialogEditUser/DialogEditUsercomponent';
+import { User } from './components/user/User.class';
 
 
 @Component({
@@ -39,8 +41,25 @@ export class NewEnergyComponent implements OnInit {
     let dialogRef = this.dialog.open(DialogEditWasteDataEntry, {
       //disableClose: true,
       autoFocus: true,
-      width: '800px', height: '550px', data: { "id": null ,"wasteOwner":"wasteOwner"}
+      width: '800px', height: '550px', data: { 
+        "id": null 
+      }
     });
+  }
+  
+  changePassword(){
+
+    let dialogRef = this.dialog.open(DialogEditUserComponent,{
+      //disableClose true,
+      autoFocus: true,
+      width: '400px', height: '500px',
+      data:{
+             "id" :this.authService.userId,
+             "showRole": false,
+             "localUser": User
+            },
+    });
+
   }
 /*
   newWasteOwner() {

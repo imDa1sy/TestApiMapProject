@@ -9,6 +9,7 @@ import { DialogDeleteQuestionComponent } from '../../DialogDeleteQuestion/Dialog
 import { WasteOwnerService } from '../WasteOwner.service';
 import { WasteOwner } from '../WasteOwner.class';
 import { Router } from '@angular/router';
+import { User } from '../../user/User.class';
 
 
 
@@ -53,7 +54,7 @@ export class ListWasteOwnerComponent implements OnInit {
   }
   //============================= METHODS ========================================             
   refresh() {
-    this._wasteOwnerService.getData().subscribe(
+    this._wasteOwnerService.loadAllActiveWasteOwners().subscribe(
       data => {
         this.wasteOwnerList = data;
         this.dataSource.data = this.wasteOwnerList;
@@ -79,6 +80,7 @@ export class ListWasteOwnerComponent implements OnInit {
       surName: '',          //Creates empty representation of WasteOwner class to be used in
       companyName: '',     // DialogEditWasteOwner to hold values of form 
       address: '',
+      active: true,
       contact: {
           telephone: '',
           mobile: '',
@@ -111,12 +113,6 @@ export class ListWasteOwnerComponent implements OnInit {
     this.router.navigate(['biodeseuri/new-energy-from-waste/map-view']);
   }
   editWasteOwner(elementData) {
-   /*_wasteOwnerService load data and pass it in data object which is then injected in 
-    DialogEditWasteOwnerComponent to handle it.
-   */
-    this._wasteOwnerService.load(elementData.id).subscribe(data => {
-      this.localWasteOwnerToEdit = data;
-    
       
     let dialogRef = this.dialog.open(DialogEditWasteOwnerComponent, {
      // disableClose: true,
@@ -136,7 +132,7 @@ export class ListWasteOwnerComponent implements OnInit {
         this.refresh();
       }
     });
-  });
+
   }
 
   deleteWasteOwner(id) {

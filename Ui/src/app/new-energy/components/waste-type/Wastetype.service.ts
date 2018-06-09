@@ -14,11 +14,16 @@ export class WasteTypeService {
     constructor(private http: HttpClient) { }
 
     //===============================METHODS=======================================
-    // getData() method returing all waste types
-    getData(): Observable<WasteType[]> {
+    // loadAllWasteTypes() method returing all waste types
+    loadAllWasteTypes(): Observable<WasteType[]> {
         return this.http.get<WasteType[]>('http://'+restConfig.Host+':'+restConfig.Port+'/api/getallwastetypes');
     }
-    load(id): Observable<WasteType> {
+
+    loadAllActiveWasteTypes(): Observable<WasteType[]> {
+        return this.http.get<WasteType[]>('http://'+restConfig.Host+':'+restConfig.Port+'/api/getallactivewastetypes');
+    }
+
+    loadWasteTypeById(id): Observable<WasteType> {
         
         return this.http.get<WasteType>('http://'+restConfig.Host+':'+restConfig.Port+'/api/getwastetypebyid/'+id);
     }

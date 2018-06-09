@@ -47,7 +47,7 @@ export class ListWasteUserComponent implements OnInit {
   }
   //============================= METHODS ========================================             
   refresh() {
-    this._wasteUserService.getData().subscribe(
+    this._wasteUserService.loadAllActiveWasteUsers().subscribe(
       data => {
         this.wasteUserList = data;
         this.dataSource.data = this.wasteUserList;
@@ -75,6 +75,7 @@ export class ListWasteUserComponent implements OnInit {
       surName: '',
       companyName: '',
       address: '',
+      active: true,
       contact: {
           telephone: '',
           mobile: '',
@@ -108,13 +109,7 @@ export class ListWasteUserComponent implements OnInit {
     });
   }
   editWasteUser(elementData) {
-   /*_wasteOwnerService load data and pass it in data object which is then injected in 
-    DialogEditWasteOwnerComponent to handle it.
-   */
-    this._wasteUserService.load(elementData.id).subscribe(data => {
-      this.localWasteUserToEdit = data;
     
-      
     let dialogRef = this.dialog.open(DialogEditWasteUserComponent, {
      // disableClose: true,
       autoFocus: true,
@@ -133,7 +128,6 @@ export class ListWasteUserComponent implements OnInit {
         this.refresh();
       }
     });
-  });
   }
 
   deleteWasteUser(id) {

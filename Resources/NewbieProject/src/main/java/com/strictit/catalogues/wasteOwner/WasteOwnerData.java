@@ -23,6 +23,7 @@ public class WasteOwnerData {
     private String surName;
     private String companyName;
     private String address;
+    private boolean active;
     private Contact contact;
 
     public String getId() {
@@ -65,6 +66,14 @@ public class WasteOwnerData {
         this.address = address;
     }
 
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
     public Contact getContact() {
         return contact;
     }
@@ -75,7 +84,8 @@ public class WasteOwnerData {
 
     @Override
     public String toString() {
-        return "WasteOwnerData{" + "id=" + id + ", name=" + name + ", surName=" + surName + ", companyName=" + companyName + ", address=" + address + ", contact=" + contact + '}';
+        return "WasteOwnerData{" + "id=" + id + ", name=" + name + ", surName=" + surName + ", companyName=" + companyName + ", address=" + address + ", active=" + active + ", contact=" + contact + '}';
     }
+
 
 }

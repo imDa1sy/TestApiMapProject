@@ -18,6 +18,7 @@ public class WasteUserData {
     private String surName;
     private String companyName;
     private String address;
+    private boolean active;
     private Contact contact;
 
     public String getId() {
@@ -60,6 +61,14 @@ public class WasteUserData {
         this.address = address;
     }
 
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
     public Contact getContact() {
         return contact;
     }
@@ -70,7 +79,8 @@ public class WasteUserData {
 
     @Override
     public String toString() {
-        return "WasteUserData{" + "id=" + id + ", name=" + name + ", surName=" + surName + ", companyName=" + companyName + ", address=" + address + ", contact=" + contact + '}';
+        return "WasteUserData{" + "id=" + id + ", name=" + name + ", surName=" + surName + ", companyName=" + companyName + ", address=" + address + ", active=" + active + ", contact=" + contact + '}';
     }
+
 
 }

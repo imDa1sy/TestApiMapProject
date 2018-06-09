@@ -20,9 +20,20 @@ export class DialogEditWasteOwnerComponent implements OnInit {
     private http: Http, private snackBar: MatSnackBar,
     public dialog: MatDialog,
     private _wasteOwnerService: WasteOwnerService) {
-    // this.loadData();
+      
+     this.loadWasteOwnerData();
   }
+  loadWasteOwnerData() {
+    if (this.data.id == null) {
 
+    }
+    else {
+      this._wasteOwnerService.loadWasteUserById(this.data.id).subscribe(data => {
+        this.data.localWasteOwner = data;
+        
+      });
+    }
+  }
   onNoClick(): void {
     this.dialogRef.close();
   }

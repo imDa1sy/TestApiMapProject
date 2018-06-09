@@ -22,6 +22,7 @@ export class WasteOwnerData {
     surName: string;
     companyName: string;
     address: string;
+    active:boolean;
     contact: {
         telephone: string;
         mobile: string;

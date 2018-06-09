@@ -14,7 +14,7 @@ export class MapViewComponent implements OnInit {
   constructor( private _wasteOwnerService: WasteOwnerService) { }
 
   ngOnInit() {
-    this._wasteOwnerService.load(this._wasteOwnerService.ownerIdToMap).subscribe(data => {
+    this._wasteOwnerService.loadWasteUserById(this._wasteOwnerService.ownerIdToMap).subscribe(data => {
       this.localOwnerLocations = data.locations;
       console.log('Locations in map view '+ this.localOwnerLocations);
     });

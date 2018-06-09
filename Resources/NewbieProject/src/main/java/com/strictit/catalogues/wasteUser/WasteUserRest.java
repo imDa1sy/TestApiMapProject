@@ -55,6 +55,13 @@ public class WasteUserRest {
         return wasteUserList;
     }
 
+    @GetMapping(path = "/getallactivewasteusers")
+    public List<WasteUserData> getAllActiveWasteUsers() {
+        boolean active = true;
+        List<WasteUserData> listOfActiveWasteUsers = wasteUserRepository.findByActive(active);
+        return listOfActiveWasteUsers;
+    }
+
     @GetMapping(path = "/getwasteuserbyid/{id}")
     public ResponseEntity getWasteUserById(@PathVariable String id) {
 
@@ -145,8 +152,8 @@ public class WasteUserRest {
 
         return wasteUserRepository.findById(id)
                 .map(deletedUser -> {
-
-                    wasteUserRepository.deleteById(id);
+                    deletedUser.setActive(false);
+                    wasteUserRepository.save(deletedUser);
                     System.out.println("Removed waste user '" + deletedUser.getName() + "' deleted!");
                     return ResponseEntity.ok().body(deletedUser.getId());
 

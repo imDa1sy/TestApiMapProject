@@ -12,7 +12,7 @@ import { User } from '../User.class';
   styleUrls: ['./ListUser.component.css']
 })
 export class ListUserComponent implements OnInit {
-  localUserToEdit: User;
+
  //=========================== ATTRIBUTES ==========================================
  userList: any;
  dataSource = new MatTableDataSource();
@@ -70,15 +70,16 @@ export class ListUserComponent implements OnInit {
   let localUserAdd={
     userName: '',
     password: '', //representation of user class to used when creating new user from DialogEditUser
-    role: '',
+    role: 'ROLE_CONTENT_MNGR',
     active:true
 
   }
    let dialogRef = this.dialog.open(DialogEditUserComponent, {
     // disableClose: true,
      autoFocus: true,
-     width: '400px', height: '350px', data: { 
+     width: '400px', height: '500px', data: { 
        "id": null,
+       "showRole": true,
        "enableUsername":true,      
        "localUser":localUserAdd
        }
@@ -91,16 +92,16 @@ export class ListUserComponent implements OnInit {
    });
  }
  editUser(elementData) {
-  this._userService.load(elementData.id).subscribe(data => {
-    this.localUserToEdit = data;
+   
    let dialogRef = this.dialog.open(DialogEditUserComponent, {
     // disableClose: true,
      autoFocus: true,
-     width: '400px', height: '350px',
+     width: '400px', height: '500px',
      data: {
        "id": elementData.id,
+       "showRole": true,
        "enableUsername":false,      
-       "localUser":this.localUserToEdit
+       "localUser": User
 
      }
    });
@@ -110,7 +111,7 @@ export class ListUserComponent implements OnInit {
      }
 
    });
-  });
+ // });
  }
  
  deleteUser(id) {

@@ -49,7 +49,7 @@ export class ListWasteTypeComponent implements OnInit {
 
   //============================ METHODS =============================================             
   refresh() {
-    this._wasteTypeService.getData().subscribe(
+    this._wasteTypeService.loadAllActiveWasteTypes().subscribe(
       data => {
         this.WasteTypeList = data;
         this.dataSource.data = this.WasteTypeList;
@@ -70,8 +70,9 @@ export class ListWasteTypeComponent implements OnInit {
     this.refresh();
   }
   NewWasteType() {
+
     let localWasteTypeToAdd={
-      id :'',
+      active:true,
       wasteType : '',
       color:''
     }
@@ -91,15 +92,14 @@ export class ListWasteTypeComponent implements OnInit {
     });
   }
   editWasteType(elementData) {
-    this._wasteTypeService.load(elementData.id).subscribe(data => {
-      this.localWasteTypeToEdit = data;
+   
     let dialogRef = this.dialog.open(DialogEditWasteTypeComponent, {
      // disableClose: true,
       autoFocus: true,
       width: '400px', height: '350px',
       data: {
         "id": elementData.id,
-        "localWasteType": this.localWasteTypeToEdit,
+        "localWasteType": WasteType
       
       }
     });
@@ -109,7 +109,6 @@ export class ListWasteTypeComponent implements OnInit {
       }
 
     });
-  });
   }
   
   deleteWasteType(id) {

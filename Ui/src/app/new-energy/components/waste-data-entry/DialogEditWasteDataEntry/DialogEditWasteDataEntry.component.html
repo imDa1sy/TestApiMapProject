@@ -35,11 +35,11 @@
 
         <mat-form-field >
           <mat-label >Waste Location</mat-label>
-          <mat-select [(ngModel)]="data.wasteLocation"
-                      name="wasteLocation" 
-                      #wasteLocation="ngModel"
+          <mat-select [(ngModel)]="data.wasteLocationId"
+                      name="wasteLocationId" 
+                      #wasteLocationId="ngModel"
                       required >
-              <div [hidden]="wasteLocation.valid || wasteLocation.pristine" class="alert alert-danger" >
+              <div [hidden]="wasteLocationId.valid || wasteLocationId.pristine" class="alert alert-danger" >
                 Waste Location is required!
               </div>
               <mat-option >--</mat-option>
@@ -50,15 +50,15 @@
 
         <mat-form-field >
           <mat-label >Waste type</mat-label>
-          <mat-select [(ngModel)]="data.wasteType"
-                      name="wasteType" 
-                      #wasteType="ngModel"
+          <mat-select [(ngModel)]="data.wasteTypeId"
+                      name="wasteTypeId" 
+                      #wasteTypeId="ngModel"
                       required >
-              <div [hidden]="wasteType.valid || wasteType.pristine" class="alert alert-danger" >
+              <div [hidden]="wasteTypeId.valid || wasteTypeId.pristine" class="alert alert-danger" >
                 Waste Type is required!
               </div>
               <mat-option >--</mat-option>
-              <mat-option *ngFor="let wt of WasteTypeList" value="{{wt.wasteType}}" >{{wt.wasteType}}</mat-option>
+              <mat-option *ngFor="let wt of WasteTypeList" value="{{wt.id}}" >{{wt.wasteType}}</mat-option>
             </mat-select>
           </mat-form-field>
 

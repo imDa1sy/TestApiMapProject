@@ -5,6 +5,7 @@
  */
 package com.strictit.catalogues.wasteType;
 
+import java.util.List;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 /**
@@ -12,5 +13,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
  * @author Nenad
  */
 public interface WasteTypeRepository extends MongoRepository<WasteType,String> {
-    
+      List<WasteType> findByActive(boolean active);
 }
