@@ -5,6 +5,7 @@ import { WasteOwnerService } from '../../waste-owner/WasteOwner.service';
 import { restConfig } from '../../restConfig';
 import { UserService } from '../User.service';
 import { User } from '../User.class';
+import { FormPatterns } from '../../FormPatterns';
 
 @Component({
   selector: 'app-DialogEditUser',
@@ -13,6 +14,10 @@ import { User } from '../User.class';
 })
 export class DialogEditUserComponent implements OnInit {
 
+
+  passwordPattern = FormPatterns.passwordPattern;
+  usernamePattern = FormPatterns.usernamePattern;
+  
   constructor(public dialogRef: MatDialogRef<DialogEditUserComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private http: Http, private snackBar: MatSnackBar,
@@ -27,7 +32,7 @@ export class DialogEditUserComponent implements OnInit {
   onNoClick(): void {
     this.dialogRef.close();
   }
-
+  
   loadUserData() {
     if (this.data.id == null) {
 

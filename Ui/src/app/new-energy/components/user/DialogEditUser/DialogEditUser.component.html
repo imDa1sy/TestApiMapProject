@@ -12,13 +12,20 @@
         <input matInput 
                [(ngModel)]="data?.localUser.userName" 
                [disabled]="!data?.enableUsername" 
-               name="userName" #userName="ngModel" maxlength="32"
+               name="userName" #userName="ngModel" 
+               minlength="5" maxlength="32"
+               [pattern]="usernamePattern"
               required >
       </mat-form-field>
-      <div [hidden]="userName.valid || userName.pristine" class="alert alert-danger" 
-          translate="new_energy-form-req-username">
-          UserName is required!
-      </div>
+      <div [hidden]="userName.valid || userName.pristine" class="alert alert-danger"
+      >
+      <div [hidden]="!userName.hasError('required')" translate="new_energy-form-req-username"> 
+        UserName is required!
+     </div>
+     <div [hidden]="!userName.hasError('pattern')" translate="new_energy-form-pattern-username"> 
+       Minimum 5 characters is required!
+     </div>	
+ </div>
       <!-- Here is checked if role option should be shown -->
       <mat-form-field *ngIf="!data?.localUser.showRole && data?.localUser.role == 'ROLE_ADMIN' ">
         <mat-label translate="new_energy-role">Role</mat-label>
@@ -38,28 +45,37 @@
             <mat-option disabled [hidden]="true" value="ROLE_WASTE_USER">ROLE_WASTE_USER</mat-option>
           </mat-select>
         </mat-form-field>
-    <mat-form-field>
-      <mat-label translate="new_energy-password">Password</mat-label>
-      <input matInput type="password" 
-             [(ngModel)]="data?.localUser.password" 
-              name="password" #password="ngModel" minlength="8" maxlength="32" 
-              required >
-    </mat-form-field>
-    <div [hidden]="password.valid || password.pristine" class="alert alert-danger"
-          translate="new_energy-form-req-password">
-     Password is required!
-    </div>
+        <mat-form-field>
+          <mat-label translate="new_energy-password">Password</mat-label>
+          <input matInput 
+                [(ngModel)]="data?.localUser.password" type="password"
+                name="password" #password="ngModel" [pattern]="passwordPattern"
+                minlength="8" maxlength="32"
+                required >
+        </mat-form-field>
+        <div [hidden]="password.valid || password.pristine" class="alert alert-danger"
+             >
+             <div [hidden]="!password.hasError('required')" translate="new_energy-form-req-password"> 
+              Password required.
+            </div>
+            <div [hidden]="!password.hasError('pattern')" translate="new_energy-form-pattern-password"> 
+              Password should be at least 8 characters long and should contain at least one number,
+              one Uppercase letter and one special character.
+            </div>	
+        </div>
     <mat-form-field>
       <mat-label translate="new_energy-confirmPassword">Confirm Password</mat-label>
       <input matInput type="password" 
-            [(ngModel)]="data?.localUser.Confirmpassword"
-            name="Confirmpassword" 
-            #password="ngModel" maxlength="32" 
+            [(ngModel)]="data?.localUser.confirmPassword"
+            name="confirmPassword" 
+            validateEqual="password" reverse="false"
+            #confirmPassword="ngModel" minlength="8" maxlength="32" 
             required>
     </mat-form-field>
-    <div [hidden]="password.valid || password.pristine" class="alert alert-danger" 
-         translate="new_energy-form-req-confirmPassword">
-      Password  mismatch!
+    
+    <div [hidden]="confirmPassword.valid || confirmPassword.pristine" class="alert alert-danger" 
+          translate="new_energy-form-req-confirmPassword">
+        Password  mismatch!
     </div>  
     <hr>
   </div>

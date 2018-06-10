@@ -6,6 +6,7 @@ import { WasteTypeService } from '../../waste-type/Wastetype.service';
 import { WasteOwnerService } from '../WasteOwner.service';
 import { WasteOwner } from '../WasteOwner.class';
 import { DialogDeleteQuestionComponent } from '../../DialogDeleteQuestion/DialogDeleteQuestion.component';
+import { FormPatterns } from '../../FormPatterns';
 
 @Component({
   selector: 'app-DialogEditWasteOwner',
@@ -13,7 +14,10 @@ import { DialogDeleteQuestionComponent } from '../../DialogDeleteQuestion/Dialog
   styleUrls: ['./DialogEditWasteOwner.component.css']
 })
 export class DialogEditWasteOwnerComponent implements OnInit {
-
+ 
+  emailPattern = FormPatterns.emailPattern;
+  passwordPattern = FormPatterns.passwordPattern;
+  usernamePattern = FormPatterns.usernamePattern;
 
   constructor(public dialogRef: MatDialogRef<DialogEditWasteOwnerComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,

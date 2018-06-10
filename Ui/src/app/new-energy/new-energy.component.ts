@@ -52,7 +52,7 @@ export class NewEnergyComponent implements OnInit {
     let dialogRef = this.dialog.open(DialogEditUserComponent,{
       //disableClose true,
       autoFocus: true,
-      width: '400px', height: '500px',
+      width: '500px', height: '500px',
       data:{
              "id" :this.authService.userId,
              "showRole": false,

@@ -90,13 +90,19 @@
              [(ngModel)]="data.localWasteOwner?.wasteOwnerData.contact.email" 
              type="email"
              name="email" #email="ngModel" 
-             email pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
+             email [pattern]="emailPattern"
              required >
     </mat-form-field>
-    <div [hidden]="email.valid || email.pristine" class="alert alert-danger" 
-         translate="new_energy-form-req-email">
-      E-mail is required and format should be 'email@example.com'
-    </div>
+    <div [hidden]="email.valid || email.pristine" class="alert alert-danger"
+    >
+    <div [hidden]="!email.hasError('required')" translate="new_energy-form-req-email"> 
+      E-mail is required!
+   </div>
+   <div [hidden]="!email.hasError('pattern')" translate="new_energy-form-pattern-email"> 
+    Format should be 'email@example.com'
+   </div>	
+</div>
+   
     <hr>
     <mat-label translate="new_energy-locations">Locations</mat-label>
     <div align="right">
@@ -179,26 +185,39 @@
                [(ngModel)]="data.localWasteOwner?.users[i].userName" 
                [disabled]="!data.localWasteOwner?.users[i].enableUsername"
                name="userName{{i+1}}" #userName="ngModel" 
-               minlength="5" maxlength="32" 
+               minlength="5" maxlength="32"
+               [pattern]="usernamePattern" 
                required >
       </mat-form-field>
       <div [hidden]="userName.valid || userName.pristine" class="alert alert-danger"
-           translate="new_energy-form-req-username">
-        UserName is required! 
-      </div>
+      >
+      <div [hidden]="!userName.hasError('required')" translate="new_energy-form-req-username"> 
+        UserName is required!
+     </div>
+     <div [hidden]="!userName.hasError('pattern')" translate="new_energy-form-pattern-username"> 
+       Minimum 5 characters is required!
+     </div>	
+ </div>
       <div class="example-container" *ngIf="data.localWasteOwner?.users[i].enableAddUser">
       <mat-form-field>
         <mat-label translate="new_energy-password">Password</mat-label>
         <input matInput 
               [(ngModel)]="data.localWasteOwner?.users[i].password" type="password"
-              name="password{{i+1}}" #password="ngModel" 
+              name="password{{i+1}}" #password="ngModel" [pattern]="passwordPattern"
               minlength="8" maxlength="32"
               required >
       </mat-form-field>
       <div [hidden]="password.valid || password.pristine" class="alert alert-danger"
-           translate="new_energy-form-req-password">
-        Password is required!
+           >
+           <div [hidden]="!password.hasError('required')" translate="new_energy-form-req-password"> 
+            Password required.
+          </div>
+          <div [hidden]="!password.hasError('pattern')" translate="new_energy-form-pattern-password"> 
+            Password should be at least 8 characters long and should contain at least one number,
+            one Uppercase letter and one special character.
+          </div>	
       </div>
+      
       <mat-form-field>
         <mat-label translate="new_energy-confirmPassword">Confirm Password</mat-label>
         <input matInput 
@@ -206,13 +225,15 @@
                name="confirmPassword{{i+1}}" 
                validateEqual="password"
                #confirmPassword="ngModel"
-               maxlength="32" 
+               validateEqual="password" reverse="false"
+               minlength="8" maxlength="32" 
                required >
       </mat-form-field>
       <div [hidden]="confirmPassword.valid || confirmPassword.pristine" class="alert alert-danger" 
-           translate="new_energy-form-req-confirmPassword">
-        Password mismatch!
-      </div>
+            translate="new_energy-form-req-confirmPassword">
+             Password  mismatch!
+     </div>
+      
       </div>
       <div align="right">
         <button type="button" align="right" color="warn" 

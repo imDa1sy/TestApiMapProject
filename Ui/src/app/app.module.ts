@@ -62,6 +62,7 @@ import { DialogEditUserComponent } from './new-energy/components/user/DialogEdit
 import { MapViewComponent } from './new-energy/components/map-view/MapView.component';
 import { HomeComponent } from './new-energy/components/home/home.component';
 import { DialogEditWasteDataEntry } from './new-energy/components/waste-data-entry/DialogEditWasteDataEntry/DialogEditWasteDataEntry.component';
+import { EqualValidator } from './new-energy/components/user/EqualValidator.directive';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -87,7 +88,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     DialogEditUserComponent,
     MapViewComponent,
     DialogEditWasteDataEntry,
-    HomeComponent  
+    HomeComponent,
+    EqualValidator
    
   ],
   imports: [

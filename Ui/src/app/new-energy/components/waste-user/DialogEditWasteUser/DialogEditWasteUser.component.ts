@@ -5,6 +5,7 @@ import { Http, RequestOptions, Headers } from '@angular/http';
 import { restConfig } from '../../restConfig';
 import { WasteUserService } from '../WasteUser.service';
 import { DialogDeleteQuestionComponent } from '../../DialogDeleteQuestion/DialogDeleteQuestion.component';
+import { FormPatterns } from '../../FormPatterns';
 
 @Component({
   selector: 'app-DialogEditWasteUser',
@@ -12,6 +13,10 @@ import { DialogDeleteQuestionComponent } from '../../DialogDeleteQuestion/Dialog
   styleUrls: ['./DialogEditWasteUser.component.css']
 })
 export class DialogEditWasteUserComponent implements OnInit {
+
+  emailPattern = FormPatterns.emailPattern;
+  passwordPattern = FormPatterns.passwordPattern;
+  usernamePattern = FormPatterns.usernamePattern;
 
   constructor(public dialogRef: MatDialogRef<DialogEditWasteUserComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,

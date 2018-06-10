@@ -77,7 +77,7 @@ export class ListUserComponent implements OnInit {
    let dialogRef = this.dialog.open(DialogEditUserComponent, {
     // disableClose: true,
      autoFocus: true,
-     width: '400px', height: '500px', data: { 
+     width: '500px', height: '500px', data: { 
        "id": null,
        "showRole": true,
        "enableUsername":true,      
@@ -96,7 +96,7 @@ export class ListUserComponent implements OnInit {
    let dialogRef = this.dialog.open(DialogEditUserComponent, {
     // disableClose: true,
      autoFocus: true,
-     width: '400px', height: '500px',
+     width: '500px', height: '500px',
      data: {
        "id": elementData.id,
        "showRole": true,
