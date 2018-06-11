@@ -38,6 +38,13 @@ public class WasteDataEntryRest {
         return getTransationData;
     }
 
+    @GetMapping(path = "/getallwastedatabyid/{wasteOwnerId}")
+    public List<WasteDataEntry> getAllWasteDataById(@PathVariable String wasteOwnerId) {
+     //add logic to get all waste data for current owner
+        List<WasteDataEntry> listOfWasteDataEntrys = wasteDataEntryRepository.findByWasteOwnerId(wasteOwnerId);
+        return listOfWasteDataEntrys;
+    }
+
     @GetMapping(path = "/getwastedatabyid/{id}")
     public ResponseEntity getWasteById(@PathVariable String id) {
         return wasteDataEntryRepository.findById(id).map(oneTransation
@@ -50,13 +57,13 @@ public class WasteDataEntryRest {
     @PutMapping(path = "/updatewastedata/{id}")
     public ResponseEntity updateWasteData(@PathVariable String id, @RequestBody WasteDataEntry wd) {
         if (id.equalsIgnoreCase("null")) {
-            
+
             WasteDataEntry wasteDatEntryInserted = wasteDataEntryRepository.save(wd);
             System.out.println("after insert");
             return ResponseEntity.ok().body(wasteDatEntryInserted);
-            
+
         } else {
-            
+
             return wasteDataEntryRepository.findById(id).map(updateData -> {
                 updateData = wd;
                 WasteDataEntry wasteDataUpdated = wasteDataEntryRepository.save(updateData);

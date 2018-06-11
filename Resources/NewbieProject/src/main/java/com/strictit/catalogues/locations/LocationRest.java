@@ -36,13 +36,13 @@ public class LocationRest {
         return locationList;
     }
 
-    @GetMapping(path = "/getallactivelocationsByWasteOwnerId/{wasteOwnerId}")
+    @GetMapping(path = "/getallactivelocationsbywasteownerid/{wasteOwnerId}")
     public List<Location> getAllActiveLocations(@PathVariable String wasteOwnerId) {
 
         boolean active = true;
         List<Location> listOfActiveLocations = locationRepository.findByWasteOwnerIdAndActive(wasteOwnerId,active);
         return listOfActiveLocations;
-    }
+    } 
 
     @GetMapping(path = "/getlocationbyid/{id}")
     public List<Location> getLocationById(@PathVariable String id) {
@@ -51,6 +51,7 @@ public class LocationRest {
         return locationsList;
 
     }
+    
 
 
 //========================== DELETE METHODS ====================================    

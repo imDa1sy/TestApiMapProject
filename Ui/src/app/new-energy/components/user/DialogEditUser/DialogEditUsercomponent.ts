@@ -29,7 +29,6 @@ export class DialogEditUserComponent implements OnInit {
   ngOnInit() {
 
   }
-  
   onNoClick(): void {
     this.dialogRef.close();
   }

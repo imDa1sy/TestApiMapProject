@@ -63,6 +63,8 @@ import { MapViewComponent } from './new-energy/components/map-view/MapView.compo
 import { HomeComponent } from './new-energy/components/home/home.component';
 import { DialogEditWasteDataEntry } from './new-energy/components/waste-data-entry/DialogEditWasteDataEntry/DialogEditWasteDataEntry.component';
 import { EqualValidator } from './new-energy/components/user/EqualValidator.directive';
+import { ListWasteDataComponent } from './new-energy/components/waste-data-entry/ListWasteData/ListWasteData.component';
+import { WasteDataEntryService } from './new-energy/components/waste-data-entry/WasteDataEntry.service';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -89,7 +91,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     MapViewComponent,
     DialogEditWasteDataEntry,
     HomeComponent,
-    EqualValidator
+    EqualValidator,
+    ListWasteDataComponent
    
   ],
   imports: [
@@ -139,7 +142,7 @@ export function HttpLoaderFactory(http: HttpClient) {
                      DialogEditUserComponent,
                      DialogEditWasteDataEntry
    ],
-  providers: [WasteOwnerService, WasteUserService,WasteTypeService,UserService,
+  providers: [WasteOwnerService, WasteUserService,WasteTypeService,UserService, WasteDataEntryService,
     AuthService, AuthGuard, MatNativeDateModule],
   bootstrap: [AppComponent]
 })
