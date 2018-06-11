@@ -10,13 +10,14 @@
 <form #dataEntryForm="ngForm">
   <div class="example-container">
     <hr>
-      <mat-form-field *ngIf="role =='ROLE_OWNER'">
+    <!-- If waste owner is logged in this field is populated and hidden and waste owner can automaticly choose his locations-->
+      <mat-form-field *ngIf="role =='ROLE_WASTE_OWNER'">
         <input matInput hidden
-               [(ngModel)]="data.wasteOwner" 
-                name="wasteOwner" #wasteOwner="ngModel" maxlength="32" >
+               [(ngModel)]="data.wasteOwnerId" 
+                name="wasteOwnerId" #wasteOwnerId="ngModel" maxlength="32" >
       </mat-form-field>
-     
-      <mat-form-field *ngIf="role =='ROLE_ADMIN'">
+     <!-- if admin or content manager is logged in then drop down list is showed.Then he can choose to which owner he can add waste input-->
+      <mat-form-field *ngIf="role =='ROLE_ADMIN' || role == 'ROLE_CONTENT_MNGR'">
         <mat-label >Waste owner</mat-label>
         <mat-select [(ngModel)]="data.wasteOwnerId" 
                     name="wasteOwnerId" 
@@ -66,7 +67,7 @@
             <mat-label>Amount (*in kg)</mat-label>
             <input matInput 
                    [(ngModel)]="data.amount" 
-                   name="amount" #amount="ngModel" type="number"
+                   name="amount" #amount="ngModel" type="number" min="0"
                    required >
           </mat-form-field>
           <div [hidden]="amount.valid || amount.pristine" class="alert alert-danger">
@@ -79,9 +80,9 @@
                    [(ngModel)]="data.validityDateStart" 
                    name="validityDateStart" 
                    #validityDateStart="ngModel"
-                  [matDatepicker]="validityDateStart" >
+                  [matDatepicker]="validityDateStart" disabled>
             <mat-datepicker-toggle matSuffix [for]="validityDateStart"></mat-datepicker-toggle>
-            <mat-datepicker #validityDateStart ></mat-datepicker>
+            <mat-datepicker #validityDateStart disabled="false" ></mat-datepicker>
           </mat-form-field>
           &nbsp; &nbsp;
           <mat-form-field style="width: 48%">
@@ -90,9 +91,9 @@
                    [(ngModel)]="data.validityDateEnd"
                     name="validityDateEnd" 
                     #validityDateEnd="ngModel"
-                   [matDatepicker]="validityDateEnd">
+                   [matDatepicker]="validityDateEnd" disabled>
             <mat-datepicker-toggle matSuffix [for]="validityDateEnd"></mat-datepicker-toggle>
-            <mat-datepicker #validityDateEnd  ></mat-datepicker>
+            <mat-datepicker #validityDateEnd disabled="false" ></mat-datepicker>
           </mat-form-field>
         </div>
 

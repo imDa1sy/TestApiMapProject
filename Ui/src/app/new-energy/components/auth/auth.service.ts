@@ -15,6 +15,7 @@ export class AuthService {
     private loggedErr: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     loggedInAs: string;
     userId :string;
+    wasteOwnerId:string;
 
     get isLoggedIn() {
         return this.loggedIn.asObservable();
@@ -44,6 +45,7 @@ export class AuthService {
 
                             this.loggedIn.next(true); //send new-energy component response to activate nav bar 
                             this.userId = this.authenticateResponse.id;
+                            this.wasteOwnerId = this.authenticateResponse.wasteOwnerId;
                             this.loggedInAs = this.authenticateResponse.userName; 
                             this.setRole.next(this.authenticateResponse.role);
                             this.showLoginDialog.next(false); //send response to login dialog to hide login dialog

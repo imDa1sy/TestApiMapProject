@@ -22,7 +22,7 @@ export class WasteOwnerService {
         return this.http.get<WasteOwner[]>('http://'+restConfig.Host+':'+restConfig.Port+'/api/getallactivewasteowners');
     }
 
-    loadWasteUserById(id): Observable<WasteOwner> {
+    loadWasteOwnerById(id): Observable<WasteOwner> {
         
         return this.http.get<WasteOwner>('http://'+restConfig.Host+':'+restConfig.Port+'/api/getwasteownerbyid/'+id);
     }

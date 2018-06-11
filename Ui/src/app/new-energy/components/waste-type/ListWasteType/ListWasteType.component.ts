@@ -59,7 +59,6 @@ export class ListWasteTypeComponent implements OnInit {
   }
 
   searchElements(search: string = "") {
-    console.log(search);
     this.dataSource.filter = search.toLowerCase().trim();
   }
   ngAfterViewInit() {

@@ -32,7 +32,7 @@ export class DialogEditWasteOwnerComponent implements OnInit {
 
     }
     else {
-      this._wasteOwnerService.loadWasteUserById(this.data.id).subscribe(data => {
+      this._wasteOwnerService.loadWasteOwnerById(this.data.id).subscribe(data => {
         this.data.localWasteOwner = data;
         
       });

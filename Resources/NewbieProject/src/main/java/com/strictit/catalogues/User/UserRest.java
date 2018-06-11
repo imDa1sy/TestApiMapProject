@@ -32,7 +32,7 @@ public class UserRest {
 
     @Autowired
     PasswordHash PasswordHash;
-
+ 
 //=========================== GET METHODS ======================================
     @GetMapping(path = "/getallusers")
     public List<User> getAllUsers() {
@@ -65,6 +65,7 @@ public class UserRest {
             if (oneUser.getUserName().equals(user.getUserName()) && oneUser.getPassword().equals(PasswordHash.hashPassword(user.getPassword())) && oneUser.isActive()) {
              
                 localUser.setId(oneUser.getId());
+                localUser.setWasteOwnerId(oneUser.getWasteOwnerId());
                 localUser.setUserName(oneUser.getUserName());
                 localUser.setRole(oneUser.getRole());
                 localUser.setAuthenticated(true);
@@ -74,10 +75,10 @@ public class UserRest {
             }
 
             return ResponseEntity.ok().body(localUser);
-        }).orElse(ResponseEntity.notFound().build());
+        }).orElse(ResponseEntity.noContent().build());
     }
 
-//========================== UPDATE-INESRT METHODS ====================================
+//========================== UPDATE-INSERT METHODS ====================================
     @PutMapping(path = "/updateuser/{id}")
     public ResponseEntity updateUser(@PathVariable String id, @RequestBody User user) {
 

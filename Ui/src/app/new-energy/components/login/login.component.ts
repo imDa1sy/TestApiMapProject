@@ -12,6 +12,7 @@ import { Observable } from 'rxjs';
 export class LoginComponent implements OnInit {
   isloggedErr$: Observable<boolean>; 
   form: FormGroup;
+  
   private formSubmitAttempt: boolean;
 
   constructor(private router: Router, private fb: FormBuilder, private authService: AuthService) { }
@@ -30,7 +31,7 @@ export class LoginComponent implements OnInit {
       (this.form.get(field).untouched && this.formSubmitAttempt)
     );
   }
-  onSubmit() {
+  login() {
     if (this.form.valid) {
       this.authService.login(this.form.value);
       

@@ -20,8 +20,8 @@ import org.springframework.stereotype.Repository;
 public interface LocationRepository extends MongoRepository<Location, String> {
     
        List<Location> findByActive(boolean active);
-       @Query(value="{ 'active' : true }")
-       List<Location> findActiveLocationsByWasteOwnerId(String wasteOwnerId);
+       
+       List<Location> findByWasteOwnerIdAndActive(String wasteOwnerId,boolean active);
        
        List<Location> findByWasteOwnerId(String wasteOwnerId);
        List<Location> findByWasteUserId(String wasteUserId);

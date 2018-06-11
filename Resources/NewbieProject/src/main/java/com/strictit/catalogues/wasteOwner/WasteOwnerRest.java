@@ -5,8 +5,6 @@
  */
 package com.strictit.catalogues.wasteOwner;
 
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBObject;
 import com.strictit.catalogues.User.PasswordHash;
 import com.strictit.catalogues.User.User;
 import com.strictit.catalogues.User.UserRepository;
@@ -14,7 +12,6 @@ import com.strictit.catalogues.locations.Location;
 import com.strictit.catalogues.locations.LocationRepository;
 import java.util.List;
 import java.util.Optional;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;

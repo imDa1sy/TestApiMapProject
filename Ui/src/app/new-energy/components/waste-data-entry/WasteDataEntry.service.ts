@@ -13,11 +13,11 @@ export class WasteDataEntryService {
 
     //==============================METHODS=======================================
 
-    getData(): Observable<WasteDataEntry[]> {
+    loadAllWasteData(): Observable<WasteDataEntry[]> {
         
         return this.http.get<WasteDataEntry[]>('http://'+restConfig.Host+':'+restConfig.Port+'/api/getallwastedata');
     }
-    load(id): Observable<WasteDataEntry> {
+    loadWasteDataById(id): Observable<WasteDataEntry> {
         
         return this.http.get<WasteDataEntry>('http://'+restConfig.Host+':'+restConfig.Port+'/api/getwastedatabyid/'+id);
     }

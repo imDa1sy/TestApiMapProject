@@ -11,8 +11,7 @@ import { WasteTypeService } from '../Wastetype.service';
 })
 export class DialogEditWasteTypeComponent implements OnInit {
 
-  wasteType: any;
-  color: any;
+  
   constructor(public dialogRef: MatDialogRef<DialogEditWasteTypeComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private http: Http, private snackBar: MatSnackBar,
@@ -27,7 +26,6 @@ export class DialogEditWasteTypeComponent implements OnInit {
     else {
       this._wasteTypeService.loadWasteTypeById(this.data.id).subscribe(data => {
         this.data.localWasteType = data;
-console.log(this.data.localWasteType)
       });
     }
   }

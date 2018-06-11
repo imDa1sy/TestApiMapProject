@@ -55,7 +55,6 @@ export class ListUserComponent implements OnInit {
  }
 
  searchElements(search: string = "") {
-   console.log(search);
    this.dataSource.filter = search.toLowerCase().trim();
  }
  ngAfterViewInit() {
@@ -109,9 +108,7 @@ export class ListUserComponent implements OnInit {
      if (result != null) {
        this.refresh();
      }
-
    });
- // });
  }
  
  deleteUser(id) {

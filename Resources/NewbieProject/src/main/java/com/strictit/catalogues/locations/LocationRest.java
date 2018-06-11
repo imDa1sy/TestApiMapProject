@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -42,7 +40,7 @@ public class LocationRest {
     public List<Location> getAllActiveLocations(@PathVariable String wasteOwnerId) {
 
         boolean active = true;
-        List<Location> listOfActiveLocations = locationRepository.findByWasteOwnerId(wasteOwnerId);
+        List<Location> listOfActiveLocations = locationRepository.findByWasteOwnerIdAndActive(wasteOwnerId,active);
         return listOfActiveLocations;
     }
 
@@ -54,30 +52,14 @@ public class LocationRest {
 
     }
 
-//========================== UPDATE METHODS ====================================
-    /*  @PutMapping(path = "/updatelocation/{id}")
-        public ResponseEntity updateLocation(@PathVariable String id, @RequestBody Location location) {
 
-            return locationRepository.findById(id).map(updateData -> {
-                updateData.setDescription(location.getDescription());
-                updateData.setLatitude(location.getLatitude());
-                updateData.setLongitude(location.getLongitude());
-
-                Location updatedLocation = locationRepository.save(updateData);
-                System.out.println("Location with id=' " + updateData.getId() + "' updated!");
-
-                return ResponseEntity.ok().body(updatedLocation);
-            }).orElse(ResponseEntity.notFound().build());
-
-        }
-     */
 //========================== DELETE METHODS ====================================    
     @DeleteMapping(path = "/removelocation/{id}")
     public ResponseEntity removeLocation(@PathVariable String id) {
 
         return locationRepository.findById(id).map(deleteLocation -> {
-
-            locationRepository.deleteById(id);
+            deleteLocation.setActive(false);
+            locationRepository.save(deleteLocation);
             System.out.println("Location  deleted!");
 
             return ResponseEntity.ok().build();

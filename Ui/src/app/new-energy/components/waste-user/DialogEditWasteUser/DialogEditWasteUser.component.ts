@@ -95,10 +95,7 @@ export class DialogEditWasteUserComponent implements OnInit {
       locations: this.data.localWasteUser.locations,
       users: this.data.localWasteUser.users
     }
-    console.log(this.data.locations)
-
-    console.log('waste user data in dialog edit waste ' + wasteUser)
-
+  
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
