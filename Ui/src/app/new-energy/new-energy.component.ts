@@ -6,6 +6,10 @@ import { MatDialog, MatDialogConfig } from '@angular/material';
 import { DialogEditWasteTypeComponent } from './components/waste-type/DialogEditWasteType/DialogEditWasteType.component';
 import { DialogEditWasteOwnerComponent } from './components/waste-owner/DialogEditWasteOwner/DialogEditWasteOwner.component';
 import { DialogEditWasteUserComponent } from './components/waste-user/DialogEditWasteUser/DialogEditWasteUser.component';
+import { DialogEditWasteDataEntry } from './components/waste-data-entry/DialogEditWasteDataEntry/DialogEditWasteDataEntry.component';
+import { DialogEditUserComponent } from './components/user/DialogEditUser/DialogEditUsercomponent';
+import { User } from './components/user/User.class';
+
 
 @Component({
   selector: 'app-new-energy',
@@ -15,33 +19,61 @@ import { DialogEditWasteUserComponent } from './components/waste-user/DialogEdit
 export class NewEnergyComponent implements OnInit {
   isLoggedIn$: Observable<boolean>;
   ROLE: string;
-
-  constructor(private authService: AuthService, private dialog: MatDialog, ) { }
+  showLoginDialog;
+  constructor(private authService: AuthService, private dialog: MatDialog ) { }
 
   ngOnInit() {
-    this.isLoggedIn$ = this.authService.isLoggedIn;
-    this.authService.bSubject.subscribe((value) => {
-      this.ROLE = value;
+    this.isLoggedIn$ = this.authService.isLoggedIn; //on init  isLogedIn$ get response if should show nav bar 
+   
+    this.authService.setRole.subscribe((value) => {
+      this.ROLE = value; // on init role is set via set role BehaviorSubject from auth service
     });
-
+    this.authService.showLoginDialog.subscribe((value) => {
+      this.showLoginDialog = value; // on init showLoginDialog is set via set showLoginDialog BehaviorSubject from auth service
+     
+    });
   }
 
   onLogout() {
     this.authService.logout();
+  }
+  newWasteDataEntry(){
+    let dialogRef = this.dialog.open(DialogEditWasteDataEntry, {
+      //disableClose: true,
+      autoFocus: true,
+      width: '800px', height: '550px', data: { 
+        "id": null 
+      }
+    });
+  }
+  
+  changePassword(){
+
+    let dialogRef = this.dialog.open(DialogEditUserComponent,{
+      //disableClose true,
+      autoFocus: true,
+      width: '500px', height: '500px',
+      data:{
+             "id" :this.authService.userId,
+             "showRole": false,
+             "localUser": User
+            },
+    });
+
   }
 /*
   newWasteOwner() {
     let dialogRef = this.dialog.open(DialogEditWasteOwnerComponent, {
       disableClose: true,
       autoFocus: true,
-      width: '600px', height: '550px', data: { "id": null }
+      width: '800px', height: '550px', data: { "id": null }
     });
   }
   newWasteUser() {
     let dialogRef = this.dialog.open(DialogEditWasteUserComponent, {
       disableClose: true,
       autoFocus: true,
-      width: '600px', height: '550px', data: { "id": null }
+      width: '800px', height: '550px', data: { "id": null }
     });
   }
   NewWasteType() {

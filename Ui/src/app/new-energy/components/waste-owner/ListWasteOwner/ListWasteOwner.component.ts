@@ -9,6 +9,7 @@ import { DialogDeleteQuestionComponent } from '../../DialogDeleteQuestion/Dialog
 import { WasteOwnerService } from '../WasteOwner.service';
 import { WasteOwner } from '../WasteOwner.class';
 import { Router } from '@angular/router';
+import { User } from '../../user/User.class';
 
 
 
@@ -39,7 +40,7 @@ export class ListWasteOwnerComponent implements OnInit {
     private _wasteOwnerService: WasteOwnerService,
     private router : Router) {
 
-    this.authService.bSubject.subscribe((value) => {
+    this.authService.setRole.subscribe((value) => {
       this.ROLE = value;
       if (value == 'ROLE_WASTE_OWNER') {
         this.displayedColumns = [ 'name','surName','companyName',
@@ -53,7 +54,7 @@ export class ListWasteOwnerComponent implements OnInit {
   }
   //============================= METHODS ========================================             
   refresh() {
-    this._wasteOwnerService.getData().subscribe(
+    this._wasteOwnerService.loadAllActiveWasteOwners().subscribe(
       data => {
         this.wasteOwnerList = data;
         this.dataSource.data = this.wasteOwnerList;
@@ -62,7 +63,6 @@ export class ListWasteOwnerComponent implements OnInit {
   }
 
   searchElements(search: string = "") {
-    console.log(search);
     this.dataSource.filter = search.toLowerCase().trim();
   }
   ngAfterViewInit() {
@@ -76,9 +76,10 @@ export class ListWasteOwnerComponent implements OnInit {
     let localWasteOwnerAdd={
       wasteOwnerData:{
         name: '',
-      surName: '',
-      companyName: '',
+      surName: '',          //Creates empty representation of WasteOwner class to be used in
+      companyName: '',     // DialogEditWasteOwner to hold values of form 
       address: '',
+      active: true,
       contact: {
           telephone: '',
           mobile: '',
@@ -92,9 +93,11 @@ export class ListWasteOwnerComponent implements OnInit {
     let dialogRef = this.dialog.open(DialogEditWasteOwnerComponent, {
      // disableClose: true,
       autoFocus: true,
-      width: '600px', height: '550px', data: { 
+      width: '800px', height: '550px', data: { 
         "id": null ,
-        "localWasteOwner":localWasteOwnerAdd
+        "localWasteOwner":localWasteOwnerAdd,
+        "enableUsername":true,
+        "enableAddUser":true
     }
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -109,21 +112,17 @@ export class ListWasteOwnerComponent implements OnInit {
     this.router.navigate(['biodeseuri/new-energy-from-waste/map-view']);
   }
   editWasteOwner(elementData) {
-   /*_wasteOwnerService load data and pass it in data object which is then injected in 
-    DialogEditWasteOwnerComponent to handle it.
-   */
-    this._wasteOwnerService.load(elementData.id).subscribe(data => {
-      this.localWasteOwnerToEdit = data;
-    
       
     let dialogRef = this.dialog.open(DialogEditWasteOwnerComponent, {
      // disableClose: true,
       autoFocus: true,
-      width: '600px', height: '550px',
+      width: '800px', height: '550px',
       data: {
         "id": elementData.id,
         "localWasteOwner":this.localWasteOwnerToEdit,
-        "edit":true
+        "edit":true,
+        "enableUsername":false,
+        "enableAddUser":false   
       }
     });
   
@@ -132,7 +131,7 @@ export class ListWasteOwnerComponent implements OnInit {
         this.refresh();
       }
     });
-  });
+
   }
 
   deleteWasteOwner(id) {

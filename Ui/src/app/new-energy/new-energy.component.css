@@ -2,3 +2,10 @@
     margin-left: 3%;
     
   }
+  nav {
+    background-color: grey;
+  }
+  li {
+    margin-top: 1%;
+    color: white;
+  }

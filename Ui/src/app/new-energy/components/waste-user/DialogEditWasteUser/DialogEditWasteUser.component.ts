@@ -1,9 +1,11 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar, MatDialog } from '@angular/material';
 
 import { Http, RequestOptions, Headers } from '@angular/http';
 import { restConfig } from '../../restConfig';
 import { WasteUserService } from '../WasteUser.service';
+import { DialogDeleteQuestionComponent } from '../../DialogDeleteQuestion/DialogDeleteQuestion.component';
+import { FormPatterns } from '../../FormPatterns';
 
 @Component({
   selector: 'app-DialogEditWasteUser',
@@ -12,30 +14,78 @@ import { WasteUserService } from '../WasteUser.service';
 })
 export class DialogEditWasteUserComponent implements OnInit {
 
+  emailPattern = FormPatterns.emailPattern;
+  passwordPattern = FormPatterns.passwordPattern;
+  usernamePattern = FormPatterns.usernamePattern;
+
   constructor(public dialogRef: MatDialogRef<DialogEditWasteUserComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private http: Http, private snackBar: MatSnackBar,
-    private _wastUserService: WasteUserService, ) { }
+    public dialog: MatDialog,
+    private _wastUserService: WasteUserService, ) {
+
+      this.loadWasteUserData();
+     }
+
+
+    loadWasteUserData() {
+      if (this.data.id == null) {
+  
+      }
+      else {
+        this._wastUserService.loadWasteUserById(this.data.id).subscribe(data => {
+          this.data.localWasteUser = data;
+          
+        });
+      }
+    } 
 
   ngOnInit() {
-    console.log('waste users ' + this.data)
+
   }
   onNoClick(): void {
     this.dialogRef.close();
   }
   addUsers() {
+    //creates new form fields in DialogEditWasteUser for creating new user
     this.data.localWasteUser.users.push({
+      "enableUsername": true,
+      "enableAddUser": true,
+      "myId": 'null',
+      "active": true, //is user active
       "role": "ROLE_WASTE_USER",
       "userName": "",
       "password": "",
       // "confirmPassword":''
     });
   }
+  deactivateUser($event, item, i) {
+    let dialogRef = this.dialog.open(DialogDeleteQuestionComponent, {
+      width: '300px', height: '300px',
+      data: { "text": "User", "entity_id": 'null' }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result != null) {
+        //shink size of array of location by 1 for every method call if form is empty
+        if (this.data.localWasteUser.users[i].userName == '' || this.data.localWasteUser.users[i].password == '') {
+          $event.preventDefault();
+          $event.stopPropagation();
+          this.data.localWasteUser.users.splice(this.data.localWasteUser.users.indexOf(item), 1);
+
+        } else {
+          //set selected user active status to false if form had data
+          this.data.localWasteUser.users[i].active = false;
+
+        }
+      }
+    });
+  }
+  /*
   deleteUsers($event, item) {
     $event.preventDefault();
     $event.stopPropagation();
     this.data.localWasteUser.users.splice(this.data.localWasteUser.users.indexOf(item), 1);
-  }
+  }*/
 
 
   SaveAndClose() {
@@ -45,10 +95,7 @@ export class DialogEditWasteUserComponent implements OnInit {
       locations: this.data.localWasteUser.locations,
       users: this.data.localWasteUser.users
     }
-    console.log(this.data.locations)
-
-    console.log('waste user data in dialog edit waste ' + wasteUser)
-
+  
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 

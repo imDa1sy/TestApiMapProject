@@ -27,7 +27,9 @@ import {
   MatGridListModule,
   MatRadioModule,
   MatSortModule,
-  MatPaginatorModule
+  MatPaginatorModule,
+  MatDatepickerModule,
+  MatNativeDateModule
 } from '@angular/material';
 
 import { router } from './app.router';
@@ -44,7 +46,6 @@ import { CaseStudyComponent } from './case-study/case-study.component';
 import { LoginComponent } from './new-energy/components/login/login.component';
 import { AuthService } from './new-energy/components/auth/auth.service';
 import { AuthGuard } from './new-energy/components/auth/auth.guard';
-import { RegisterComponent } from './new-energy/components/register/register.component';
 import { DialogEditWasteTypeComponent } from './new-energy/components/waste-type/DialogEditWasteType/DialogEditWasteType.component';
 import { ListWasteTypeComponent } from './new-energy/components/waste-type/ListWasteType/ListWasteType.component';
 import { DialogDeleteQuestionComponent } from './new-energy/components/DialogDeleteQuestion/DialogDeleteQuestion.component';
@@ -59,8 +60,9 @@ import { WasteUserService } from './new-energy/components/waste-user/WasteUser.s
 import { UserService } from './new-energy/components/user/User.service';
 import { DialogEditUserComponent } from './new-energy/components/user/DialogEditUser/DialogEditUsercomponent';
 import { MapViewComponent } from './new-energy/components/map-view/MapView.component';
-import { WasteDataEntryComponent } from './new-energy/components/waste-data-entry/WasteDataEntry.component';
 import { HomeComponent } from './new-energy/components/home/home.component';
+import { DialogEditWasteDataEntry } from './new-energy/components/waste-data-entry/DialogEditWasteDataEntry/DialogEditWasteDataEntry.component';
+import { EqualValidator } from './new-energy/components/user/EqualValidator.directive';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -79,15 +81,15 @@ export function HttpLoaderFactory(http: HttpClient) {
     ListWasteTypeComponent,
     ListWasteUserComponent,
     LoginComponent,
-    RegisterComponent,
     DialogEditWasteOwnerComponent,
     DialogEditWasteTypeComponent,
     DialogDeleteQuestionComponent,
     DialogEditWasteUserComponent,
     DialogEditUserComponent,
     MapViewComponent,
-    WasteDataEntryComponent,
-    HomeComponent  
+    DialogEditWasteDataEntry,
+    HomeComponent,
+    EqualValidator
    
   ],
   imports: [
@@ -125,18 +127,20 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatGridListModule,
     MatRadioModule,
     MatSortModule,
-    MatPaginatorModule
-
+    MatPaginatorModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   entryComponents: [ 
                      DialogDeleteQuestionComponent,
                      DialogEditWasteTypeComponent,
                      DialogEditWasteOwnerComponent,
                      DialogEditWasteUserComponent,
-                     DialogEditUserComponent
+                     DialogEditUserComponent,
+                     DialogEditWasteDataEntry
    ],
   providers: [WasteOwnerService, WasteUserService,WasteTypeService,UserService,
-    AuthService, AuthGuard],
+    AuthService, AuthGuard, MatNativeDateModule],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

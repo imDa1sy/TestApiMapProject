@@ -15,6 +15,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 public interface UserRepository extends MongoRepository<User, String> {
 
     public Optional<User> findByUserName(String userName);
+     List<User> findByActive(boolean active);
     List<User> findByWasteOwnerId(String wasteOwnerId);
     List<User> findByWasteUserId(String wasteUserId);
 }

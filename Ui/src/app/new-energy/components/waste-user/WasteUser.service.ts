@@ -11,12 +11,19 @@ export class WasteUserService{
 
    //==============================METHODS=======================================
 
-   getData(): Observable<WasteUser[]> {
+   loadAllWasteUsers(): Observable<WasteUser[]> {
        
        return this.http.get<WasteUser[]>('http://'+restConfig.Host+':'+restConfig.Port+'/api/getallwasteusers');
    }
-   load(id): Observable<WasteUser> {
+
+   loadAllActiveWasteUsers(): Observable<WasteUser[]> {
+       
+    return this.http.get<WasteUser[]>('http://'+restConfig.Host+':'+restConfig.Port+'/api/getallactivewasteusers');
+   }
+
+   loadWasteUserById(id): Observable<WasteUser> {
        
        return this.http.get<WasteUser>('http://'+restConfig.Host+':'+restConfig.Port+'/api/getwasteuserbyid/'+id);
    }
+
 }

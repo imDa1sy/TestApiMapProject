@@ -3,27 +3,24 @@
       <mat-toolbar color="primary">
       <h2>
          <mat-icon color="warn">remove</mat-icon>
-          <span translate="waste-type-remove-10">Delete {{data?.text}}</span>
+         <span translate="new_energy-delete">Delete </span> {{data?.text}}
       </h2>
     </mat-toolbar> 
      <hr>
-     <h1 mat-dialog-title translate="waste-type-remove-11"> Are you sure you want to Delete {{data?.text}} ?</h1>
+     <h1 mat-dialog-title> <span translate="new_energy-question-dialog">Are you sure you want to Delete</span> {{data?.text}} ?</h1>
     </div>
     <div mat-dialog-actions >
-          <button align="left" mat-raised-button color="accent" cdkFocusInitial
-                  (click)="onNoClick()"
-                  matTooltip="Cancel">  
-                  <span translate="waste-type-remove-12"> Cancel  </span>   
-              <mat-icon>close</mat-icon>
-          </button>
-          &nbsp;&nbsp;
-        <button 
-                  mat-raised-button  color="warn" 
-                  [mat-dialog-close]="true"
-                  (click)="DeleteAndClose()"
-                  matTooltip="Delete"> 
-                  <span translate="waste-type-remove-13">  Delete </span>        
+        <button mat-raised-button  color="warn" 
+               [mat-dialog-close]="true"
+               (click)="DeleteAndClose()" > 
+            <span translate="new_energy-delete">  Delete </span>        
             <mat-icon>delete</mat-icon>
+        </button>
+          &nbsp;&nbsp;
+        <button align="left" mat-raised-button color="accent" cdkFocusInitial
+               (click)="onNoClick()">  
+              <span translate="new_energy-cancel"> Cancel  </span>   
+            <mat-icon>close</mat-icon>
         </button>
       </div>
   </form>

@@ -32,7 +32,7 @@ public class UserRest {
 
     @Autowired
     PasswordHash PasswordHash;
-
+ 
 //=========================== GET METHODS ======================================
     @GetMapping(path = "/getallusers")
     public List<User> getAllUsers() {
@@ -40,6 +40,13 @@ public class UserRest {
         List<User> userList = userRepository.findAll();
 
         return userList;
+    }
+
+    @GetMapping(path = "/getallactiveusers")
+    public List<User> getAllActiveUsers() {
+        boolean active = true;
+        List<User> listOfActiveUsers = userRepository.findByActive(active);
+        return listOfActiveUsers;
     }
 
     @GetMapping(path = "/getuserbyid/{id}")
@@ -53,24 +60,25 @@ public class UserRest {
     @PostMapping(path = "/authenticate")
     public ResponseEntity Authenticate(@RequestBody User user) {
         return userRepository.findByUserName(user.getUserName()).map(oneUser -> {
-            
+
             User localUser = new User();
-            if (oneUser.getUserName().equals(user.getUserName()) && oneUser.getPassword().equals(PasswordHash.hashPassword(user.getPassword()))) {
- 
+            if (oneUser.getUserName().equals(user.getUserName()) && oneUser.getPassword().equals(PasswordHash.hashPassword(user.getPassword())) && oneUser.isActive()) {
+             
                 localUser.setId(oneUser.getId());
+                localUser.setWasteOwnerId(oneUser.getWasteOwnerId());
                 localUser.setUserName(oneUser.getUserName());
                 localUser.setRole(oneUser.getRole());
                 localUser.setAuthenticated(true);
-            }else{
+            } else {
                 localUser.setAuthenticated(false);
-                
+
             }
 
             return ResponseEntity.ok().body(localUser);
-        }).orElse(ResponseEntity.notFound().build());
+        }).orElse(ResponseEntity.noContent().build());
     }
 
-//========================== UPDATE-INESRT METHODS ====================================
+//========================== UPDATE-INSERT METHODS ====================================
     @PutMapping(path = "/updateuser/{id}")
     public ResponseEntity updateUser(@PathVariable String id, @RequestBody User user) {
 
@@ -98,10 +106,12 @@ public class UserRest {
     @DeleteMapping(path = "/removeuser/{id}")
     public ResponseEntity removeUser(@PathVariable String id) {
 
-        return userRepository.findById(id).map(deletedUser -> {
-
-            userRepository.deleteById(id);
-            System.out.println("User with id= '" + deletedUser.getId() + "' deleted!");
+        return userRepository.findById(id).map(deactivatedUser -> {
+            //user is not deleted is flaged to 'not active' and is open here to create logic if needs
+            // to be permanently be deleted
+            deactivatedUser.setActive(false);
+            userRepository.save(deactivatedUser);
+            System.out.println("User with id= '" + deactivatedUser.getId() + "' deleted!");
 
             return ResponseEntity.ok().build();
         }).orElse(ResponseEntity.notFound().build());

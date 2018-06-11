@@ -11,9 +11,10 @@ export class WasteUser {
 }
 export class Location {
     id: string;
+    active:boolean;
     description: string;
-    latitude: string;
-    longitude: string;
+    latitude: number;
+    longitude: number;
 }
 
 export class WasteUserData{
@@ -21,6 +22,7 @@ export class WasteUserData{
     surName: string;
     companyName: string;
     address: string;
+    active : boolean;
     contact: {
         telephone: string;
         mobile: string;

@@ -1,6 +1,6 @@
 <div class="containers">
   <h2>
-    <mat-icon color="accent">info</mat-icon> <span translate="new_energy-user-table-head">Users</span>
+    <mat-icon color="accent">info</mat-icon> <span translate="new_energy-users-header">Users</span>
   </h2>
   <button *ngIf="ROLE == 'ROLE_ADMIN'" mat-raised-button color="accent" (click)="NewUser()">
     <mat-icon>add</mat-icon>
@@ -15,17 +15,17 @@
   
       <ng-container matColumnDef="userName">
         <mat-header-cell *matHeaderCellDef mat-sort-header matTooltip="Sort by username Type asc or desc"> 
-          <span translate="new_energy-user-table-username">Username</span> </mat-header-cell>
+          <span translate="new_energy-username">Username</span> </mat-header-cell>
         <mat-cell *matCellDef="let element"> {{element.userName}} </mat-cell>
       </ng-container>
       <ng-container matColumnDef="role">
       <mat-header-cell *matHeaderCellDef > 
-          <span translate="new_energy-user-table-role">Role</span> </mat-header-cell>
+          <span translate="new_energy-role">Role</span> </mat-header-cell>
           <mat-cell *matCellDef="let element"> {{element.role}} </mat-cell>
       </ng-container>
       <ng-container matColumnDef="actionsColumn">
           <mat-header-cell *matHeaderCellDef matTooltip="Manage content">
-              <span translate="new_energy-user-table-actions"> Actions </span>     
+              <span translate="new_energy-actions"> Actions </span>     
           </mat-header-cell>
           <mat-cell *matCellDef="let row">
             <button mat-button (click)="editUser(row)" color="accent" matTooltip="Edit">

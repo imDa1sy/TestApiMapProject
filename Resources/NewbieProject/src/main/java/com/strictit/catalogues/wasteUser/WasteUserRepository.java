@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package com.strictit.catalogues.wasteUser;
+import java.util.List;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 /**
@@ -11,5 +12,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
  * @author Nenad
  */
 public interface WasteUserRepository extends MongoRepository<WasteUserData,String> {
-    
+    List<WasteUserData> findByActive(boolean active);
 }

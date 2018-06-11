@@ -11,9 +11,10 @@ export class WasteOwner {
 }
 export class Location {
     id: string;
+    active:boolean;
     description: string;
-    latitude: string; //change to number
-    longitude: string; //change to number
+    latitude: number; //change to number
+    longitude: number; //change to number
 }
 
 export class WasteOwnerData {
@@ -21,6 +22,7 @@ export class WasteOwnerData {
     surName: string;
     companyName: string;
     address: string;
+    active:boolean;
     contact: {
         telephone: string;
         mobile: string;

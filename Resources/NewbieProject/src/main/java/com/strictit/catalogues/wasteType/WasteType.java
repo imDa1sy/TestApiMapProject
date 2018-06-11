@@ -19,8 +19,17 @@ public class WasteType {
     private String id;
     
     private String name;
+    private boolean active;
     private String wasteType;
     private String color;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -30,13 +39,12 @@ public class WasteType {
         this.name = name;
     }
 
-    
-    public String getId() {
-        return id;
+    public boolean isActive() {
+        return active;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     public String getWasteType() {
@@ -57,8 +65,9 @@ public class WasteType {
 
     @Override
     public String toString() {
-        return "WasteType{" + "id=" + id + ", name=" + name + ", wasteType=" + wasteType + ", color=" + color + '}';
+        return "WasteType{" + "id=" + id + ", name=" + name + ", active=" + active + ", wasteType=" + wasteType + ", color=" + color + '}';
     }
 
+  
     
 }

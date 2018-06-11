@@ -1,57 +1,93 @@
 <mat-toolbar color="primary">
   <h2>
     <mat-icon color="accent">create</mat-icon>
-    <span>User</span>
+    <span translate="new_energy-user-header">User</span>
   </h2>
 </mat-toolbar>
 <form #newUserForm="ngForm">
   <div class="example-container">
     <hr>
       <mat-form-field >
-        <mat-label>Name</mat-label>
-        <input matInput [(ngModel)]="data?.localUser.userName" [disabled]="!data?.enableUsername" name="userName" #userName="ngModel" maxlength="30">
-        
+        <mat-label translate="new_energy-username">Username</mat-label>
+        <input matInput 
+               [(ngModel)]="data?.localUser.userName" 
+               [disabled]="!data?.enableUsername" 
+               name="userName" #userName="ngModel" 
+               minlength="5" maxlength="32"
+               [pattern]="usernamePattern"
+              required >
       </mat-form-field>
-      <mat-form-field>
-        <mat-label>Role</mat-label>
-        <mat-select [(ngModel)]="data?.localUser.role" required 
-        name="role" 
-        #role="ngModel">
-            <div [hidden]="role.valid || role.pristine" class="alert alert-danger">
+      <div [hidden]="userName.valid || userName.pristine" class="alert alert-danger"
+      >
+      <div [hidden]="!userName.hasError('required')" translate="new_energy-form-req-username"> 
+        UserName is required!
+     </div>
+     <div [hidden]="!userName.hasError('pattern')" translate="new_energy-form-pattern-username"> 
+       Minimum 5 characters is required!
+     </div>	
+ </div>
+      <!-- Here is checked if role option should be shown -->
+      <mat-form-field *ngIf="!data?.localUser.showRole && data?.localUser.role == 'ROLE_ADMIN' ">
+        <mat-label translate="new_energy-role">Role</mat-label>
+        <mat-select [(ngModel)]="data?.localUser.role"
+                    [disabled]="data?.localUser.role == 'ROLE_WASTE_OWNER' || data?.localUser.role == 'ROLE_WASTE_USER' || data?.localUser.role == 'ROLE_CONTENT_MNGR'"   
+                    name="role" 
+                    #role="ngModel"
+                    required >
+            <div [hidden]="role.valid || role.pristine" class="alert alert-danger" 
+                 translate="new_energy-form-req-role">
                 Role is required!
             </div>
-            <mat-option>--</mat-option>
-            <mat-option value="ROLE_WASTE_OWNER">WASTE OWNER</mat-option>
-            <mat-option value="ROLE_WASTE_USER">WASTE USER</mat-option>
-     </mat-select>
+            <mat-option >--</mat-option>
+            <mat-option value="ROLE_ADMIN"><span translate="new_energy-role-admin">ADMINISTRATOR</span></mat-option>
+            <mat-option value="ROLE_CONTENT_MNGR"><span translate="new_energy-role-manager">CONTENT MANAGER</span></mat-option>
+            <mat-option disabled [hidden]="true" value="ROLE_WASTE_OWNER">ROLE_WASTE_OWNER</mat-option>
+            <mat-option disabled [hidden]="true" value="ROLE_WASTE_USER">ROLE_WASTE_USER</mat-option>
+          </mat-select>
         </mat-form-field>
+        <mat-form-field>
+          <mat-label translate="new_energy-password">Password</mat-label>
+          <input matInput 
+                [(ngModel)]="data?.localUser.password" type="password"
+                name="password" #password="ngModel" [pattern]="passwordPattern"
+                minlength="8" maxlength="32"
+                required >
+        </mat-form-field>
+        <div [hidden]="password.valid || password.pristine" class="alert alert-danger"
+             >
+             <div [hidden]="!password.hasError('required')" translate="new_energy-form-req-password"> 
+              Password required.
+            </div>
+            <div [hidden]="!password.hasError('pattern')" translate="new_energy-form-pattern-password"> 
+              Password should be at least 8 characters long and should contain at least one number,
+              one Uppercase letter and one special character.
+            </div>	
+        </div>
     <mat-form-field>
-      <mat-label >Password</mat-label>
-      <input matInput type="password" [(ngModel)]="data?.localUser.password" required name="password" #password="ngModel" maxlength="30" #passwordCount>
-      <mat-hint align="end">{{ passwordCount.value.length }} / 30</mat-hint>
+      <mat-label translate="new_energy-confirmPassword">Confirm Password</mat-label>
+      <input matInput type="password" 
+            [(ngModel)]="data?.localUser.confirmPassword"
+            name="confirmPassword" 
+            validateEqual="password" reverse="false"
+            #confirmPassword="ngModel" minlength="8" maxlength="32" 
+            required>
     </mat-form-field>
-    <div [hidden]="password.valid || password.pristine" class="alert alert-danger" >
-      Password is required!
-    </div>
-    <mat-form-field>
-      <mat-label >Confirm Password</mat-label>
-      <input matInput type="password" [(ngModel)]="data?.localUser.Confirmpassword" required name="Confirmpassword" #password="ngModel" maxlength="30" #confirmpasswordCount>
-      <mat-hint align="end">{{ confirmpasswordCount.value.length }} / 30</mat-hint>
-    </mat-form-field>
-    <div [hidden]="password.valid || password.pristine" class="alert alert-danger" >
-      Password not match!
+    
+    <div [hidden]="confirmPassword.valid || confirmPassword.pristine" class="alert alert-danger" 
+          translate="new_energy-form-req-confirmPassword">
+        Password  mismatch!
     </div>  
     <hr>
   </div>
   <div mat-dialog-actions align="end">
-    <button mat-raised-button color="warn" (click)="onNoClick()" matTooltip="Close">
-      <mat-icon>close</mat-icon>
-    </button>
-
-    &nbsp; &nbsp;
-    <button color="accent" [disabled]="!newUserForm.form.valid" mat-raised-button [mat-dialog-close]="true" 
-     (click)="SaveAndClose()">
+    <button color="accent" [disabled]="!newUserForm.form.valid" 
+            mat-raised-button [mat-dialog-close]="true" 
+           (click)="SaveAndClose()">
       <mat-icon>done</mat-icon>
     </button>
+    &nbsp; &nbsp;
+    <button mat-raised-button color="warn" (click)="onNoClick()" matTooltip="Close">
+        <mat-icon>close</mat-icon>
+      </button>
   </div>
 </form>

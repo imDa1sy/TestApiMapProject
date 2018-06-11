@@ -7,6 +7,7 @@ import { restConfig } from '../../restConfig';
 import { DialogEditWasteTypeComponent } from '../DialogEditWasteType/DialogEditWasteType.component';
 import { DialogDeleteQuestionComponent } from '../../DialogDeleteQuestion/DialogDeleteQuestion.component';
 import { WasteTypeService } from '../Wastetype.service';
+import { WasteType } from '../WasteType.class';
 
 
 @Component({
@@ -16,6 +17,7 @@ import { WasteTypeService } from '../Wastetype.service';
 })
 export class ListWasteTypeComponent implements OnInit {
 
+  localWasteTypeToEdit: WasteType;
   //=========================== ATTRIBUTES ==========================================
   WasteTypeList: any;
   dataSource = new MatTableDataSource();
@@ -33,7 +35,7 @@ export class ListWasteTypeComponent implements OnInit {
     public dialog: MatDialog,
     public snackBar: MatSnackBar,
     private authService: AuthService) {
-    this.authService.bSubject.subscribe((value) => {
+    this.authService.setRole.subscribe((value) => {
 
       this.ROLE = value;
       if (value == 'ROLE_WASTE_OWNER') {
@@ -47,7 +49,7 @@ export class ListWasteTypeComponent implements OnInit {
 
   //============================ METHODS =============================================             
   refresh() {
-    this._wasteTypeService.getData().subscribe(
+    this._wasteTypeService.loadAllActiveWasteTypes().subscribe(
       data => {
         this.WasteTypeList = data;
         this.dataSource.data = this.WasteTypeList;
@@ -57,7 +59,6 @@ export class ListWasteTypeComponent implements OnInit {
   }
 
   searchElements(search: string = "") {
-    console.log(search);
     this.dataSource.filter = search.toLowerCase().trim();
   }
   ngAfterViewInit() {
@@ -68,10 +69,19 @@ export class ListWasteTypeComponent implements OnInit {
     this.refresh();
   }
   NewWasteType() {
+
+    let localWasteTypeToAdd={
+      active:true,
+      wasteType : '',
+      color:''
+    }
     let dialogRef = this.dialog.open(DialogEditWasteTypeComponent, {
     //  disableClose: true,
       autoFocus: true,
-      width: '400px', height: '350px', data: { "id": null }
+      width: '400px', height: '350px', data: { 
+        "id": null,
+        "localWasteType":localWasteTypeToAdd
+       }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result != null) {
@@ -81,14 +91,15 @@ export class ListWasteTypeComponent implements OnInit {
     });
   }
   editWasteType(elementData) {
+   
     let dialogRef = this.dialog.open(DialogEditWasteTypeComponent, {
      // disableClose: true,
       autoFocus: true,
       width: '400px', height: '350px',
       data: {
         "id": elementData.id,
-        "wasteType": elementData.wasteType,
-        "color":elementData.color
+        "localWasteType": WasteType
+      
       }
     });
     dialogRef.afterClosed().subscribe(result => {

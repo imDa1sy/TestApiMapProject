@@ -1,29 +1,28 @@
 <div>
-  <a [routerLink]="['/biodeseuri']" >
-     <img class="logo" src="../assets/biodeseuri.jpg" alt="">
-  </a>
-  <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
+    <p align="right" style="font-size:12px; margin-top:10px;margin-right:10px">ALPHA .4 VERSION</p>
+ 
+  <nav class="navbar  navbar-static-top" role="navigation">
+      <div class="containers">
+        <div class="navbar-header" style="background-color: black">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar1">
+                        <span style="background-color: white" class="sr-only">Toggle navigation</span>
+                        <span style="background-color: white" class="icon-bar"></span>
+                        <span style="background-color: white" class="icon-bar"></span>
+                        <span style="background-color: white" class="icon-bar"></span>
                     </button>
         </div>
     
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <div class="collapse navbar-collapse" id="navbar1">
            
           <ul class="nav navbar-nav">
-             
-              <li routerLinkActive="active"><a [routerLink]="['/biodeseuri']" translate="Intro"> INTRO </a></li>
-              <li routerLinkActive="active"><a [routerLink]="['/biodeseuri/benefits-for-moldova']" translate="Benefits"> BENEFITS FOR MOLDOVA </a></li>
-              <li routerLinkActive="active"><a [routerLink]="['/biodeseuri/procedure-and-services-for-farmers']" translate="Procedure_and_services"> PROCEDURE AND SERVICES FOR FARMERS </a></li>
-              <li routerLinkActive="active"><a [routerLink]="['/biodeseuri/new-energy-from-waste/login']" translate="New_energy"> NEW ENERGY FROM WASTE </a></li>
-              <li routerLinkActive="active"><a [routerLink]="['/biodeseuri/case-study']" translate="Case_study"> CASE STUDY </a></li>
-              <li><button mat-mini-fab (click)="switchLanguage('en')">en</button></li>
-              <li><button  mat-mini-fab (click)="switchLanguage('ro')">ro</button></li>
+             <li><img  src="../assets/biodeseuri.jpg" alt="" ></li>
+              <li class="nav-listItems" routerLinkActive="active"><a [routerLink]="['/biodeseuri']" translate="Intro"> INTRO </a></li>
+              <li class="nav-listItems" routerLinkActive="active"><a [routerLink]="['/biodeseuri/benefits-for-moldova']" translate="Benefits"> BENEFITS FOR MOLDOVA </a></li>
+              <li class="nav-listItems" routerLinkActive="active"><a [routerLink]="['/biodeseuri/procedure-and-services-for-farmers']" translate="Procedure_and_services"> PROCEDURE AND SERVICES FOR FARMERS </a></li>
+              <li class="nav-listItems" routerLinkActive="active"><a [routerLink]="['/biodeseuri/new-energy-from-waste']" translate="New_energy"> NEW ENERGY FROM WASTE </a></li>
+              <li class="nav-listItems" routerLinkActive="active"><a [routerLink]="['/biodeseuri/case-study']" translate="Case_study"> CASE STUDY </a></li>
+              <li class="nav-listItems"><button mat-mini-fab (click)="switchLanguage(switchLang =! switchLang)">{{langName}}</button></li>
+              
           </ul>
         </div>
       </div>

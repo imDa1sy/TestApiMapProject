@@ -4,33 +4,33 @@
   <mat-card>
     <mat-toolbar color="primary">
       <h2>
-        <p translate="login-comp-text1">Please login to continue</p>
+        <p translate="new_energy-login-header">Please login to continue</p>
       </h2>
     </mat-toolbar>
     <hr>
     <mat-card-content>
-      <form [formGroup]="form" (ngSubmit)="onSubmit()" autocomplete="off">
+      <form [formGroup]="form" (ngSubmit)="login()" autocomplete="off">
 
         <mat-form-field class="full-width-input">
-          <mat-label translate="login-comp-text10">Username</mat-label>
+          <mat-label translate="new_energy-username">Username</mat-label>
           <input matInput formControlName="userName" required>
-          <mat-error *ngIf="isFieldInvalid('userName')" translate="login-comp-text11">
-              Please enter your password
-            </mat-error>
+          <mat-error *ngIf="isFieldInvalid('userName')" translate="new_energy-form-req-username">
+            Username is required!
+          </mat-error>
         </mat-form-field>
         <mat-form-field class="full-width-input">
-          <mat-label translate="login-comp-text12">Password</mat-label>
+          <mat-label translate="new_energy-password">Password</mat-label>
           <input matInput type="password" formControlName="password" required>
-          <mat-error *ngIf="isFieldInvalid('password')" translate="login-comp-text13">
-              Please enter your password
-            </mat-error>
+          <mat-error *ngIf="isFieldInvalid('password')" translate="new_energy-form-req-password">
+            Password is required!
+          </mat-error>
         </mat-form-field>
-        <div *ngIf="isloggedErr$ | async" translate="login-comp-text14" class="alert alert-danger">
+        <div *ngIf="isloggedErr$ | async" translate="new_energy-login-error" class="alert alert-danger">
           Wrong username or password!
         </div>
-<hr>
+        <hr>
         <button autofocus mat-raised-button color="accent" type="submit">
-          <span translate="login-comp-button1">Login</span>
+          <span translate="new_energy-Login">Login</span>
         </button>
         &nbsp;
       </form>

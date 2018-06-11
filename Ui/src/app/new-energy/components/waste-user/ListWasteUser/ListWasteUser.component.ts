@@ -34,7 +34,7 @@ export class ListWasteUserComponent implements OnInit {
     public dialog: MatDialog,
     public snackBar: MatSnackBar) {
 
-    this.authService.bSubject.subscribe((value) => {  
+    this.authService.setRole.subscribe((value) => {  
       this.ROLE = value;
       if (value == 'ROLE_WASTE_OWNER') {
         this.displayedColumns = [ 'name','surName','companyName',
@@ -47,7 +47,7 @@ export class ListWasteUserComponent implements OnInit {
   }
   //============================= METHODS ========================================             
   refresh() {
-    this._wasteUserService.getData().subscribe(
+    this._wasteUserService.loadAllActiveWasteUsers().subscribe(
       data => {
         this.wasteUserList = data;
         this.dataSource.data = this.wasteUserList;
@@ -56,7 +56,6 @@ export class ListWasteUserComponent implements OnInit {
   }
 
   searchElements(search: string = "") {
-    console.log(search);
     this.dataSource.filter = search.toLowerCase().trim();
   }
   ngAfterViewInit() {
@@ -67,12 +66,15 @@ export class ListWasteUserComponent implements OnInit {
     this.refresh();
   }
   newWasteUser() {
+    // This is object model used in dialogEditWasteUser when creation new Waste user 
+    //and is sended in data object
     let localWasteUserAdd={
       wasteUserData:{
         name: '',
       surName: '',
       companyName: '',
       address: '',
+      active: true,
       contact: {
           telephone: '',
           mobile: '',
@@ -80,6 +82,7 @@ export class ListWasteUserComponent implements OnInit {
       }
     },
     locations:[{
+      myId: 'null',
       description:'',
       latitude:'',
       logitude:''
@@ -90,9 +93,11 @@ export class ListWasteUserComponent implements OnInit {
     let dialogRef = this.dialog.open(DialogEditWasteUserComponent, {
      // disableClose: true,
       autoFocus: true,
-      width: '600px', height: '550px', data: {
+      width: '800px', height: '550px', data: {
          "id": null ,
-         "localWasteUser":localWasteUserAdd
+         "localWasteUser":localWasteUserAdd,
+         "enableUsername":true, 
+         "enableAddUser":true
          
         }
     });
@@ -103,21 +108,17 @@ export class ListWasteUserComponent implements OnInit {
     });
   }
   editWasteUser(elementData) {
-   /*_wasteOwnerService load data and pass it in data object which is then injected in 
-    DialogEditWasteOwnerComponent to handle it.
-   */
-    this._wasteUserService.load(elementData.id).subscribe(data => {
-      this.localWasteUserToEdit = data;
     
-      
     let dialogRef = this.dialog.open(DialogEditWasteUserComponent, {
      // disableClose: true,
       autoFocus: true,
-      width: '600px', height: '550px',
+      width: '800px', height: '550px',
       data: {
         "id": elementData.id,
         "localWasteUser":this.localWasteUserToEdit,
-        "edit":true
+        "edit":true,
+        "enableUsername":false, 
+        "enableAddUser":false
       }
     });
   
@@ -126,7 +127,6 @@ export class ListWasteUserComponent implements OnInit {
         this.refresh();
       }
     });
-  });
   }
 
   deleteWasteUser(id) {

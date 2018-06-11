@@ -1,5 +1,5 @@
 com\strictit\catalogues\locations\Location.class
-com\strictit\catalogues\wasteUser\Contact.class
+com\strictit\catalogues\contact\Contact.class
 com\strictit\catalogues\wasteOwner\WasteOwnerData.class
 com\strictit\catalogues\wasteType\WasteTypeRepository.class
 com\strictit\catalogues\wasteUser\WasteUserRest.class
@@ -8,6 +8,7 @@ com\strictit\catalogues\wasteDataEntry\WasteDataEntryRepository.class
 com\strictit\catalogues\wasteUser\WasteUser.class
 com\strictit\catalogues\wasteDataEntry\WasteDataEntryRest.class
 com\strictit\catalogues\User\Users.class
+com\strictit\catalogues\User\PasswordHash.class
 com\strictit\catalogues\wasteUser\WasteUserData.class
 com\strictit\catalogues\wasteType\WasteType.class
 com\strictit\catalogues\wasteOwner\WasteOwner.class
@@ -19,8 +20,6 @@ com\strictit\catalogues\locations\LocationRest.class
 com\strictit\catalogues\wasteOwner\WasteOwnerRepository.class
 com\strictit\catalogues\User\User.class
 com\strictit\catalogues\locations\Locations.class
-com\strictit\config\SwaggerConfig.class
 com\strictit\catalogues\User\UserRest.class
 com\strictit\catalogues\wasteOwner\WasteOwnerRest.class
 com\strictit\catalogues\wasteUser\WasteUserRepository.class
-com\strictit\catalogues\wasteOwner\Contact.class

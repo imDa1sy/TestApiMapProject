@@ -5,8 +5,6 @@
  */
 package com.strictit.catalogues.wasteOwner;
 
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBObject;
 import com.strictit.catalogues.User.PasswordHash;
 import com.strictit.catalogues.User.User;
 import com.strictit.catalogues.User.UserRepository;
@@ -14,7 +12,6 @@ import com.strictit.catalogues.locations.Location;
 import com.strictit.catalogues.locations.LocationRepository;
 import java.util.List;
 import java.util.Optional;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -57,6 +54,13 @@ public class WasteOwnerRest {
         return wasteOwnerList;
     }
 
+    @GetMapping(path = "/getallactivewasteowners")
+    public List<WasteOwnerData> getAllActiveWasteOwners() {
+        boolean active = true;
+        List<WasteOwnerData> listOfActiveWasteOwners = wasteOwnerRepository.findByActive(active);
+        return listOfActiveWasteOwners;
+    }
+
     @GetMapping(path = "/getwasteownerbyid/{id}")
     public ResponseEntity getWasteOwnerById(@PathVariable String id) {
 
@@ -66,8 +70,8 @@ public class WasteOwnerRest {
         wasteOwner.setWasteOwnerData(wasteOwnerData.orElse(new WasteOwnerData()));
         // Load all locations from database by owner id
         wasteOwner.getLocations().loadByWasteOwnerId(id);
-
-        // wasteOwner.getUsers().loadByWasteOwnerId(id);
+        //load all users from database by user id 
+        wasteOwner.getUsers().loadByWasteOwnerId(id);
         return ResponseEntity.ok().body(wasteOwner);
 
     }
@@ -100,9 +104,12 @@ public class WasteOwnerRest {
         for (Location location : wob.getLocations()) {
             if (location.getMyId().equalsIgnoreCase("null")) {
                 location.setWasteOwnerId(tempOwnerId);
+                location.setActive(location.isActive());
                 locationRepository.save(location);
             } else {
                 locationRepository.findById(location.getMyId()).map(locationUpdate -> {
+
+                    locationUpdate.setActive(location.isActive());
                     locationUpdate.setDescription(location.getDescription());
                     locationUpdate.setLatitude(location.getLatitude());
                     locationUpdate.setLongitude(location.getLongitude());
@@ -115,9 +122,27 @@ public class WasteOwnerRest {
             }
 
         }
-        if(id.equalsIgnoreCase("null")){
+        for (User user : wob.getUsers()) {
+            if (user.getMyId().equalsIgnoreCase("null")) {
+                user.setWasteOwnerId(tempOwnerId);
+                user.setPassword(PasswordHash.hashPassword(user.getPassword()));
+                userRepository.save(user);
+            } else {
+                // In current version update user is not available from waste owner update form
+                // only can be displayed to get overview of his users.
+
+                userRepository.findById(user.getMyId()).map(userUpdate -> {
+                    userUpdate.setActive(user.isActive());
+
+                    User userUpdated = userRepository.save(userUpdate);
+
+                    return ResponseEntity.ok().body(userUpdated);
+                });
+            }
+        }
+        if (id.equalsIgnoreCase("null")) {
             return ResponseEntity.ok().body(null);
-        }else{
+        } else {
             return ResponseEntity.ok().body(null);
         }
 
@@ -125,13 +150,13 @@ public class WasteOwnerRest {
 
     //========================== DELETE METHODS ==================================
     @DeleteMapping(path = "/removewasteowner/{id}")
-        @ResponseBody
-        public ResponseEntity<?> removeWasteOwner(@PathVariable String id) {
+    @ResponseBody
+    public ResponseEntity<?> removeWasteOwner(@PathVariable String id) {
 
         return wasteOwnerRepository.findById(id)
                 .map(deletedOwner -> {
-
-                    wasteOwnerRepository.deleteById(id);
+                    deletedOwner.setActive(false);
+                    wasteOwnerRepository.save(deletedOwner);
                     //    System.out.println("Removed waste Owner '" + deletedOwner.getName() + "' deleted!");
                     return ResponseEntity.ok().body(deletedOwner.getId());
 

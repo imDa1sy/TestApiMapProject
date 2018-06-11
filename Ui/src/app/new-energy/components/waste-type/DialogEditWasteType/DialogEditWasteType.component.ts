@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 import { RequestOptions, Http, Headers } from '@angular/http';
 import { restConfig } from '../../restConfig';
+import { WasteTypeService } from '../Wastetype.service';
 
 @Component({
   selector: 'app-DialogEditWasteType',
@@ -10,11 +11,24 @@ import { restConfig } from '../../restConfig';
 })
 export class DialogEditWasteTypeComponent implements OnInit {
 
-  wasteType: any;
-  color: any;
+  
   constructor(public dialogRef: MatDialogRef<DialogEditWasteTypeComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private http: Http, private snackBar: MatSnackBar) { }
+    private http: Http, private snackBar: MatSnackBar,
+    private _wasteTypeService: WasteTypeService) {
+
+    this.loadWasteTypeData();
+  }
+  loadWasteTypeData() {
+    if (this.data.id == null) {
+
+    }
+    else {
+      this._wasteTypeService.loadWasteTypeById(this.data.id).subscribe(data => {
+        this.data.localWasteType = data;
+      });
+    }
+  }
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -33,10 +47,8 @@ export class DialogEditWasteTypeComponent implements OnInit {
     let options = new RequestOptions({ headers: headers });
 
     this.http.put('http://' + restConfig.Host + ':' + restConfig.Port + '/api/updatewastetype/' + this.data.id,
-      JSON.stringify({
-        wasteType: this.data.wasteType,
-        color: this.data.color
-      }), options).subscribe(
+      JSON.stringify( this.data.localWasteType
+      ), options).subscribe(
         (data) => {
           if (data.ok) {
             if (this.data.id == null) {
@@ -45,13 +57,13 @@ export class DialogEditWasteTypeComponent implements OnInit {
               this.snackBar.open("Waste type ", " inserted!", {
                 duration: 4000,
               });
-              
+
             } else {
               console.log('Waste type updated!');
               this.snackBar.open("Waste type ", " updated!", {
                 duration: 4000,
               });
-             
+
             }
           } else if (!data.ok) {
             this.snackBar.open("Error ", " occurred!", {

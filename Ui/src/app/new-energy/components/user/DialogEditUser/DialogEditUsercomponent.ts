@@ -3,6 +3,9 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 import { Http, RequestOptions, Headers } from '@angular/http';
 import { WasteOwnerService } from '../../waste-owner/WasteOwner.service';
 import { restConfig } from '../../restConfig';
+import { UserService } from '../User.service';
+import { User } from '../User.class';
+import { FormPatterns } from '../../FormPatterns';
 
 @Component({
   selector: 'app-DialogEditUser',
@@ -12,21 +15,38 @@ import { restConfig } from '../../restConfig';
 export class DialogEditUserComponent implements OnInit {
 
 
+  passwordPattern = FormPatterns.passwordPattern;
+  usernamePattern = FormPatterns.usernamePattern;
+  
   constructor(public dialogRef: MatDialogRef<DialogEditUserComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private http: Http, private snackBar: MatSnackBar,
-    private _wasteOwnerService: WasteOwnerService) {
-    // this.loadData();
+    private _userService: UserService) {
+
+    this.loadUserData();
   }
 
   ngOnInit() {
+
   }
+  
   onNoClick(): void {
     this.dialogRef.close();
   }
+  
+  loadUserData() {
+    if (this.data.id == null) {
+
+    }
+    else {
+      this._userService.loadUserById(this.data.id).subscribe(data => {
+        this.data.localUser = data;
+        this.data.localUser.password = '';
+      });
+    }
+  }
   SaveAndClose() {
 
-    console.log(this.data.localUser)
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 

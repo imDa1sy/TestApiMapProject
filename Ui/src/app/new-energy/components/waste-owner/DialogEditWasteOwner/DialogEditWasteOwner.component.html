@@ -1,173 +1,248 @@
 <mat-toolbar color="primary">
   <h2>
     <mat-icon color="accent">create</mat-icon>
-    <span translate="new-waste-owner-head">Waste owner</span>
+    <span translate="new_energy-waste-owner-header">Waste owner</span>
   </h2>
 </mat-toolbar>
 <form #newOwnerForm="ngForm">
   <div class="example-container">
     <hr>
-    <mat-label translate="new-waste-owner-base">Base information</mat-label>
+    <mat-label translate="new_energy-form-baseinfo">Base information</mat-label>
     <br>
 
     <div>
       <mat-form-field style="width: 48%">
-        <mat-label translate="new-waste-owner-name">Name</mat-label>
-        <input matInput [(ngModel)]="data.localWasteOwner?.wasteOwnerData.name" required name="name" #name="ngModel" maxlength="30" #nameCount>
-        <mat-hint align="end">{{ nameCount.value.length }} / 30</mat-hint>
+        <mat-label translate="new_energy-name">Name</mat-label>
+        <input matInput 
+               [(ngModel)]="data.localWasteOwner?.wasteOwnerData.name" 
+               name="name" 
+               #name="ngModel" maxlength="32" 
+               required >
       </mat-form-field>
-      <div [hidden]="name.valid || name.pristine" class="alert alert-danger" translate="new-waste-owner-req-name">
+      <div [hidden]="name.valid || name.pristine" class="alert alert-danger" 
+            translate="new_energy-form-req-name">
         Name is required!
       </div>
 
-      &nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <mat-form-field style="width: 48%">
-        <mat-label translate="new-waste-owner-sname">SurName</mat-label>
-        <input matInput [(ngModel)]="data.localWasteOwner?.wasteOwnerData.surName" required name="surName" #surName="ngModel" maxlength="30" #surNamecharacterCount>
-        <mat-hint align="end">{{ surNamecharacterCount.value.length }} / 30</mat-hint>
+        <mat-label translate="new_energy-surname">SurName</mat-label>
+        <input matInput
+               [(ngModel)]="data.localWasteOwner?.wasteOwnerData.surName"
+               name="surName" 
+               #surName="ngModel" maxlength="32"  
+               required >
       </mat-form-field>
-      <div [hidden]="surName.valid || surName.pristine" class="alert alert-danger" translate="new-waste-owner-req-sname">
+      <div [hidden]="surName.valid || surName.pristine" class="alert alert-danger" 
+           translate="new_energy-form-req-surname">
         SurName is required!
       </div>
     </div>
     <mat-form-field>
-      <mat-label translate="new-waste-owner-cname">Company name</mat-label>
-      <input matInput [(ngModel)]="data.localWasteOwner?.wasteOwnerData.companyName" required name="companyName" #companyName="ngModel" maxlength="30" #companyNameCount>
-      <mat-hint align="end">{{ companyNameCount.value.length }} / 30</mat-hint>
+      <mat-label translate="new_energy-company-name">Company name</mat-label>
+      <input matInput 
+             [(ngModel)]="data.localWasteOwner?.wasteOwnerData.companyName" 
+             name="companyName" 
+             #companyName="ngModel" maxlength="128" >
     </mat-form-field>
-    <div [hidden]="companyName.valid || companyName.pristine" class="alert alert-danger" translate="new-waste-owner-req-cname">
+    <div [hidden]="companyName.valid || companyName.pristine" class="alert alert-danger" 
+         translate="new_energy-form-req-companyName">
       companyName is required!
     </div>
     <mat-form-field>
-      <mat-label translate="new-waste-owner-address">Address</mat-label>
-      <input matInput [(ngModel)]="data.localWasteOwner?.wasteOwnerData.address" required name="address" #address="ngModel" maxlength="30" #addresscharacterCount>
-      <mat-hint align="end">{{ addresscharacterCount.value.length }} / 30</mat-hint>
+      <mat-label translate="new_energy-address">Address</mat-label>
+      <input matInput 
+             [(ngModel)]="data.localWasteOwner?.wasteOwnerData.address" 
+             name="address" #address="ngModel" maxlength="128" 
+             required >
     </mat-form-field>
-    <div [hidden]="address.valid || address.pristine" class="alert alert-danger" translate="new-waste-owner-req-address">
+    <div [hidden]="address.valid || address.pristine" class="alert alert-danger" 
+         translate="new_energy-form-req-address">
       Address is required!
     </div>
     <div>
       <mat-form-field style="width: 48%">
-        <mat-label translate="new-waste-owner-telephone">Telephone</mat-label>
-        <input matInput [(ngModel)]="data.localWasteOwner?.wasteOwnerData.contact.telephone" name="telephone" #telephone="ngModel" maxlength="15" #telephonecharacterCount>
-        <mat-hint align="end">{{ telephonecharacterCount.value.length }} / 16</mat-hint>
+        <mat-label translate="new_energy-telephone">Telephone</mat-label>
+        <input matInput 
+               [(ngModel)]="data.localWasteOwner?.wasteOwnerData.contact.telephone" 
+               name="telephone" #telephone="ngModel" maxlength="30" >
       </mat-form-field>
-      <div [hidden]="telephone.valid || telephone.pristine" class="alert alert-danger" translate="new-waste-owner-req-telephone">
+      <div [hidden]="telephone.valid || telephone.pristine" class="alert alert-danger" 
+           translate="new_energy-form-req-telephone">
         Telephone is required!
       </div>
-      &nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <mat-form-field style="width: 48%">
-        <mat-label translate="new-waste-owner-mobile">Mobile</mat-label>
-        <input matInput [(ngModel)]="data.localWasteOwner?.wasteOwnerData.contact.mobile" required name="mobile" #mobile="ngModel" maxlength="15" #mobilecharacterCount>
-        <mat-hint align="end">{{ mobilecharacterCount.value.length }} / 16</mat-hint>
+        <mat-label translate="new_energy-mobile">Mobile</mat-label>
+        <input matInput 
+               [(ngModel)]="data.localWasteOwner?.wasteOwnerData.contact.mobile"
+                name="mobile" #mobile="ngModel" maxlength="30" 
+                required >
       </mat-form-field>
-      <div [hidden]="mobile.valid || mobile.pristine" class="alert alert-danger" translate="new-waste-owner-req-mobile">
+      <div [hidden]="mobile.valid || mobile.pristine" class="alert alert-danger" 
+           translate="new_energy-form-req-mobile">
         Mobile is required!
       </div>
     </div>
     <mat-form-field>
-      <mat-label translate="new-waste-owner-email">Email</mat-label>
-      <input matInput [(ngModel)]="data.localWasteOwner?.wasteOwnerData.contact.email" type="email" required name="email" #email="ngModel" 
-      #emailcharacterCount email pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}">
-
+      <mat-label translate="new_energy-email">E-mail</mat-label>
+      <input matInput
+             [(ngModel)]="data.localWasteOwner?.wasteOwnerData.contact.email" 
+             type="email"
+             name="email" #email="ngModel" 
+             email [pattern]="emailPattern"
+             required >
     </mat-form-field>
-    <div [hidden]="email.valid || email.pristine" class="alert alert-danger" translate="new-waste-owner-req-email">
-      Email is required and format should be 'email@example.com'
-    </div>
+    <div [hidden]="email.valid || email.pristine" class="alert alert-danger"
+    >
+    <div [hidden]="!email.hasError('required')" translate="new_energy-form-req-email"> 
+      E-mail is required!
+   </div>
+   <div [hidden]="!email.hasError('pattern')" translate="new_energy-form-pattern-email"> 
+    Format should be 'email@example.com'
+   </div>	
+</div>
+   
     <hr>
-    <mat-label translate="new-waste-owner-locations">Locations</mat-label>
+    <mat-label translate="new_energy-locations">Locations</mat-label>
     <div align="right">
       <button type="button" mat-mini-fab (click)="addLocations()">
         <mat-icon>add</mat-icon>
       </button>
     </div>
+   
     <div class="example-container" *ngFor="let field of data.localWasteOwner?.locations; let i = index">
-      <mat-label translate="new-waste-owner-locationN">Location {{i+1}}</mat-label>
-      <mat-form-field>
-        <mat-label translate="new-waste-owner-description">Description</mat-label>
-        <textarea matInput [(ngModel)]="data.localWasteOwner?.locations[i].description" name="description{{i+1}}" #description="ngModel" required maxlength="50"
-          #descriptioncharacterCount></textarea>
-
-        <mat-hint align="end">{{ descriptioncharacterCount.value.length }} / 50</mat-hint>
-      </mat-form-field>
-      <div [hidden]="description.valid || description.pristine" class="alert alert-danger" translate="new-waste-owner-req-description">
+      <!-- here is checked if location is active  show it else is hidden-->
+        <div *ngIf="data.localWasteOwner?.locations[i].active">
+      <mat-label><span translate="new_energy-location">Location</span></mat-label>
+      <div>
+      <mat-form-field style="width: 32%">
+        <mat-label translate="new_energy-description">Description</mat-label>
+        <textarea matInput 
+                  [(ngModel)]="data.localWasteOwner?.locations[i].description"
+                   name="description{{i+1}}" #description="ngModel"  maxlength="128"
+                  required >
+      </textarea>
+    </mat-form-field>
+      <div [hidden]="description.valid || description.pristine" class="alert alert-danger" 
+           translate="new_energy-form-req-description">
         Description is required!
       </div>
-      <mat-form-field>
-        <mat-label translate="new-waste-owner-latitude">Latitude</mat-label>
-        <input matInput [(ngModel)]="data.localWasteOwner?.locations[i].latitude" name="latitude{{i+1}}" #latitude="ngModel" required maxlength="50" #latitudecharacterCount>
-
-        <mat-hint align="end">{{ latitudecharacterCount.value.length }} / 50</mat-hint>
-      </mat-form-field>
-      <div [hidden]="latitude.valid || latitude.pristine" class="alert alert-danger" translate="new-waste-owner-req-latitude">
+      &nbsp;
+      <mat-form-field style="width: 32%">
+        <mat-label translate="new_energy-latitude">Latitude</mat-label>
+        <input matInput 
+               [(ngModel)]="data.localWasteOwner?.locations[i].latitude"
+               type="number" 
+               name="latitude{{i+1}}" 
+               #latitude="ngModel" 
+               required >
+              </mat-form-field>
+      <div [hidden]="latitude.valid || latitude.pristine" class="alert alert-danger" 
+      translate="new_energy-form-req-latitude">
         Latitude is required!
       </div>
-      <mat-form-field>
-        <mat-label translate="new-waste-owner-longitude">Longitude</mat-label>
-        <input matInput [(ngModel)]="data.localWasteOwner?.locations[i].longitude" name="longitude{{i+1}}" #longitude="ngModel" required maxlength="50"
-          #longitudecharacterCount>
-
-        <mat-hint align="end">{{ longitudecharacterCount.value.length }} / 50</mat-hint>
+      &nbsp;
+      <mat-form-field style="width: 32%">
+        <mat-label translate="new_energy-longitude">Longitude</mat-label>
+        <input matInput 
+               [(ngModel)]="data.localWasteOwner?.locations[i].longitude" 
+               type="number"
+               name="longitude{{i+1}}" 
+               #longitude="ngModel"  
+               required >
       </mat-form-field>
-      <div [hidden]="longitude.valid || longitude.pristine" class="alert alert-danger" translate="new-waste-owner-req-longitude">
+      <div [hidden]="longitude.valid || longitude.pristine" class="alert alert-danger" 
+      translate="new_energy-form-req-longitude">
         Longitude is required!
       </div>
+      </div>
       <div align="right">
-        <button type="button" align="right" color="warn" mat-mini-fab mat-raised-button class="destroy-button" (mousedown)="deleteLocation($event, item)"
-          (touchstart)="deleteLocation($event, item)" matTooltip="Delete Location {{i+1}}">
-          <mat-icon>remove</mat-icon>
+        <button type="button" align="right" color="warn" 
+                mat-mini-fab mat-raised-button class="destroy-button" 
+               (click)="deactivateLocation($event, item,i)">
+               <mat-icon>remove</mat-icon>
         </button>
       </div>
     </div>
+    </div>
     <hr>
-    <div *ngIf="!data.edit == true">
-    <mat-label translate="new-waste-owner-users">Users</mat-label>
+    <div>
+    <mat-label translate="new_energy-users-header">Users</mat-label>
     <div align="right">
       <button type="button" mat-mini-fab (click)="addUsers()">
         <mat-icon>add</mat-icon>
       </button>
     </div>
   
-    <div  class="example-container" *ngFor="let field of data.localWasteOwner?.users; let i = index">
-      <mat-label translate="new-waste-owner-userN">User {{i+1}}</mat-label>
+    <div class="example-container" *ngFor="let field of data.localWasteOwner?.users; let i = index">
+      <!-- here is checked if user is active  show it else is hidden-->
+        <div class="example-container" *ngIf="data.localWasteOwner?.users[i].active">
+      <mat-label><span translate="new_energy-user-header">User</span></mat-label>
       <mat-form-field>
-        <mat-label translate="new-waste-owner-username">Username</mat-label>
-        <input matInput [(ngModel)]="data.localWasteOwner?.users[i].userName" name="userName{{i+1}}" #userName="ngModel" 
-        required minlength="5" maxlength="50" #userNamecharacterCount>
-
-        <mat-hint align="end">{{ userNamecharacterCount.value.length }} / 50</mat-hint>
+        <mat-label translate="new_energy-username">Username</mat-label>
+        <input matInput 
+               [(ngModel)]="data.localWasteOwner?.users[i].userName" 
+               [disabled]="!data.localWasteOwner?.users[i].enableUsername"
+               name="userName{{i+1}}" #userName="ngModel" 
+               minlength="5" maxlength="32"
+               [pattern]="usernamePattern" 
+               required >
       </mat-form-field>
-      <div [hidden]="userName.valid || userName.pristine" class="alert alert-danger" translate="new-waste-owner-req-username">
-        UserName is required! (minimum 5 characters)
+      <div [hidden]="userName.valid || userName.pristine" class="alert alert-danger"
+      >
+      <div [hidden]="!userName.hasError('required')" translate="new_energy-form-req-username"> 
+        UserName is required!
+     </div>
+     <div [hidden]="!userName.hasError('pattern')" translate="new_energy-form-pattern-username"> 
+       Minimum 5 characters is required!
+     </div>	
+ </div>
+      <div class="example-container" *ngIf="data.localWasteOwner?.users[i].enableAddUser">
+      <mat-form-field>
+        <mat-label translate="new_energy-password">Password</mat-label>
+        <input matInput 
+              [(ngModel)]="data.localWasteOwner?.users[i].password" type="password"
+              name="password{{i+1}}" #password="ngModel" [pattern]="passwordPattern"
+              minlength="8" maxlength="32"
+              required >
+      </mat-form-field>
+      <div [hidden]="password.valid || password.pristine" class="alert alert-danger"
+           >
+           <div [hidden]="!password.hasError('required')" translate="new_energy-form-req-password"> 
+            Password required.
+          </div>
+          <div [hidden]="!password.hasError('pattern')" translate="new_energy-form-pattern-password"> 
+            Password should be at least 8 characters long and should contain at least one number,
+            one Uppercase letter and one special character.
+          </div>	
       </div>
+      
       <mat-form-field>
-        <mat-label translate="new-waste-owner-password">Password</mat-label>
-        <input matInput [(ngModel)]="data.localWasteOwner?.users[i].password" name="password{{i+1}}" #password="ngModel" 
-        required minlength="5" maxlength="50" #passwordcharacterCount>
-
-        <mat-hint align="end">{{ passwordcharacterCount.value.length }} / 50</mat-hint>
+        <mat-label translate="new_energy-confirmPassword">Confirm Password</mat-label>
+        <input matInput 
+               [(ngModel)]="data.localWasteOwner?.users[i].confirmPassword" type="password"
+               name="confirmPassword{{i+1}}" 
+               validateEqual="password"
+               #confirmPassword="ngModel"
+               validateEqual="password" reverse="false"
+               minlength="8" maxlength="32" 
+               required >
       </mat-form-field>
-      <div [hidden]="password.valid || password.pristine" class="alert alert-danger" translate="new-waste-owner-req-password">
-        Password is required!
-      </div>
-      <mat-form-field>
-        <mat-label translate="new-waste-owner-confirmP">Confirm Password</mat-label>
-        <input matInput [(ngModel)]="data.localWasteOwner?.users[i].confirmPassword" name="confirmPassword{{i+1}}" 
-        validateEqual="password"
-        #confirmPassword="ngModel" required
-          maxlength="50" #confirmPasswordcharacterCount>
-
-        <mat-hint align="end">{{ confirmPasswordcharacterCount.value.length }} / 50</mat-hint>
-      </mat-form-field>
-      <div [hidden]="confirmPassword.valid || confirmPassword.pristine" class="alert alert-danger" translate="new-waste-owner-req-confirmP">
-        Password mismatch!
+      <div [hidden]="confirmPassword.valid || confirmPassword.pristine" class="alert alert-danger" 
+            translate="new_energy-form-req-confirmPassword">
+             Password  mismatch!
+     </div>
+      
       </div>
       <div align="right">
-        <button type="button" align="right" color="warn" mat-mini-fab mat-raised-button class="destroy-button" (mousedown)="deleteUsers($event, item)"
-          (touchstart)="deleteLogins($event, item)" matTooltip="Delete user {{i+1}}">
+        <button type="button" align="right" color="warn" 
+                mat-mini-fab mat-raised-button class="destroy-button" 
+                (click)="deactivateUser($event, item,i)" >
           <mat-icon>remove</mat-icon>
         </button>
       </div>
+    </div>
     </div>
   </div>
     <hr>
@@ -175,14 +250,16 @@
     <hr>
   </div>
   <div mat-dialog-actions align="end">
-    <button mat-raised-button color="warn" (click)="onNoClick()" matTooltip="Close">
-      <mat-icon>close</mat-icon>
-    </button>
-
+      <button color="accent" [disabled]="!newOwnerForm.form.valid" 
+              mat-raised-button [mat-dialog-close]="true" 
+              (click)="SaveAndClose()">
+       <mat-icon>done</mat-icon>
+     </button>
     &nbsp; &nbsp;
-    <button color="accent" [disabled]="!newOwnerForm.form.valid" mat-raised-button [mat-dialog-close]="true" 
-     (click)="SaveAndClose()">
-      <mat-icon>done</mat-icon>
-    </button>
+    <button  color="warn" 
+             mat-raised-button 
+             (click)="onNoClick()">
+        <mat-icon>close</mat-icon>
+      </button>
   </div>
 </form>

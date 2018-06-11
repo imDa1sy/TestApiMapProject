@@ -5,6 +5,7 @@
  */
 package com.strictit.catalogues.wasteOwner;
 
+import java.util.List;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 /**
@@ -12,5 +13,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
  * @author Nenad
  */
 public interface WasteOwnerRepository extends MongoRepository<WasteOwnerData, String> {
-        
+         List<WasteOwnerData> findByActive(boolean active);
 }

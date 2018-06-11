@@ -19,12 +19,13 @@ public class WasteDataEntry {
 
     @Id
     private String id;
-    private String wasteOwner;
-    private String wasteLocation;
-    private String wasteType;
+    private String wasteOwnerId;
+    private String wasteLocationId;
+    private String wasteTypeId;
     private double amount;
-    private Date validityDate;
-    private Date planedWasteDate;
+    private Date wasteDataSubmited;
+    private Date validityDateStart;
+    private Date validityDateEnd;
     private boolean expired;
 
     public String getId() {
@@ -35,28 +36,28 @@ public class WasteDataEntry {
         this.id = id;
     }
 
-    public String getWasteOwner() {
-        return wasteOwner;
+    public String getWasteOwnerId() {
+        return wasteOwnerId;
     }
 
-    public void setWasteOwner(String wasteOwner) {
-        this.wasteOwner = wasteOwner;
+    public void setWasteOwnerId(String wasteOwnerId) {
+        this.wasteOwnerId = wasteOwnerId;
     }
 
-    public String getWasteLocation() {
-        return wasteLocation;
+    public String getWasteLocationId() {
+        return wasteLocationId;
     }
 
-    public void setWasteLocation(String wasteLocation) {
-        this.wasteLocation = wasteLocation;
+    public void setWasteLocationId(String wasteLocationId) {
+        this.wasteLocationId = wasteLocationId;
     }
 
-    public String getWasteType() {
-        return wasteType;
+    public String getWasteTypeId() {
+        return wasteTypeId;
     }
 
-    public void setWasteType(String wasteType) {
-        this.wasteType = wasteType;
+    public void setWasteTypeId(String wasteTypeId) {
+        this.wasteTypeId = wasteTypeId;
     }
 
     public double getAmount() {
@@ -67,20 +68,28 @@ public class WasteDataEntry {
         this.amount = amount;
     }
 
-    public Date getValidityDate() {
-        return validityDate;
+    public Date getWasteDataSubmited() {
+        return wasteDataSubmited;
     }
 
-    public void setValidityDate(Date validityDate) {
-        this.validityDate = validityDate;
+    public void setWasteDataSubmited(Date wasteDataSubmited) {
+        this.wasteDataSubmited = wasteDataSubmited;
     }
 
-    public Date getPlanedWasteDate() {
-        return planedWasteDate;
+    public Date getValidityDateStart() {
+        return validityDateStart;
     }
 
-    public void setPlanedWasteDate(Date planedWasteDate) {
-        this.planedWasteDate = planedWasteDate;
+    public void setValidityDateStart(Date validityDateStart) {
+        this.validityDateStart = validityDateStart;
+    }
+
+    public Date getValidityDateEnd() {
+        return validityDateEnd;
+    }
+
+    public void setValidityDateEnd(Date validityDateEnd) {
+        this.validityDateEnd = validityDateEnd;
     }
 
     public boolean isExpired() {
@@ -93,7 +102,8 @@ public class WasteDataEntry {
 
     @Override
     public String toString() {
-        return "WasteData{" + "id=" + id + ", wasteOwner=" + wasteOwner + ", wasteLocation=" + wasteLocation + ", wasteType=" + wasteType + ", amount=" + amount + ", validityDate=" + validityDate + ", planedWasteDate=" + planedWasteDate + ", expired=" + expired + '}';
+        return "WasteDataEntry{" + "id=" + id + ", wasteOwnerId=" + wasteOwnerId + ", wasteLocationId=" + wasteLocationId + ", wasteTypeId=" + wasteTypeId + ", amount=" + amount + ", wasteDataSubmited=" + wasteDataSubmited + ", validityDateStart=" + validityDateStart + ", validityDateEnd=" + validityDateEnd + ", expired=" + expired + '}';
     }
 
+    
 }

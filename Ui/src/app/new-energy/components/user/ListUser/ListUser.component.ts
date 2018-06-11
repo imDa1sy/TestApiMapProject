@@ -12,7 +12,7 @@ import { User } from '../User.class';
   styleUrls: ['./ListUser.component.css']
 })
 export class ListUserComponent implements OnInit {
-  localUserToEdit: User;
+
  //=========================== ATTRIBUTES ==========================================
  userList: any;
  dataSource = new MatTableDataSource();
@@ -31,7 +31,7 @@ export class ListUserComponent implements OnInit {
    public dialog: MatDialog,
    public snackBar: MatSnackBar,
    private authService: AuthService) {
-   this.authService.bSubject.subscribe((value) => {
+   this.authService.setRole.subscribe((value) => {
 
      this.ROLE = value;
      if (value == 'ROLE_WASTE_OWNER') {
@@ -45,17 +45,16 @@ export class ListUserComponent implements OnInit {
 
  //============================ METHODS =============================================             
  refresh() {
-   this._userService.getData().subscribe(
+   this._userService.loadAllActiveUsers().subscribe(
      data => {
        this.userList = data;
        this.dataSource.data = this.userList;
+   
      });
    this.changeDetectorRefs.detectChanges();
-
  }
 
  searchElements(search: string = "") {
-   console.log(search);
    this.dataSource.filter = search.toLowerCase().trim();
  }
  ngAfterViewInit() {
@@ -69,15 +68,17 @@ export class ListUserComponent implements OnInit {
 
   let localUserAdd={
     userName: '',
-    password: '',
-    role: ''
+    password: '', //representation of user class to used when creating new user from DialogEditUser
+    role: 'ROLE_CONTENT_MNGR',
+    active:true
 
   }
    let dialogRef = this.dialog.open(DialogEditUserComponent, {
     // disableClose: true,
      autoFocus: true,
-     width: '400px', height: '350px', data: { 
+     width: '500px', height: '500px', data: { 
        "id": null,
+       "showRole": true,
        "enableUsername":true,      
        "localUser":localUserAdd
        }
@@ -90,16 +91,16 @@ export class ListUserComponent implements OnInit {
    });
  }
  editUser(elementData) {
-  this._userService.load(elementData.id).subscribe(data => {
-    this.localUserToEdit = data;
+   
    let dialogRef = this.dialog.open(DialogEditUserComponent, {
     // disableClose: true,
      autoFocus: true,
-     width: '400px', height: '350px',
+     width: '500px', height: '500px',
      data: {
        "id": elementData.id,
+       "showRole": true,
        "enableUsername":false,      
-       "localUser":this.localUserToEdit
+       "localUser": User
 
      }
    });
@@ -107,9 +108,7 @@ export class ListUserComponent implements OnInit {
      if (result != null) {
        this.refresh();
      }
-
    });
-  });
  }
  
  deleteUser(id) {

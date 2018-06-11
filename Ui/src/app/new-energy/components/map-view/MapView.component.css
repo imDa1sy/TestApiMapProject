@@ -1,4 +1,21 @@
 agm-map {
-    height:700px;
+    height:600px;
     
 }
+mat-sidenav-container {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+  
+mat-sidenav {
+    overflow-x: hidden;
+    
+    width: 15%;
+    max-width: 600px;
+    min-width: 400px;
+    height: 100%;
+    padding: 8px;
+    align-items: center;
+  }

@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,41 +46,34 @@ public class WasteDataEntryRest {
 
     }
 
-    //========================= POST METHODS ====================================
-    @PostMapping(path = "/insertwastedata")
-    public WasteDataEntry insertWasteData(@RequestBody WasteDataEntry wd) {
-
-        System.out.println("Waste data inserted!");
-
-        return wasteDataEntryRepository.save(wd);
-    }
-
     //========================= UPDATE METHODS ====================================
     @PutMapping(path = "/updatewastedata/{id}")
     public ResponseEntity updateWasteData(@PathVariable String id, @RequestBody WasteDataEntry wd) {
+        if (id.equalsIgnoreCase("null")) {
+            
+            WasteDataEntry wasteDatEntryInserted = wasteDataEntryRepository.save(wd);
+            System.out.println("after insert");
+            return ResponseEntity.ok().body(wasteDatEntryInserted);
+            
+        } else {
+            
+            return wasteDataEntryRepository.findById(id).map(updateData -> {
+                updateData = wd;
+                WasteDataEntry wasteDataUpdated = wasteDataEntryRepository.save(updateData);
+                System.out.println("Waste data with id=' " + updateData.getId() + "' updated!");
 
-        return wasteDataEntryRepository.findById(id).map(updateData -> {
+                return ResponseEntity.ok().body(wasteDataUpdated);
 
-            updateData.setWasteOwner(wd.getWasteOwner());
-            updateData.setWasteLocation(wd.getWasteLocation());
-            updateData.setAmount(wd.getAmount());
-            updateData.setWasteType(wd.getWasteType());
-            updateData.setValidityDate(wd.getValidityDate());
-            updateData.setPlanedWasteDate(wd.getPlanedWasteDate());
-            updateData.setExpired(wd.isExpired());
-
-            System.out.println("waste data with id=' " + updateData.getId() + "' updated!");
-            WasteDataEntry wdupdated = wasteDataEntryRepository.save(updateData);
-            return ResponseEntity.ok().body(wdupdated);
-        }).orElse(ResponseEntity.notFound().build());
+            }).orElse(ResponseEntity.notFound().build());
+        }
     }
 
     //========================= DELETE METHODS ===================================
     @DeleteMapping(path = "/removewastedata/{id}")
     public ResponseEntity removeWasteData(@PathVariable String id) {
         return wasteDataEntryRepository.findById(id).map(deleteData -> {
-
-            wasteDataEntryRepository.deleteById(id);
+            deleteData.setExpired(true);
+            wasteDataEntryRepository.save(deleteData);
             System.out.println("Removed waste data with type= '" + deleteData.getId() + "' deleted!");
             return ResponseEntity.ok().build();
         }).orElse(ResponseEntity.notFound().build());
