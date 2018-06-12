@@ -29,7 +29,8 @@ import {
   MatSortModule,
   MatPaginatorModule,
   MatDatepickerModule,
-  MatNativeDateModule
+  MatNativeDateModule,
+  MatTabsModule
 } from '@angular/material';
 
 import { router } from './app.router';
@@ -65,6 +66,7 @@ import { DialogEditWasteDataEntry } from './new-energy/components/waste-data-ent
 import { EqualValidator } from './new-energy/components/user/EqualValidator.directive';
 import { ListWasteDataComponent } from './new-energy/components/waste-data-entry/ListWasteData/ListWasteData.component';
 import { WasteDataEntryService } from './new-energy/components/waste-data-entry/WasteDataEntry.service';
+import { MapViewService } from './new-energy/components/map-view/MapView.service';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -132,7 +134,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatSortModule,
     MatPaginatorModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatTabsModule
   ],
   entryComponents: [ 
                      DialogDeleteQuestionComponent,
@@ -142,8 +145,9 @@ export function HttpLoaderFactory(http: HttpClient) {
                      DialogEditUserComponent,
                      DialogEditWasteDataEntry
    ],
-  providers: [WasteOwnerService, WasteUserService,WasteTypeService,UserService, WasteDataEntryService,
-    AuthService, AuthGuard, MatNativeDateModule],
+  providers: [WasteOwnerService, WasteUserService,WasteTypeService,
+              UserService, WasteDataEntryService, MapViewService,
+              AuthService, AuthGuard, MatNativeDateModule],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

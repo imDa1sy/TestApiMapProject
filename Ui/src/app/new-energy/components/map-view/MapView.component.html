@@ -1,15 +1,160 @@
 <button mat-mini-fab (click)="sidenav.toggle()" matTooltip="Map Options">
-  <mat-icon>apps</mat-icon>
+  <mat-icon>swap_horiz</mat-icon>
 </button>
+<hr>
 <mat-sidenav-container>
-  <mat-sidenav #sidenav mode="side" [opened]="true" >
- <h2>In development!</h2>
+  <mat-sidenav #sidenav mode="side" [opened]="true">
+    <h2>In development!</h2>
   </mat-sidenav>
 
-  <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" (mapClick)='onChoseLocation($event)'>
-    <div *ngFor="let i of localOwnerLocations">
-      <agm-marker *ngIf="i.active" [latitude]="i.latitude" [longitude]="i.longitude"></agm-marker>
-    </div>
-  </agm-map>
- 
+
+  <mat-tab-group>
+    <mat-tab label="Map view">
+      <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" (mapClick)='onChoseLocation($event)'>
+        <div *ngFor="let i of localOwnerLocations">
+          <agm-marker *ngIf="i.active"  [latitude]="i.latitude" [longitude]="i.longitude"></agm-marker>
+        </div>
+        <div *ngFor="let activeWaste of activeWasteData let i = index">
+          <agm-marker *ngIf="activeWaste.location.active" 
+                      (markerClick)="clickedMarker(activeWaste.location.description, i)"
+                       [latitude]="activeWaste.location.latitude"
+                       [longitude]="activeWaste.location.longitude">
+            <!--agm info hold placeholder value-->
+            <agm-info-window>
+
+              <table>
+                <tr>
+                  <td>
+                    <span translate="new_energy-waste-owner-header">Waste owner </span>:
+                    <strong>{{activeWaste.wasteOwnerData.name}} {{activeWaste.wasteOwnerData.surName}}</strong>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <span translate="new_energy-location">Location </span>:
+                    <strong>{{activeWaste.location.description}}</strong>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <span translate="new_energy-waste-type-header"> waste Type</span>:
+                    <strong>{{activeWaste.wasteType.wasteType}}</strong>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <span translate="new_energy-amount">Amount</span>:
+                    <strong>{{activeWaste.wasteDataEntry.amount}} kg</strong>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <span translate="new_energy-valid-from"> Valid from</span>:
+                    <strong>{{activeWaste.wasteDataEntry.validityDateStart | date: 'dd/MM/yyyy'}}</strong>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <span translate="new_energy-expire-date"> Expire date</span>:
+                    <strong>{{activeWaste.wasteDataEntry.validityDateEnd | date: 'dd/MM/yyyy'}}</strong>
+                  </td>
+                </tr>
+              </table>
+            </agm-info-window>
+          </agm-marker>
+        </div>
+      </agm-map>
+    </mat-tab>
+    <mat-tab translate="new_energy-grid-view" label="Grid view">
+        <div class="containers">
+        <div class="example-container mat-elevation-z8">
+
+            <mat-table #table [dataSource]="dataSource" matSort>
+    
+                <ng-container matColumnDef="wasteOwner">
+                    <mat-header-cell *matHeaderCellDef>
+                        <span translate="new_energy-waste-owner-header">Waste owner </span>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                        <table>
+                            <tr>
+                                <td>
+                                   <span translate="new_energy-name">Name</span>: {{element.wasteOwnerData.name}}
+                                </td>
+                            </tr> 
+                            <tr>
+                                <td>
+                                   <span translate="new_energy-surname">Surname</span>: {{element.wasteOwnerData.surName}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                   <span translate="new_energy-address">Address</span>: {{element.wasteOwnerData.address}}
+                                </td>
+                            </tr>
+                        </table>
+                    </mat-cell>
+                </ng-container>
+    
+                <ng-container matColumnDef="location">
+                    <mat-header-cell *matHeaderCellDef>
+                        <span translate="new_energy-location">Location </span>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.location.description}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="amount">
+                    <mat-header-cell *matHeaderCellDef>
+                        <span translate="new_energy-amount">Amount</span>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.wasteDataEntry.amount}} kg </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="wasteType">
+                    <mat-header-cell *matHeaderCellDef>
+                        <span translate="new_energy-waste-type-header"> waste Type</span>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.wasteType.wasteType}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="validityDate">
+                    <mat-header-cell *matHeaderCellDef>
+                        <span translate="new_energy-validityDate"> validityDate</span>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                        <table>
+                            <tr>
+                                <td>
+                                        <span translate="new_energy-valid-from"> Valid from</span>: {{element.wasteDataEntry.validityDateStart | date: 'dd/MM/yyyy'}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                        <span translate="new_energy-expire-date"> Expire date</span>: {{element.wasteDataEntry.validityDateEnd | date: 'dd/MM/yyyy'}}
+                                </td>
+                            </tr>
+                        </table>
+                    </mat-cell>
+                </ng-container>
+    
+                <ng-container matColumnDef="actionsColumn">
+                  <mat-header-cell *matHeaderCellDef matTooltip="Manage content">
+                      <span translate="new_energy-actions"> Actions </span>     
+                  </mat-header-cell>
+                  <mat-cell *matCellDef="let row">
+                    <button mat-button (click)="editWasteData(row)" color="accent"  matTooltip="Edit">
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-button (click)="deleteWasteData(row.id)" color="warn" matTooltip="Delete">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </mat-cell>
+                </ng-container>
+    
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            </mat-table>
+            <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]">
+            </mat-paginator>
+            </div>
+        </div>
+    </mat-tab>
+  </mat-tab-group>
 </mat-sidenav-container>

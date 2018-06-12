@@ -78,6 +78,7 @@
     "new_energy-waste-types-header":"Tipuri de deșeuri",
     "new_energy-user-header":"Utilizator",
     "new_energy-users-header":"Utilizatori",
+    "new_energy-waste-dataEntry-header":"Introducerea datelor deșeurilor",
 
     "new_energy-name":"Nume",
     "new_energy-surname":"Nume de familie",
@@ -87,6 +88,10 @@
     "new_energy-email":"E-mail",
     "new_energy-telephone":"Telefon",
     "new_energy-mobile":"Mobil",
+    "new_energy-amount":"Cantitate",
+    "new_energy-validityDate":"Dată de validare",
+    "new_energy-valid-from":"Valabil de la",
+    "new_energy-expire-date":"Data de expirare",
 
     "new_energy-username":"Nume de utilizator",
     "new_energy-password":"Parola",
@@ -121,6 +126,9 @@
     "new_energy-form-pattern-password":"Parola trebuie să aibă cel puțin 8 caractere și trebuie să conțină cel puțin un număr, o literă superioară și un caracter special.",
     "new_energy-form-req-confirmPassword":"Necorespunderea parolei!",
     "new_energy-form-req-type":"Tipul de deșeuri este necesar!",
+    "new_energy-form-req-waste-owner":"Deținătorul deșeurilor este necesar!",
+    "new_energy-form-req-waste-location":"Locația este necesar!",
+    "new_energy-form-req-waste-amount":"Suma este necesară!",
 
 
     "new_energy-delete":"Șterge",

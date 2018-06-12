@@ -90,6 +90,11 @@
     "new_energy-email":"E-mail",
     "new_energy-telephone":"Telephone",
     "new_energy-mobile":"Mobile",
+    "new_energy-amount":"Amount",
+    "new_energy-validityDate":"Validity date",
+    "new_energy-valid-from":"Valid from",
+    "new_energy-expire-date":"Expire date",
+
 
     "new_energy-username":"Username",
     "new_energy-password":"Password",
@@ -124,6 +129,9 @@
     "new_energy-form-pattern-password":"Password should be at least 8 characters long and should contain at least one number,one Uppercase letter and one special character.",
     "new_energy-form-req-confirmPassword":"Password mismatch!",
     "new_energy-form-req-type":"Waste type is required!",
+    "new_energy-form-req-waste-owner":"Waste owner is required!",
+    "new_energy-form-req-waste-location":"Location is required!",
+    "new_energy-form-req-waste-amount":"Amount is required!",
 
 
     "new_energy-delete":"Delete",

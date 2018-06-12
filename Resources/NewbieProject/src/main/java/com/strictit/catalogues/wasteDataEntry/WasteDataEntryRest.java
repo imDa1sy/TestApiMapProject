@@ -5,7 +5,15 @@
  */
 package com.strictit.catalogues.wasteDataEntry;
 
+import com.strictit.catalogues.locations.Location;
+import com.strictit.catalogues.locations.LocationRepository;
+import com.strictit.catalogues.wasteOwner.WasteOwnerData;
+import com.strictit.catalogues.wasteOwner.WasteOwnerRepository;
+import com.strictit.catalogues.wasteType.WasteType;
+import com.strictit.catalogues.wasteType.WasteTypeRepository;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -30,6 +38,15 @@ public class WasteDataEntryRest {
     @Autowired
     WasteDataEntryRepository wasteDataEntryRepository;
 
+    @Autowired
+    WasteOwnerRepository wasteOwnerRepository;
+
+    @Autowired
+    LocationRepository locationRepository;
+
+    @Autowired
+    WasteTypeRepository wasteTypeRepository;
+
     //======================= GET METHODS =====================================
     @GetMapping(path = "/getallwastedata")
     public List<WasteDataEntry> getAllWasteData() {
@@ -37,14 +54,72 @@ public class WasteDataEntryRest {
                 = wasteDataEntryRepository.findAll();
         return getTransationData;
     }
-
+      // method is returning list of waste data for specific waste owner
     @GetMapping(path = "/getallwastedatabyid/{wasteOwnerId}")
-    public List<WasteDataEntry> getAllWasteDataById(@PathVariable String wasteOwnerId) {
-     //add logic to get all waste data for current owner
+    public List<WasteData> getAllWasteDataById(@PathVariable String wasteOwnerId) {
+        //add logic to get all waste data for current owner
+        List wasteList = new ArrayList();
+
+        //here we retreive listo of waste data by owner id then we loop through it 
         List<WasteDataEntry> listOfWasteDataEntrys = wasteDataEntryRepository.findByWasteOwnerId(wasteOwnerId);
-        return listOfWasteDataEntrys;
+        for (WasteDataEntry wasteDataEntry : listOfWasteDataEntrys) {
+            WasteData localWasteData = new WasteData();
+              //here waste data base information is set 
+            localWasteData.setWasteDataEntry(wasteDataEntry);
+
+            //here we retreive current waste owner information and add it to waste data object
+            Optional<WasteOwnerData> wasteOwnerData = wasteOwnerRepository.findById(wasteDataEntry.getWasteOwnerId());
+            localWasteData.setWasteOwnerData(wasteOwnerData);
+            
+            //here we retreive location of waste data and add it to waste data object
+            Optional<Location> location = locationRepository.findById(wasteDataEntry.getWasteLocationId());
+            //here we retreive waste type and add it to waste data object
+            
+            localWasteData.setLocation(location);
+            Optional<WasteType> wasteType = wasteTypeRepository.findById(wasteDataEntry.getWasteTypeId());
+
+            localWasteData.setWasteType(wasteType);
+            //here waste object is populated and added to wasteList list to be sent
+
+            wasteList.add(localWasteData);
+
+        }
+        return wasteList;
     }
 
+    //method is returning all waste data from all waste owners
+     @GetMapping(path = "/getallactivewastedata")
+    public List<WasteData> getAllActiveWasteData() {
+        //add logic to get all waste data for current owner
+        List wasteList = new ArrayList();
+
+        //here we retreive listo of waste data by owner id then we loop through it 
+        List<WasteDataEntry> listOfWasteDataEntrys = wasteDataEntryRepository.findAll();
+        for (WasteDataEntry wasteDataEntry : listOfWasteDataEntrys) {
+            WasteData localWasteData = new WasteData();
+              //here waste data base information is set 
+            localWasteData.setWasteDataEntry(wasteDataEntry);
+
+            //here we retreive current waste owner information and add it to waste data object
+            Optional<WasteOwnerData> wasteOwnerData = wasteOwnerRepository.findById(wasteDataEntry.getWasteOwnerId());
+            localWasteData.setWasteOwnerData(wasteOwnerData);
+            
+            //here we retreive location of waste data and add it to waste data object
+            Optional<Location> location = locationRepository.findById(wasteDataEntry.getWasteLocationId());
+            //here we retreive waste type and add it to waste data object
+            
+            localWasteData.setLocation(location);
+            Optional<WasteType> wasteType = wasteTypeRepository.findById(wasteDataEntry.getWasteTypeId());
+
+            localWasteData.setWasteType(wasteType);
+            //here waste object is populated and added to wasteList list to be sent
+
+            wasteList.add(localWasteData);
+
+        }
+        return wasteList;
+    }
+    
     @GetMapping(path = "/getwastedatabyid/{id}")
     public ResponseEntity getWasteById(@PathVariable String id) {
         return wasteDataEntryRepository.findById(id).map(oneTransation

@@ -17,7 +17,14 @@ export class WasteDataEntryService {
         
         return this.http.get<WasteDataEntry[]>('http://'+restConfig.Host+':'+restConfig.Port+'/api/getallwastedata');
     }
-    
+    loadAllActiveWasteData(): Observable<WasteDataEntry[]> {
+        
+        return this.http.get<WasteDataEntry[]>('http://'+restConfig.Host+':'+restConfig.Port+'/api/getallactivewastedata');
+    }
+    loadAllWasteDataById(id): Observable<WasteDataEntry> {
+        
+        return this.http.get<WasteDataEntry>('http://'+restConfig.Host+':'+restConfig.Port+'/api/getallwastedatabyid/'+id);
+    }
     loadWasteDataById(id): Observable<WasteDataEntry> {
         
         return this.http.get<WasteDataEntry>('http://'+restConfig.Host+':'+restConfig.Port+'/api/getwastedatabyid/'+id);

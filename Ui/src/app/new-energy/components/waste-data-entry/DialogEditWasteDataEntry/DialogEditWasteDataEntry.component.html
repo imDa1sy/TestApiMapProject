@@ -18,12 +18,13 @@
       </mat-form-field>
      <!-- if admin or content manager is logged in then drop down list is showed.Then he can choose to which owner he can add waste input-->
       <mat-form-field *ngIf="role =='ROLE_ADMIN' || role == 'ROLE_CONTENT_MNGR'">
-        <mat-label >Waste owner</mat-label>
+        <mat-label translate="new_energy-waste-owner-header">Waste owner</mat-label>
         <mat-select [(ngModel)]="data.wasteOwnerId" 
                     name="wasteOwnerId" 
                     #wasteOwnerId="ngModel"
                     required >
-            <div [hidden]="wasteOwnerId.valid || wasteOwnerId.pristine" class="alert alert-danger" >
+            <div [hidden]="wasteOwnerId.valid || wasteOwnerId.pristine" class="alert alert-danger"
+            translate="new_energy-form-req-waste-owner" >
                  Waste Owner is required!
             </div>
             <mat-option >--</mat-option>
@@ -35,12 +36,13 @@
         </mat-form-field>
 
         <mat-form-field >
-          <mat-label >Waste Location</mat-label>
+          <mat-label translate="new_energy-location">Waste Location</mat-label>
           <mat-select [(ngModel)]="data.wasteLocationId"
                       name="wasteLocationId" 
                       #wasteLocationId="ngModel"
                       required >
-              <div [hidden]="wasteLocationId.valid || wasteLocationId.pristine" class="alert alert-danger" >
+              <div [hidden]="wasteLocationId.valid || wasteLocationId.pristine" class="alert alert-danger" 
+              translate="new_energy-form-req-waste-location">
                 Waste Location is required!
               </div>
               <mat-option >--</mat-option>
@@ -50,12 +52,13 @@
           </mat-form-field>
 
         <mat-form-field >
-          <mat-label >Waste type</mat-label>
+          <mat-label translate="new_energy-waste-type-header">Waste type</mat-label>
           <mat-select [(ngModel)]="data.wasteTypeId"
                       name="wasteTypeId" 
                       #wasteTypeId="ngModel"
                       required >
-              <div [hidden]="wasteTypeId.valid || wasteTypeId.pristine" class="alert alert-danger" >
+              <div [hidden]="wasteTypeId.valid || wasteTypeId.pristine" class="alert alert-danger"
+              translate="new_energy-form-req-type" >
                 Waste Type is required!
               </div>
               <mat-option >--</mat-option>
@@ -64,18 +67,19 @@
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>Amount (*in kg)</mat-label>
+            <mat-label ><span translate="new_energy-amount">Amount</span> (*in kg)</mat-label>
             <input matInput 
                    [(ngModel)]="data.amount" 
                    name="amount" #amount="ngModel" type="number" min="0"
                    required >
           </mat-form-field>
-          <div [hidden]="amount.valid || amount.pristine" class="alert alert-danger">
+          <div [hidden]="amount.valid || amount.pristine" class="alert alert-danger"
+          translate="new_energy-form-req-waste-amount">
             Amount is required!
           </div>
           <div>
               <mat-form-field style="width: 48%">
-              <mat-label>Choose a validity from</mat-label>
+              <mat-label translate="new_energy-valid-from"> validity from</mat-label>
             <input matInput
                    [(ngModel)]="data.validityDateStart" 
                    name="validityDateStart" 
@@ -86,7 +90,7 @@
           </mat-form-field>
           &nbsp; &nbsp;
           <mat-form-field style="width: 48%">
-              <mat-label>Choose a validity to</mat-label>
+              <mat-label translate="new_energy-expire-date">Expire date</mat-label>
             <input matInput
                    [(ngModel)]="data.validityDateEnd"
                     name="validityDateEnd" 

@@ -19,3 +19,9 @@ mat-sidenav {
     padding: 8px;
     align-items: center;
   }
+  table {
+    width: 100%;
+  }
+  .containers {
+    margin: 3%;
+  }
