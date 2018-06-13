@@ -10,16 +10,28 @@
 <form #dataEntryForm="ngForm">
   <div class="example-container">
     <hr>
+    <mat-form-field *ngIf="data?.edit">
+      <mat-label translate="new_energy-expired">Expired</mat-label>
+      <mat-select [(ngModel)]="data?.localWasteDataEntry.expired"
+                  name="expired" 
+                  #expired="ngModel"
+                   >
+          
+          <mat-option >--</mat-option>
+          <mat-option value="true" >Expired</mat-option>
+          <mat-option value="false" >Active</mat-option>
+        </mat-select>
+      </mat-form-field>
     <!-- If waste owner is logged in this field is populated and hidden and waste owner can automaticly choose his locations-->
       <mat-form-field *ngIf="role =='ROLE_WASTE_OWNER'">
         <input matInput hidden
-               [(ngModel)]="data.wasteOwnerId" 
+               [(ngModel)]="data?.localWasteDataEntry.wasteOwnerId" 
                 name="wasteOwnerId" #wasteOwnerId="ngModel" maxlength="32" >
       </mat-form-field>
      <!-- if admin or content manager is logged in then drop down list is showed.Then he can choose to which owner he can add waste input-->
       <mat-form-field *ngIf="role =='ROLE_ADMIN' || role == 'ROLE_CONTENT_MNGR'">
         <mat-label translate="new_energy-waste-owner-header">Waste owner</mat-label>
-        <mat-select [(ngModel)]="data.wasteOwnerId" 
+        <mat-select [(ngModel)]="data?.localWasteDataEntry.wasteOwnerId" 
                     name="wasteOwnerId" 
                     #wasteOwnerId="ngModel"
                     required >
@@ -37,7 +49,7 @@
 
         <mat-form-field >
           <mat-label translate="new_energy-location">Waste Location</mat-label>
-          <mat-select [(ngModel)]="data.wasteLocationId"
+          <mat-select [(ngModel)]="data?.localWasteDataEntry.wasteLocationId"
                       name="wasteLocationId" 
                       #wasteLocationId="ngModel"
                       required >
@@ -53,7 +65,7 @@
 
         <mat-form-field >
           <mat-label translate="new_energy-waste-type-header">Waste type</mat-label>
-          <mat-select [(ngModel)]="data.wasteTypeId"
+          <mat-select [(ngModel)]="data?.localWasteDataEntry.wasteTypeId"
                       name="wasteTypeId" 
                       #wasteTypeId="ngModel"
                       required >
@@ -69,7 +81,7 @@
           <mat-form-field>
             <mat-label ><span translate="new_energy-amount">Amount</span> (*in kg)</mat-label>
             <input matInput 
-                   [(ngModel)]="data.amount" 
+                   [(ngModel)]="data?.localWasteDataEntry.amount" 
                    name="amount" #amount="ngModel" type="number" min="0"
                    required >
           </mat-form-field>
@@ -81,7 +93,7 @@
               <mat-form-field style="width: 48%">
               <mat-label translate="new_energy-valid-from"> validity from</mat-label>
             <input matInput
-                   [(ngModel)]="data.validityDateStart" 
+                   [(ngModel)]="data?.localWasteDataEntry.validityDateStart" 
                    name="validityDateStart" 
                    #validityDateStart="ngModel"
                   [matDatepicker]="validityDateStart" disabled>
@@ -92,8 +104,9 @@
           <mat-form-field style="width: 48%">
               <mat-label translate="new_energy-expire-date">Expire date</mat-label>
             <input matInput
-                   [(ngModel)]="data.validityDateEnd"
+                   [(ngModel)]="data?.localWasteDataEntry.validityDateEnd"
                     name="validityDateEnd" 
+                    [min]="data?.localWasteDataEntry.validityDateStart"
                     #validityDateEnd="ngModel"
                    [matDatepicker]="validityDateEnd" disabled>
             <mat-datepicker-toggle matSuffix [for]="validityDateEnd"></mat-datepicker-toggle>

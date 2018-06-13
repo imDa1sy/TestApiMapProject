@@ -8,13 +8,15 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { FormsModule }    from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AgmCoreModule } from '@agm/core';
+import { AgmJsMarkerClustererModule } from '@agm/js-marker-clusterer';
+
 import 'hammerjs';
 import {
   MatIconModule,
   MatButtonModule,
   MatSelectModule,
   MatInputModule,
-  MatDialogModule,
+  MatDialogModule, 
   MatTooltipModule,
   MatCheckboxModule,
   MatSidenavModule,
@@ -102,6 +104,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     AgmCoreModule.forRoot({
       apiKey: ''
     }),
+    AgmJsMarkerClustererModule,
     BrowserModule,
     BrowserAnimationsModule,
     HttpModule,
@@ -111,7 +114,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         provide: TranslateLoader,
         useFactory: HttpLoaderFactory,
         deps: [HttpClient]
-      }
+      } 
+     
     }),
     FormsModule,
     ReactiveFormsModule,
@@ -147,7 +151,7 @@ export function HttpLoaderFactory(http: HttpClient) {
    ],
   providers: [WasteOwnerService, WasteUserService,WasteTypeService,
               UserService, WasteDataEntryService, MapViewService,
-              AuthService, AuthGuard, MatNativeDateModule],
+              AuthService, AuthGuard, MatNativeDateModule ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -7,6 +7,7 @@ import { WasteTypeService } from '../../waste-type/Wastetype.service';
 import { WasteType } from '../../waste-type/WasteType.class';
 import { restConfig } from '../../restConfig';
 import { AuthService } from '../../auth/auth.service';
+import { WasteDataEntryService } from '../WasteDataEntry.service';
 
 @Component({
   selector: 'app-DialogEditWasteDataEntry',
@@ -25,10 +26,32 @@ export class DialogEditWasteDataEntry implements OnInit {
     public dialog: MatDialog,
     private authService: AuthService,
     private _wasteOwnerService: WasteOwnerService,
+    private _wasteDataEntryService: WasteDataEntryService,
     private _wasteTypeService: WasteTypeService) { }
 
   onNoClick(): void {
     this.dialogRef.close();
+  }
+  
+  //load  waste data entry by id if is called from edit dialog
+  loadWasteDataEntryById() {
+    if (this.data.id == null) {
+
+    }
+    else {
+      this._wasteDataEntryService.loadWasteDataById(this.data.id).subscribe(data => {
+        this.data.localWasteDataEntry = data;
+
+        //convert date that can be presented in form
+        this.data.localWasteDataEntry.validityDateStart = new Date(this.data.localWasteDataEntry.validityDateStart);
+        if(this.data.localWasteDataEntry.validityDateEnd != null){
+        
+          this.data.localWasteDataEntry.validityDateEnd = new Date(this.data.localWasteDataEntry.validityDateEnd);  
+        }
+        //if edit set location wasteownerid is set automaticly
+        this.selectLocation(this.data.localWasteDataEntry.wasteOwnerId);
+      });
+    }
   }
 
   ngOnInit() {
@@ -38,7 +61,8 @@ export class DialogEditWasteDataEntry implements OnInit {
       this.role = value;
       if (value == 'ROLE_WASTE_OWNER') {
 
-        this.data.wasteOwnerId = this.authService.wasteOwnerId;
+        //here is set waste owner id when waste owner is loged in
+        this.data.localWasteDataEntry.wasteOwnerId = this.authService.wasteOwnerId;
 
       } if (value == 'ROLE_ADMIN' || value == 'ROLE_CONTENT_MNGR') {
         //get all waste owners to populate waste owner select option
@@ -56,28 +80,23 @@ export class DialogEditWasteDataEntry implements OnInit {
 
         });
     });
+
+    //load waste data by id 
+    this.loadWasteDataEntryById();
+
     // load all active locations of selected owner 
     this.selectLocation(this.authService.wasteOwnerId);
 
-    //this sets data entry default validityDateStart to current date
-    this.data.validityDateStart = new Date();
+  
   }
 
   selectLocation(wasteOwnerId) {
-   
-    if (this.role == 'ROLE_WASTE_OWNER') {
+   // select all active waste owner locations 
       this._wasteOwnerService.loadActiveLocations(wasteOwnerId).subscribe(
         data => {
           this.wasteOwnerLocationList = data;
 
-        });
-    } if (this.role == 'ROLE_ADMIN' || this.role == 'ROLE_CONTENT_MNGR') {
-      this._wasteOwnerService.loadActiveLocations(wasteOwnerId).subscribe(
-        data => {
-          this.wasteOwnerLocationList = data;
-
-        });
-    }
+        });  
   }
   SaveAndClose() {
     //setting date when waste data entry is submited
@@ -90,7 +109,7 @@ export class DialogEditWasteDataEntry implements OnInit {
     let options = new RequestOptions({ headers: headers });
 
     this.http.put('http://' + restConfig.Host + ':' + restConfig.Port + '/api/updatewastedata/' + this.data.id,
-      JSON.stringify(this.data
+      JSON.stringify(this.data.localWasteDataEntry
       ), options).subscribe(
         (data) => {
           if (data.ok) {

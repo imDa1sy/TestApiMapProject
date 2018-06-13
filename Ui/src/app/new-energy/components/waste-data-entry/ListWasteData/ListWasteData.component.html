@@ -1,16 +1,15 @@
-<button mat-mini-fab (click)="sidenav.toggle()">
-    <mat-icon>swap_horiz</mat-icon>
-</button>
-&nbsp;&nbsp;
-<button mat-mini-fab color="accent" (click)="newWasteDataEntry()">
-    <mat-icon>add</mat-icon>
-</button>
-<hr>
 <mat-sidenav-container>
     <mat-sidenav #sidenav mode="side" [opened]="true">
         <h2>In development!</h2>
 
     </mat-sidenav>
+    <button mat-mini-fab (click)="sidenav.toggle()">
+            <mat-icon>swap_horiz</mat-icon>
+        </button>
+        &nbsp;&nbsp;
+        <button mat-mini-fab color="accent" (click)="newWasteDataEntry()">
+            <mat-icon>add</mat-icon>
+        </button>
     <div class="containers">
     <div class="example-container mat-elevation-z8">
 
@@ -79,7 +78,7 @@
                 </mat-cell>
             </ng-container>
 
-            <!--ng-container matColumnDef="actionsColumn">
+            <ng-container matColumnDef="actionsColumn">
               <mat-header-cell *matHeaderCellDef matTooltip="Manage content">
                   <span translate="new_energy-actions"> Actions </span>     
               </mat-header-cell>
@@ -87,11 +86,11 @@
                 <button mat-button (click)="editWasteData(row)" color="accent"  matTooltip="Edit">
                   <mat-icon>edit</mat-icon>
                 </button>
-                <button mat-button (click)="deleteWasteData(row.id)" color="warn" matTooltip="Delete">
+                <button mat-button (click)="deleteWasteData(row.wasteDataEntry.id)" color="warn" matTooltip="Delete">
                   <mat-icon>delete</mat-icon>
                 </button>
               </mat-cell>
-            </ng-container-->
+            </ng-container>
 
             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
             <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>

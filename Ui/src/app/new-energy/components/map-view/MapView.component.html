@@ -1,27 +1,27 @@
-<button mat-mini-fab (click)="sidenav.toggle()" matTooltip="Map Options">
-  <mat-icon>swap_horiz</mat-icon>
-</button>
-<hr>
+
 <mat-sidenav-container>
   <mat-sidenav #sidenav mode="side" [opened]="true">
     <h2>In development!</h2>
   </mat-sidenav>
 
-
+  <button mat-mini-fab (click)="sidenav.toggle()" matTooltip="Map Options">
+      <mat-icon>swap_horiz</mat-icon>
+    </button>
   <mat-tab-group>
     <mat-tab label="Map view">
-      <agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" (mapClick)='onChoseLocation($event)'>
+      <agm-map #AgmMap [latitude]="latitude" [longitude]="longitude" [maxZoom]="16" [zoom]="zoom" (mapClick)='onChoseLocation($event)'>
         <div *ngFor="let i of localOwnerLocations">
           <agm-marker *ngIf="i.active"  [latitude]="i.latitude" [longitude]="i.longitude"></agm-marker>
         </div>
-        <div *ngFor="let activeWaste of activeWasteData let i = index">
-          <agm-marker *ngIf="activeWaste.location.active" 
+        <div id="map">
+            <agm-marker-cluster [maxZoom]="15" imagePath="https://raw.githubusercontent.com/googlemaps/v3-utility-library/master/markerclustererplus/images/m" >
+          <agm-marker  *ngFor="let activeWaste of activeWasteData let i = index"
                       (markerClick)="clickedMarker(activeWaste.location.description, i)"
                        [latitude]="activeWaste.location.latitude"
                        [longitude]="activeWaste.location.longitude">
             <!--agm info hold placeholder value-->
             <agm-info-window>
-
+ 
               <table>
                 <tr>
                   <td>
@@ -62,6 +62,7 @@
               </table>
             </agm-info-window>
           </agm-marker>
+          </agm-marker-cluster>
         </div>
       </agm-map>
     </mat-tab>
@@ -142,7 +143,7 @@
                     <button mat-button (click)="editWasteData(row)" color="accent"  matTooltip="Edit">
                       <mat-icon>edit</mat-icon>
                     </button>
-                    <button mat-button (click)="deleteWasteData(row.id)" color="warn" matTooltip="Delete">
+                    <button mat-button (click)="deleteWasteData(row.wasteDataEntry.id)" color="warn" matTooltip="Delete">
                       <mat-icon>delete</mat-icon>
                     </button>
                   </mat-cell>

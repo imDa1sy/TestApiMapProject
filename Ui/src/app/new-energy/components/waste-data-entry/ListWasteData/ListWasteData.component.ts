@@ -3,6 +3,8 @@ import { WasteDataEntryService } from '../WasteDataEntry.service';
 import { AuthService } from '../../auth/auth.service';
 import { MatTableDataSource, MatPaginator, MatSort, MatDialog } from '@angular/material';
 import { DialogEditWasteDataEntry } from '../DialogEditWasteDataEntry/DialogEditWasteDataEntry.component';
+import { WasteDataEntry } from '../WasteDataEntry.class';
+import { DialogDeleteQuestionComponent } from '../../DialogDeleteQuestion/DialogDeleteQuestion.component';
 
 @Component({
   selector: 'app-ListWasteData',
@@ -24,11 +26,12 @@ export class ListWasteDataComponent implements OnInit {
               private authService: AuthService,
               private _wasteDataEntryService: WasteDataEntryService,
               public dialog: MatDialog ) {
+
      this.authService.setRole.subscribe((value) => {
           this.ROLE = value;
           if (value == 'ROLE_WASTE_OWNER') {
            this.displayedColumns = ['location', 'wasteType', 'amount',
-                                    'validityDate', /*'actionsColumn'*/];
+                                    'validityDate', 'actionsColumn'];
           }
           if (value == 'ROLE_ADMIN') {
            this.displayedColumns = ['wasteOwner', 'location', 'wasteType', 'amount',
@@ -36,12 +39,26 @@ export class ListWasteDataComponent implements OnInit {
       }
     });
   }
+
   newWasteDataEntry() {
+
+    let localWasteDataEntryNew= {
+      wasteOwnerId: '',
+      wasteLocationId: '',
+      wasteTypeId: '',
+      amount: '',
+      wasteDataSubmited: '' ,
+      validityDateStart:  new Date(),  // when creating new waste data entry then default date is set to current date
+      validityDateEnd: '',
+      expired: false
+    }
+    
     let dialogRef = this.dialog.open(DialogEditWasteDataEntry, {
       //disableClose: true,
       autoFocus: true,
       width: '800px', height: '550px', data: {
-        "id": null
+        "id": null,
+        "localWasteDataEntry": localWasteDataEntryNew,
       }
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -50,22 +67,56 @@ export class ListWasteDataComponent implements OnInit {
       }
     });
   }
+
   refresh() {
     //load all waste data entryes with waste owner id 
     this._wasteDataEntryService.loadAllWasteDataById(this.authService.wasteOwnerId).subscribe(
       data => {
         this.wasteList = data;
         this.dataSource.data = this.wasteList;
-        console.log(this.wasteList);
       });
     this.changeDetectorRefs.detectChanges();
   }
+
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
+
   ngOnInit() {
     this.refresh();
   }
 
+  editWasteData(elementData){
+    let dialogRef = this.dialog.open(DialogEditWasteDataEntry, {
+      // disableClose: true,
+       autoFocus: true,
+       width: '800px', height: '550px',
+       data: {
+         "id": elementData.wasteDataEntry.id,
+         "localWasteDataEntry": WasteDataEntry,
+         "edit":true,
+        
+       }
+     });
+   
+     dialogRef.afterClosed().subscribe(result => {
+       if (result != null) {
+         this.refresh();
+       }
+     });
+  }
+
+  deleteWasteData(id){
+    let dialogRef = this.dialog.open(DialogDeleteQuestionComponent, {
+      width: '300px', height: '300px',
+      data: { "text": "Waste data", "restName": "/api/removewastedata/", "entity_id": id }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result != null) {
+        this.refresh();
+      }
+    });
+  }
+  
 }

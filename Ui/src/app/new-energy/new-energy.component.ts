@@ -38,11 +38,22 @@ export class NewEnergyComponent implements OnInit {
     this.authService.logout();
   }
   newWasteDataEntry(){
+    let localWasteDataEntryNew= {
+      wasteOwnerId: '',
+      wasteLocationId: '',
+      wasteTypeId: '',
+      amount: '',
+      wasteDataSubmited: '' ,
+      validityDateStart:  new Date(),  // when creating new waste data entry then default date is set to current date
+      validityDateEnd: '',
+      expired: false
+    }
     let dialogRef = this.dialog.open(DialogEditWasteDataEntry, {
       //disableClose: true,
       autoFocus: true,
-      width: '800px', height: '550px', data: { 
-        "id": null 
+      width: '800px', height: '550px', data: {
+        "id": null,
+        "localWasteDataEntry": localWasteDataEntryNew,
       }
     });
   }
