@@ -10,6 +10,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AgmCoreModule } from '@agm/core';
 import { AgmJsMarkerClustererModule } from '@agm/js-marker-clusterer';
 
+
 import 'hammerjs';
 import {
   MatIconModule,
@@ -70,6 +71,7 @@ import { ListWasteDataComponent } from './new-energy/components/waste-data-entry
 import { WasteDataEntryService } from './new-energy/components/waste-data-entry/WasteDataEntry.service';
 import { MapViewService } from './new-energy/components/map-view/MapView.service';
 
+
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
 }
@@ -100,6 +102,7 @@ export function HttpLoaderFactory(http: HttpClient) {
    
   ],
   imports: [
+
     RouterModule.forRoot(router),
     AgmCoreModule.forRoot({
       apiKey: ''

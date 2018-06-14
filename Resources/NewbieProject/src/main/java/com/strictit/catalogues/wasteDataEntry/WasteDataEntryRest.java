@@ -48,11 +48,11 @@ public class WasteDataEntryRest {
     WasteTypeRepository wasteTypeRepository;
 
     //======================= GET METHODS =====================================
-    @GetMapping(path = "/getallwastedata")
-    public List<WasteDataEntry> getAllWasteData() {
+    @PutMapping(path = "/getallwastedata")
+    public ResponseEntity getAllWasteData(@RequestBody String filterData) {
         List<WasteDataEntry> getTransationData
                 = wasteDataEntryRepository.findAll();
-        return getTransationData;
+        return ResponseEntity.ok().body(getTransationData);
     }
       // method is returning list of waste data for specific waste owner
     @GetMapping(path = "/getallwastedatabyid/{wasteOwnerId}")
@@ -88,8 +88,8 @@ public class WasteDataEntryRest {
     }
 
     //method is returning all waste data from all waste owners
-     @GetMapping(path = "/getallactivewastedata")
-    public List<WasteData> getAllActiveWasteData() {
+     @PutMapping(path = "/getallactivewastedata")
+    public ResponseEntity getAllActiveWasteData(@RequestBody String filterData) {
         //add logic to get all waste data for current owner
         List wasteList = new ArrayList();
 
@@ -117,7 +117,8 @@ public class WasteDataEntryRest {
             wasteList.add(localWasteData);
 
         }
-        return wasteList;
+        
+        return ResponseEntity.ok().body(wasteList);
     }
     
     @GetMapping(path = "/getwastedatabyid/{id}")

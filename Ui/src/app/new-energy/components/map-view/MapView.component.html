@@ -1,25 +1,56 @@
 
 <mat-sidenav-container>
   <mat-sidenav #sidenav mode="side" [opened]="true">
-    <h2>In development!</h2>
-  </mat-sidenav>
+  
+<form #filterForm="ngForm">
+  <div class="example-container">
+  <mat-checkbox [checked]="" [(ngModel)]="filterData.inFuture" 
+    name="inFuture"
+    #inFuture="ngModel">
+ Waste in future
+</mat-checkbox><hr>
+<div *ngFor="let wt of filterData.wasteTypeSearch ; let i = index">
+  <mat-checkbox [checked]="wt.search" [(ngModel)]="filterData.wasteTypeSearch[i].search" 
+  name="wt{{i+1}}"
+  #wasteType="ngModel">
+  {{wt.wasteType}}
+</mat-checkbox>
+</div>
 
+</div>
+      <div  align="end">
+        <button color="accent" 
+        mat-raised-button  (click)="FilterSearch()">
+          <mat-icon>search</mat-icon>
+        </button>
+        &nbsp; &nbsp;
+        <!--button color="warn" mat-raised-button type="reset">
+          <mat-icon>close</mat-icon>
+        </button-->
+      </div>
+</form>
+</mat-sidenav>
+<table><tr>
+<td style="width:30px;vertical-align:top;padding-left:3px">
   <button mat-mini-fab (click)="sidenav.toggle()" matTooltip="Map Options">
       <mat-icon>swap_horiz</mat-icon>
     </button>
+  </td>
+  <td class="row">
   <mat-tab-group>
     <mat-tab label="Map view">
-      <agm-map #AgmMap [latitude]="latitude" [longitude]="longitude" [maxZoom]="16" [zoom]="zoom" (mapClick)='onChoseLocation($event)'>
+      <agm-map #AgmMap [latitude]="latitude" [longitude]="longitude" [maxZoom]="15" [zoom]="zoom"
+      [fullscreenControl]='true' [mapTypeControl]='true'>
         <div *ngFor="let i of localOwnerLocations">
           <agm-marker *ngIf="i.active"  [latitude]="i.latitude" [longitude]="i.longitude"></agm-marker>
         </div>
-        <div id="map">
-            <agm-marker-cluster [maxZoom]="15" imagePath="https://raw.githubusercontent.com/googlemaps/v3-utility-library/master/markerclustererplus/images/m" >
-          <agm-marker  *ngFor="let activeWaste of activeWasteData let i = index"
+        <!--div id="map">
+          <agm-marker-cluster [maxZoom]="16" imagePath="https://raw.githubusercontent.com/googlemaps/v3-utility-library/master/markerclustererplus/images/m" >
+          <agm-marker  *ngFor="let activeWaste of activeWasteData; trackBy: insertMarker"
                       (markerClick)="clickedMarker(activeWaste.location.description, i)"
                        [latitude]="activeWaste.location.latitude"
                        [longitude]="activeWaste.location.longitude">
-            <!--agm info hold placeholder value-->
+            
             <agm-info-window>
  
               <table>
@@ -63,7 +94,7 @@
             </agm-info-window>
           </agm-marker>
           </agm-marker-cluster>
-        </div>
+        </div--> 
       </agm-map>
     </mat-tab>
     <mat-tab translate="new_energy-grid-view" label="Grid view">
@@ -152,10 +183,11 @@
                 <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
                 <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
             </mat-table>
-            <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]">
+            <mat-paginator #paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 50]">
             </mat-paginator>
             </div>
         </div>
     </mat-tab>
   </mat-tab-group>
+</td></tr></table>
 </mat-sidenav-container>

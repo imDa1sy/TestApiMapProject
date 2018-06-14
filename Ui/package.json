@@ -29,7 +29,9 @@
     "core-js": "^2.5.4",
     "hammerjs": "^2.0.8",
     "js-marker-clusterer": "^1.0.0",
+    "markerclustererplus-node": "^1.2.1",
     "rxjs": "^6.0.0",
+    "ts-overlapping-marker-spiderfier": "^1.0.3",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {
