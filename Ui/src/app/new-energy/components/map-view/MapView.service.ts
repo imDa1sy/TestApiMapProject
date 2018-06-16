@@ -11,12 +11,15 @@ export class MapViewService {
     constructor(private http: HttpClient) { }
 
     //==============================METHODS=======================================
-
-    getData(): Observable<Location[]> {
+    loadAllLocations(): Observable<Location[]> {
         
         return this.http.get<Location[]>('http://'+restConfig.Host+':'+restConfig.Port+'/api/getalllocations');
     }
-    load(id): Observable<Location> {
+    loadAllActiveLocations(): Observable<Location[]> {
+        
+        return this.http.get<Location[]>('http://'+restConfig.Host+':'+restConfig.Port+'/api/getallactivelocations');
+    }
+    loadLocationById(id): Observable<Location> {
         
         return this.http.get<Location>('http://'+restConfig.Host+':'+restConfig.Port+'/api/getlocationbyid/'+id);
     }

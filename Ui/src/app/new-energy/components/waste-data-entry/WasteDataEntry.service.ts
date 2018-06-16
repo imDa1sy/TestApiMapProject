@@ -1,8 +1,10 @@
 import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable } from "rxjs/internal/Observable";
 import { restConfig } from "../restConfig";
-import { WasteDataEntry } from "./WasteDataEntry.class";
+import { WasteData } from "./WasteDataEntry.class";
+import { WasteTypeFilter } from "../waste-type/WasteType.class";
+
 
 
 @Injectable()
@@ -13,13 +15,23 @@ export class WasteDataEntryService {
 
     //==============================METHODS=======================================
 
-    loadAllWasteData(): Observable<WasteDataEntry[]> {
+    loadAllWasteData(): Observable<WasteData[]> {
         
-        return this.http.get<WasteDataEntry[]>('http://'+restConfig.Host+':'+restConfig.Port+'/api/getallwastedata');
+        return this.http.get<WasteData[]>('http://'+restConfig.Host+':'+restConfig.Port+'/api/getallwastedata');
     }
-    loadWasteDataById(id): Observable<WasteDataEntry> {
+    loadAllActiveWasteData(filter: WasteTypeFilter): Observable<WasteData[]> {
+        const headers = new HttpHeaders().set("Content-Type", "application/json");
+    
+        return this.http.put<WasteData[]>('http://'+restConfig.Host+':'+restConfig.Port+'/api/getallactivewastedata',      
+        JSON.stringify( filter ), {headers} );
+    }
+    loadAllWasteDataById(id): Observable<WasteData> {
         
-        return this.http.get<WasteDataEntry>('http://'+restConfig.Host+':'+restConfig.Port+'/api/getwastedatabyid/'+id);
+        return this.http.get<WasteData>('http://'+restConfig.Host+':'+restConfig.Port+'/api/getallwastedatabyid/'+id);
+    }
+    loadWasteDataById(id): Observable<WasteData> {
+        
+        return this.http.get<WasteData>('http://'+restConfig.Host+':'+restConfig.Port+'/api/getwastedatabyid/'+id);
     }
   
 }

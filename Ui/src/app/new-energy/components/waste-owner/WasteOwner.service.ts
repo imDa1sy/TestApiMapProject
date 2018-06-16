@@ -29,7 +29,7 @@ export class WasteOwnerService {
 
     loadActiveLocations(id): Observable<WasteOwner> {
         
-        return this.http.get<WasteOwner>('http://'+restConfig.Host+':'+restConfig.Port+'/api/getallactivelocationsByWasteOwnerId/'+id);
+        return this.http.get<WasteOwner>('http://'+restConfig.Host+':'+restConfig.Port+'/api/getallactivelocationsbywasteownerid/'+id);
     }
     get ownerIdToMap():string {
         return this._ownerIdToMap;

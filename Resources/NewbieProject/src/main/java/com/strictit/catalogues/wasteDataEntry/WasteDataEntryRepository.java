@@ -5,6 +5,7 @@
  */
 package com.strictit.catalogues.wasteDataEntry;
 
+import java.util.List;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 /**
@@ -12,5 +13,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
  * @author daisy
  */
 public interface WasteDataEntryRepository extends MongoRepository<WasteDataEntry, String> {
-
+    
+     List<WasteDataEntry> findByWasteOwnerId(String wasteOwnerId);
 }

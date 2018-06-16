@@ -6,6 +6,7 @@ import { restConfig } from '../../restConfig';
 import { WasteUserService } from '../WasteUser.service';
 import { DialogDeleteQuestionComponent } from '../../DialogDeleteQuestion/DialogDeleteQuestion.component';
 import { FormPatterns } from '../../FormPatterns';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-DialogEditWasteUser',
@@ -22,7 +23,8 @@ export class DialogEditWasteUserComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private http: Http, private snackBar: MatSnackBar,
     public dialog: MatDialog,
-    private _wastUserService: WasteUserService, ) {
+    private _wastUserService: WasteUserService,
+    private translate: TranslateService ) {
 
       this.loadWasteUserData();
      }
@@ -106,13 +108,13 @@ export class DialogEditWasteUserComponent implements OnInit {
             if (this.data.id == null) {
 
               console.log('Waste user inserted!');
-              this.snackBar.open("Waste user ", " inserted!", {
+              this.snackBar.open(this.translate.instant('new_energy-waste-user-header'), this.translate.instant('new_energy-inserted'), {
                 duration: 4000,
               });
 
             } else {
               console.log('Waste user update!');
-              this.snackBar.open("Waste user ", " updated!", {
+              this.snackBar.open(this.translate.instant('new_energy-waste-user-header'), this.translate.instant('new_energy-updated'), {
                 duration: 4000,
               });
 

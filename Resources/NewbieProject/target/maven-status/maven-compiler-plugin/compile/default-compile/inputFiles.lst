@@ -1,8 +1,10 @@
 C:\Users\Nenad\Documents\GitHub\TestApiMapProject\Resources\NewbieProject\src\main\java\com\strictit\catalogues\locations\LocationRest.java
 C:\Users\Nenad\Documents\GitHub\TestApiMapProject\Resources\NewbieProject\src\main\java\com\strictit\catalogues\wasteType\WasteType.java
+C:\Users\Nenad\Documents\GitHub\TestApiMapProject\Resources\NewbieProject\src\main\java\com\strictit\catalogues\wasteType\MultiLanguageDescription.java
 C:\Users\Nenad\Documents\GitHub\TestApiMapProject\Resources\NewbieProject\src\main\java\com\strictit\catalogues\wasteType\WasteTypeRepository.java
 C:\Users\Nenad\Documents\GitHub\TestApiMapProject\Resources\NewbieProject\src\main\java\com\strictit\catalogues\wasteDataEntry\WasteDataEntryRest.java
 C:\Users\Nenad\Documents\GitHub\TestApiMapProject\Resources\NewbieProject\src\main\java\com\strictit\catalogues\wasteDataEntry\WasteDataEntryRepository.java
+C:\Users\Nenad\Documents\GitHub\TestApiMapProject\Resources\NewbieProject\src\main\java\com\strictit\catalogues\wasteDataEntry\WasteData.java
 C:\Users\Nenad\Documents\GitHub\TestApiMapProject\Resources\NewbieProject\src\main\java\com\strictit\catalogues\wasteOwner\WasteOwnerRepository.java
 C:\Users\Nenad\Documents\GitHub\TestApiMapProject\Resources\NewbieProject\src\main\java\com\strictit\catalogues\wasteUser\WasteUserData.java
 C:\Users\Nenad\Documents\GitHub\TestApiMapProject\Resources\NewbieProject\src\main\java\com\strictit\catalogues\wasteType\WasteTypeRest.java
@@ -11,6 +13,7 @@ C:\Users\Nenad\Documents\GitHub\TestApiMapProject\Resources\NewbieProject\src\ma
 C:\Users\Nenad\Documents\GitHub\TestApiMapProject\Resources\NewbieProject\src\main\java\com\strictit\catalogues\locations\LocationRepository.java
 C:\Users\Nenad\Documents\GitHub\TestApiMapProject\Resources\NewbieProject\src\main\java\com\strictit\catalogues\wasteDataEntry\WasteDataEntry.java
 C:\Users\Nenad\Documents\GitHub\TestApiMapProject\Resources\NewbieProject\src\main\java\com\strictit\catalogues\User\PasswordHash.java
+C:\Users\Nenad\Documents\GitHub\TestApiMapProject\Resources\NewbieProject\src\main\java\com\strictit\catalogues\wasteType\WasteTypeFilter.java
 C:\Users\Nenad\Documents\GitHub\TestApiMapProject\Resources\NewbieProject\src\main\java\com\strictit\catalogues\User\User.java
 C:\Users\Nenad\Documents\GitHub\TestApiMapProject\Resources\NewbieProject\src\main\java\com\strictit\catalogues\locations\Locations.java
 C:\Users\Nenad\Documents\GitHub\TestApiMapProject\Resources\NewbieProject\src\main\java\com\strictit\catalogues\User\UserRest.java
@@ -19,6 +22,7 @@ C:\Users\Nenad\Documents\GitHub\TestApiMapProject\Resources\NewbieProject\src\ma
 C:\Users\Nenad\Documents\GitHub\TestApiMapProject\Resources\NewbieProject\src\main\java\com\strictit\NewbieProjectApplication.java
 C:\Users\Nenad\Documents\GitHub\TestApiMapProject\Resources\NewbieProject\src\main\java\com\strictit\catalogues\User\Users.java
 C:\Users\Nenad\Documents\GitHub\TestApiMapProject\Resources\NewbieProject\src\main\java\com\strictit\catalogues\wasteOwner\WasteOwnerData.java
+C:\Users\Nenad\Documents\GitHub\TestApiMapProject\Resources\NewbieProject\src\main\java\com\strictit\config\MongoClientConfig.java
 C:\Users\Nenad\Documents\GitHub\TestApiMapProject\Resources\NewbieProject\src\main\java\com\strictit\catalogues\wasteOwner\WasteOwnerRest.java
 C:\Users\Nenad\Documents\GitHub\TestApiMapProject\Resources\NewbieProject\src\main\java\com\strictit\catalogues\User\UserRepository.java
 C:\Users\Nenad\Documents\GitHub\TestApiMapProject\Resources\NewbieProject\src\main\java\com\strictit\catalogues\wasteUser\WasteUser.java
