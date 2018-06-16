@@ -79,6 +79,11 @@
     "new_energy-user-header":"Utilizator",
     "new_energy-users-header":"Utilizatori",
     "new_energy-waste-dataEntry-header":"Introducerea datelor deșeurilor",
+    "new_energy-waste-dataEntry-data":"Date despre deșeuri",
+    "new_energy-english":"Engleză",
+    "new_energy-romanian":"Română",
+
+
 
     "new_energy-name":"Nume",
     "new_energy-surname":"Nume de familie",
@@ -137,7 +142,12 @@
     "new_energy-cancel":"Anulare",
 
     "new_energy-role-admin":"ADMINISTRATOR",
-    "new_energy-role-manager":"MANAGER DE CONTINUT"
+    "new_energy-role-manager":"MANAGER DE CONTINUT",
+
+
+    "new_energy-inserted":"Inserat!",
+    "new_energy-updated":"Actualizat!",
+    "new_energy-deleted":"Șters!"
 
   
    }

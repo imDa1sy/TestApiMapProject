@@ -12,6 +12,7 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
+import com.strictit.config.MongoClientConfig;
 import java.util.ArrayList;
 import java.util.List;
 import org.bson.types.ObjectId;
@@ -27,7 +28,8 @@ public class Locations extends ArrayList<Location> {
 
     @Autowired
     LocationRepository locationRepository;
-    MongoClient mongoClient = new MongoClient();
+    MongoClient mongoClient = MongoClientConfig.getConnection();
+ 
     DB database = mongoClient.getDB("Biodeseuri");
 
     public int loadByWasteOwnerId(String wasteOwnerId) {

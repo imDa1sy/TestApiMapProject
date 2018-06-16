@@ -6,6 +6,7 @@ import { restConfig } from '../../restConfig';
 import { UserService } from '../User.service';
 import { User } from '../User.class';
 import { FormPatterns } from '../../FormPatterns';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-DialogEditUser',
@@ -21,6 +22,7 @@ export class DialogEditUserComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<DialogEditUserComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private http: Http, private snackBar: MatSnackBar,
+    private translate: TranslateService,
     private _userService: UserService) {
 
     this.loadUserData();
@@ -58,13 +60,13 @@ export class DialogEditUserComponent implements OnInit {
             if (this.data.id == null) {
 
               console.log('User inserted!');
-              this.snackBar.open("User ", " inserted!", {
+              this.snackBar.open(this.translate.instant('new_energy-user-header'), this.translate.instant('new_energy-inserted'), {
                 duration: 4000,
               });
 
             } else {
               console.log('User update!');
-              this.snackBar.open("User ", " updated!", {
+              this.snackBar.open(this.translate.instant('new_energy-user-header'), this.translate.instant('new_energy-updated'), {
                 duration: 4000,
               });
 

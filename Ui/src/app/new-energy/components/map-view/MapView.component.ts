@@ -5,15 +5,19 @@ import { MatTableDataSource, MatPaginator, MatDialog } from '@angular/material';
 import { AuthService } from '../auth/auth.service';
 import { WasteDataEntryService } from '../waste-data-entry/WasteDataEntry.service';
 import { DialogEditWasteDataEntry } from '../waste-data-entry/DialogEditWasteDataEntry/DialogEditWasteDataEntry.component';
-import { WasteDataEntry, WasteData } from '../waste-data-entry/WasteDataEntry.class';
+import { WasteDataEntry, WasteData, WasteDataTypeSum, VolumeToPower } from '../waste-data-entry/WasteDataEntry.class';
 import { DialogDeleteQuestionComponent } from '../DialogDeleteQuestion/DialogDeleteQuestion.component';
 import { AgmMap, LatLngBounds } from '@agm/core';
 import { AgmMarkerCluster } from '@agm/js-marker-clusterer';
 import {OverlappingMarkerSpiderfier} from 'ts-overlapping-marker-spiderfier'
 import { WasteTypeService } from '../waste-type/Wastetype.service';
 import { WasteType, WasteTypeSearch, WasteTypeFilter } from '../waste-type/WasteType.class';
-import { Http, RequestOptions, Headers } from '@angular/http';
+
 import { restConfig } from '../restConfig';
+import { TranslateLangService } from '../../TranslateLangService.service';
+import { TranslateService } from '@ngx-translate/core';
+
+
 
 declare var google: any;
 declare var MarkerClusterer: any;
@@ -34,30 +38,42 @@ export class MapViewComponent implements OnInit {
   zoom: number = 8;
 
   filterData:WasteTypeFilter;
-  
+  lastevent: Date = new Date();
   dataSource = new MatTableDataSource();
 
   markerSpiderfier: OverlappingMarkerSpiderfier;
   iw : google.maps.InfoWindow;
   markerCluster: any;
-
+  gasVolume: number = 0;
+  kw: number = 0;
+  // refresh timer for map backend calling
+  refreshTimer: any;
   //displayedColumns is array of strings,and every string is representation of one column in table.
 
   displayedColumns = [];
+  // summed waste type data for energy tab
+  EnergyData: WasteDataTypeSum[] = [];
+
+
+
+
   ROLE: string;
+  Language= 'en';
+
   @ViewChild('AgmMap') agmMap: AgmMap;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(private _wasteOwnerService: WasteOwnerService,
     private changeDetectorRefs: ChangeDetectorRef,
-    
+    private translate: TranslateService,
     public dialog: MatDialog,
     private authService: AuthService,
     private _mapViewService: MapViewService,
     private _wasteDataEntryService: WasteDataEntryService,
     private _wasteTypeService: WasteTypeService, 
-    private http:Http
+    private _translateServiceLang : TranslateLangService
     ) {
+      this.Language= this._translateServiceLang.currentLanguageActive;
       this.filterData = new WasteTypeFilter();
     //check  role and display table based on role
     this.authService.setRole.subscribe((value) => {
@@ -114,17 +130,21 @@ export class MapViewComponent implements OnInit {
           this.iw.open(map, marker);
         });
 
-        
+        /* removed by idle event
         // and add a event listener for changing the center
         google.maps.event.addListener(map, 'center_changed', ()=> { 
-            this.GetMapBounds();
-            this.fillMap(this.gMap);
+           // this.StartTimer();
+        });
+        */ 
+
+        google.maps.event.addListener(map, 'idle', ()=> { 
+          this.LoadMarkersDelayed();
         });
 
             // and finally create the cluster for the markers
         this.markerCluster = new MarkerClusterer(map, [],
           {gridSize: 20,
-          maxZoom: 14,
+          maxZoom: 13,
           zoomOnClick: true, 
           imagePath: 'https://googlemaps.github.io/js-marker-clusterer/images/m'
         });
@@ -136,12 +156,27 @@ export class MapViewComponent implements OnInit {
  }
 
 
+ LoadMarkersDelayed(){
+  this.Log('delayed started')
+  clearTimeout(this.refreshTimer);
+  this.refreshTimer = setTimeout(()=>{this.LoadMarkers()}, 1000);
+
+}
+
+LoadMarkers(){
+    this.Log('load started');
+    this.Log('started to fill')
+    this.fillMap(this.gMap);
+  
+};
+  
+
 // this method load all waste date
 loadAllactiveWasteData(filter: WasteTypeFilter) {
   // call the backend service to get all the data
   this.Log( 'getting data from backend')
   this._wasteDataEntryService.loadAllActiveWasteData(filter).subscribe(data => {
-  this.Log('data loaded ' + data )
+  //this.Log('data loaded ' + data )
   this.activeWasteData = data;
   this.dataSource.data = this.activeWasteData;
   this.DrawMarkers(this.gMap);
@@ -168,14 +203,30 @@ fillMap( map ){
     // get some parameters from map (long lat bounds)
     this.GetMapBounds();
     //load all active waste data
-    this.Log( 'fill map');
-    this.Log( this.filterData);
+   // this.Log( 'fill map');
+    //this.Log( this.filterData);
+    
     this.loadAllactiveWasteData(this.filterData);
 }
 
 DrawMarkers(map){
     // prepare temp markers
     var markers = [];
+    this.EnergyData = [];
+
+    // fill the energy data with filterData.wasteTypeSearch so we have the same order as in the selection
+    for (const iterator of this.filterData.wasteTypeSearch) {
+      var tempwasteDataTypeSum = new WasteDataTypeSum();
+      tempwasteDataTypeSum.wasteType = iterator;
+      tempwasteDataTypeSum.sumAmount = 0;
+      tempwasteDataTypeSum.count = 0;
+      this.EnergyData.push(tempwasteDataTypeSum);  
+      
+    }
+    // reset gas volume
+    this.gasVolume = 0;
+    this.kw = 0;
+
 
     // init spider objects
     this.markerSpiderfier.removeAllMarkers();
@@ -199,19 +250,25 @@ DrawMarkers(map){
       marker.title = '<strong>' + iterationWasteData.wasteOwnerData.name + ' ' +  iterationWasteData.wasteOwnerData.surName + '</strong>'
 
       marker.title = 
-      '<table><tr><td>Waste owner: '+
+      '<table><tr><td>'+this.translate.instant('new_energy-waste-owner-header') +':' +
       '<strong>'+iterationWasteData.wasteOwnerData.name+' ' + iterationWasteData.wasteOwnerData.surName+'</strong>'+
       '</td></tr>'+
-      '<tr><td>Location: '+
+      '<tr><td>'+this.translate.instant('new_energy-location') +':'+
       '<strong>'+iterationWasteData.location.description+'</strong>'+
       '</td></tr>'+
-      '<tr><td>Waste Type: '+
-      '<strong>'+iterationWasteData.wasteType.wasteType+'</strong>'+
-      '</td></tr>'+
-      '<tr><td>Amount: '+
-      '<strong>'+iterationWasteData.wasteDataEntry.amount+'</strong>'+
+     
+      '<tr><td>'+this.translate.instant('new_energy-waste-type-header') +':' +'<strong>';
+      if(this.Language == 'en'){
+        marker.title += iterationWasteData.wasteType.wasteType.en;
+      } if(this.Language == 'ro'){
+        marker.title += iterationWasteData.wasteType.wasteType.ro;
+      }
+      marker.title +='</strong></td></tr>'+
+
+      '<tr><td>'+this.translate.instant('new_energy-amount') +':' +
+      '<strong>'+iterationWasteData.wasteDataEntry.amount+ ' kg'+'</strong>'+
       '</td></tr>'+    
-      '<tr><td> Valid from: <strong>';
+      '<tr><td>'+this.translate.instant('new_energy-valid-from') +': <strong>';
 
       if (!iterationWasteData.wasteDataEntry.validityDateStart ){
         marker.title += '-';
@@ -228,16 +285,41 @@ DrawMarkers(map){
       }
       marker.title += '</strong></td></tr></table>';
       
+
+      // calculation
+      this.gasVolume += iterationWasteData.wasteDataEntry.amount/1000 * iterationWasteData.wasteType.factor; 
+      this.kw += VolumeToPower( this.gasVolume );
+      console.log(this.gasVolume);
+
+      // if in EnergyData we do not have an entry with the waste type
+      // add it into the array
+      let nIndex = this.EnergyData.findIndex(
+         tempwasteDataTypeSum => tempwasteDataTypeSum.wasteType.id == iterationWasteData.wasteType.id ) ;
+
+      if ( nIndex == -1 ) {
+        console.log('shold not happen!!!!!')
+        var tempwasteDataTypeSum = new WasteDataTypeSum();
+        tempwasteDataTypeSum.wasteType = iterationWasteData.wasteType;
+        tempwasteDataTypeSum.sumAmount = iterationWasteData.wasteDataEntry.amount;
+        tempwasteDataTypeSum.count = 1;
+        this.EnergyData.push(tempwasteDataTypeSum);
+      } else {
+        console.log( 'found ' + nIndex);
+        this.EnergyData[nIndex].sumAmount += iterationWasteData.wasteDataEntry.amount;
+        this.EnergyData[nIndex].count ++;
+      }
+
       // push marker into temp array
       markers.push(marker);      
       
       // add all markers to the spiderfier 
       this.markerSpiderfier.addMarker(marker,  function(marker) {console.log('neki klick')});  // Adds the Marker to OverlappingMarkerSpiderfier
     };
-
+    this.Log(this.EnergyData);
     this.markerCluster.addMarkers(markers);
 
 }
+
 
 
 Log(data){
@@ -245,37 +327,37 @@ Log(data){
 }
  
  
-  editWasteData(elementData) {
-    let dialogRef = this.dialog.open(DialogEditWasteDataEntry, {
-      // disableClose: true,
-      autoFocus: true,
-      width: '800px', height: '550px',
-      data: {
-        "id": elementData.wasteDataEntry.id,
-        "localWasteDataEntry": WasteDataEntry,
-        "edit": true,
+editWasteData(elementData) {
+  let dialogRef = this.dialog.open(DialogEditWasteDataEntry, {
+    // disableClose: true,
+    autoFocus: true,
+    width: '800px', height: '550px',
+    data: {
+      "id": elementData.wasteDataEntry.id,
+      "localWasteDataEntry": WasteDataEntry,
+      "edit": true,
 
-      }
-    });
+    }
+  });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result != null) {
-        this.loadAllactiveWasteData(this.filterData);
-      }
-    });
-  }
+  dialogRef.afterClosed().subscribe(result => {
+    if (result != null) {
+      this.loadAllactiveWasteData(this.filterData);
+    }
+  });
+}
 
-  deleteWasteData(id) {
-    let dialogRef = this.dialog.open(DialogDeleteQuestionComponent, {
-      width: '300px', height: '300px',
-      data: { "text": "Waste data", "restName": "/api/removewastedata/", "entity_id": id }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result != null) {
-        this.loadAllactiveWasteData(this.filterData);
-      }
-    });
-  }
+deleteWasteData(id) {
+  let dialogRef = this.dialog.open(DialogDeleteQuestionComponent, {
+    width: '300px', height: '300px',
+    data: { "text": this.translate.instant('new_energy-waste-dataEntry-data'), "restName": "/api/removewastedata/", "entity_id": id }
+  });
+  dialogRef.afterClosed().subscribe(result => {
+    if (result != null) {
+      this.loadAllactiveWasteData(this.filterData);
+    }
+  });
+}
 
 
 }

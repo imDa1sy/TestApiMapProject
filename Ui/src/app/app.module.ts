@@ -70,6 +70,7 @@ import { EqualValidator } from './new-energy/components/user/EqualValidator.dire
 import { ListWasteDataComponent } from './new-energy/components/waste-data-entry/ListWasteData/ListWasteData.component';
 import { WasteDataEntryService } from './new-energy/components/waste-data-entry/WasteDataEntry.service';
 import { MapViewService } from './new-energy/components/map-view/MapView.service';
+import { TranslateLangService } from './new-energy/TranslateLangService.service';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -153,7 +154,7 @@ export function HttpLoaderFactory(http: HttpClient) {
                      DialogEditWasteDataEntry
    ],
   providers: [WasteOwnerService, WasteUserService,WasteTypeService,
-              UserService, WasteDataEntryService, MapViewService,
+              UserService, WasteDataEntryService, MapViewService,TranslateLangService,
               AuthService, AuthGuard, MatNativeDateModule ],
   bootstrap: [AppComponent]
 })

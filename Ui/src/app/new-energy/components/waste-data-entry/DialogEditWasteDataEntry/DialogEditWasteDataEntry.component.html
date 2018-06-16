@@ -71,7 +71,7 @@
                 Waste Type is required!
               </div>
               <mat-option >--</mat-option>
-              <mat-option *ngFor="let wt of WasteTypeList" value="{{wt.id}}" >{{wt.wasteType}}</mat-option>
+              <mat-option *ngFor="let wt of WasteTypeList" value="{{wt.id}}" ><span *ngIf="Language == 'en'"> {{wt.wasteType.en}}</span>  <span *ngIf="Language == 'ro'">{{wt.wasteType.ro}} </span></mat-option>
             </mat-select>
           </mat-form-field>
 

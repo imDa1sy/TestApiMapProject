@@ -11,6 +11,7 @@ import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.MongoClient;
+import com.strictit.config.MongoClientConfig;
 import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -22,7 +23,7 @@ public class Users extends ArrayList<User> {
 
     @Autowired
     UserRepository userRepository;
-    MongoClient mongoClient = new MongoClient();
+    MongoClient mongoClient = MongoClientConfig.getConnection();
     DB database = mongoClient.getDB("Biodeseuri");
 
     public int loadByWasteOwnerId(String wasteOwnerId) {

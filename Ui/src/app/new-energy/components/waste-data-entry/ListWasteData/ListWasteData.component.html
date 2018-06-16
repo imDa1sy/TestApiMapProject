@@ -53,10 +53,15 @@
                 <mat-cell *matCellDef="let element"> {{element.wasteDataEntry.amount}} kg </mat-cell>
             </ng-container>
             <ng-container matColumnDef="wasteType">
-                <mat-header-cell *matHeaderCellDef>
-                    <span translate="new_energy-waste-type-header"> waste Type</span>
-                </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.wasteType.wasteType}} </mat-cell>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header matTooltip="Sort by waste Type asc or desc"> 
+                      <span translate="new_energy-waste-type-header">Waste Type</span> </mat-header-cell>
+
+                        <mat-cell  *matCellDef="let element"> 
+                            <span *ngIf="Language == 'ro'">{{element.wasteType.wasteType.ro}}</span>
+                            <span *ngIf="Language == 'en'">{{element.wasteType.wasteType.en}}</span>
+                        </mat-cell>
+                      
+                  
             </ng-container>
             <ng-container matColumnDef="validityDate">
                 <mat-header-cell *matHeaderCellDef>

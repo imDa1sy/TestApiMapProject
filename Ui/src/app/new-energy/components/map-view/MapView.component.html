@@ -13,7 +13,7 @@
   <mat-checkbox [checked]="wt.search" [(ngModel)]="filterData.wasteTypeSearch[i].search" 
   name="wt{{i+1}}"
   #wasteType="ngModel">
-  {{wt.wasteType}}
+  <span *ngIf="Language == 'en'"> {{wt.wasteType.en}}</span>  <span *ngIf="Language == 'ro'">{{wt.wasteType.ro}} </span>
 </mat-checkbox>
 </div>
 
@@ -29,6 +29,7 @@
         </button-->
       </div>
 </form>
+{{gasVolume}}
 </mat-sidenav>
 <table><tr>
 <td style="width:30px;vertical-align:top;padding-left:3px">
@@ -39,7 +40,7 @@
   <td class="row">
   <mat-tab-group>
     <mat-tab label="Map view">
-      <agm-map #AgmMap [latitude]="latitude" [longitude]="longitude" [maxZoom]="15" [zoom]="zoom"
+      <agm-map #AgmMap [latitude]="latitude" [longitude]="longitude" [maxZoom]="14" [zoom]="zoom"
       [fullscreenControl]='true' [mapTypeControl]='true'>
         <div *ngFor="let i of localOwnerLocations">
           <agm-marker *ngIf="i.active"  [latitude]="i.latitude" [longitude]="i.longitude"></agm-marker>
@@ -141,11 +142,16 @@
                     <mat-cell *matCellDef="let element"> {{element.wasteDataEntry.amount}} kg </mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="wasteType">
-                    <mat-header-cell *matHeaderCellDef>
-                        <span translate="new_energy-waste-type-header"> waste Type</span>
-                    </mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.wasteType.wasteType}} </mat-cell>
-                </ng-container>
+                    <mat-header-cell *matHeaderCellDef> 
+                      <span translate="new_energy-waste-type-header">Waste Type</span> </mat-header-cell>
+
+                        <mat-cell  *matCellDef="let element"> 
+                            <span *ngIf="Language == 'ro'">{{element.wasteType.wasteType.ro}}</span>
+                            <span *ngIf="Language == 'en'">{{element.wasteType.wasteType.en}}</span>
+                        </mat-cell>
+                      
+                  
+                  </ng-container>
                 <ng-container matColumnDef="validityDate">
                     <mat-header-cell *matHeaderCellDef>
                         <span translate="new_energy-validityDate"> validityDate</span>

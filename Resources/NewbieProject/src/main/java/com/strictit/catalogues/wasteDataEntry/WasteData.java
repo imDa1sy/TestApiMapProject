@@ -20,6 +20,10 @@ public class WasteData {
     private Optional<WasteOwnerData> wasteOwnerData;
     private Optional<Location> location;
     private Optional<WasteType> wasteType;
+
+    public WasteData() {
+        this.wasteDataEntry = new WasteDataEntry();
+    }
     
 
     public WasteDataEntry getWasteDataEntry() {

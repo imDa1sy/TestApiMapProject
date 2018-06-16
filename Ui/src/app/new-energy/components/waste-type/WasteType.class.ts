@@ -3,9 +3,15 @@ export class WasteType {
     id :string;
     name:string;
     active: boolean;
-    wasteType : string;
+    wasteType : MultiLanguageDescription;
     color:string;
+    factor: number;
 }
+export class MultiLanguageDescription{
+   en:string;
+   ro:string;
+}
+
 export class WasteTypeSearch extends WasteType {
     constructor(){
         super();
@@ -18,9 +24,11 @@ export class WasteTypeSearch extends WasteType {
         this.wasteType=wasteType.wasteType;
         this.color=wasteType.color;
         this.search=true;
+        this.factor = wasteType.factor;
     }
     search:boolean;
 }
+
 export class WasteTypeFilter{
     constructor(){
         this.inFuture= false;

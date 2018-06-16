@@ -15,7 +15,12 @@
         <ng-container matColumnDef="wasteType">
           <mat-header-cell *matHeaderCellDef mat-sort-header matTooltip="Sort by waste Type asc or desc"> 
             <span translate="new_energy-waste-type-header">Waste Type</span> </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.wasteType}} </mat-cell>
+           
+              <mat-cell  *matCellDef="let element">
+                 <span *ngIf="Language == 'ro'">{{element.wasteType.ro}}</span> 
+                 <span *ngIf="Language == 'en'">{{element.wasteType.en}}</span> 
+              </mat-cell>
+           
         </ng-container>
         <ng-container matColumnDef="wasteColor">
         <mat-header-cell *matHeaderCellDef > 
@@ -23,6 +28,13 @@
           <mat-cell *matCellDef="let element"> <input type="color" value="{{element.color}}" disabled> 
           </mat-cell>
         </ng-container>
+        <ng-container matColumnDef="factor">
+            <mat-header-cell *matHeaderCellDef mat-sort-header matTooltip="Sort by factor asc or desc">
+               Factor
+             </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.factor}} 
+              </mat-cell>
+            </ng-container>
         <ng-container matColumnDef="actionsColumn">
             <mat-header-cell *matHeaderCellDef matTooltip="Manage content">
                 <span translate="new_energy-actions"> Actions </span>     

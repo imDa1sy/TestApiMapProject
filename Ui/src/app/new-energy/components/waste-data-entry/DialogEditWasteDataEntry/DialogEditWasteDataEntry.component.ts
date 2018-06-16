@@ -8,6 +8,8 @@ import { WasteType } from '../../waste-type/WasteType.class';
 import { restConfig } from '../../restConfig';
 import { AuthService } from '../../auth/auth.service';
 import { WasteDataEntryService } from '../WasteDataEntry.service';
+import { TranslateLangService } from '../../../TranslateLangService.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-DialogEditWasteDataEntry',
@@ -20,6 +22,8 @@ export class DialogEditWasteDataEntry implements OnInit {
   WasteTypeList: WasteType[];
   wasteOwnerList: WasteOwner[];
   role: string;
+  Language='en';
+
   constructor(public dialogRef: MatDialogRef<DialogEditWasteDataEntry>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private http: Http, private snackBar: MatSnackBar,
@@ -27,7 +31,12 @@ export class DialogEditWasteDataEntry implements OnInit {
     private authService: AuthService,
     private _wasteOwnerService: WasteOwnerService,
     private _wasteDataEntryService: WasteDataEntryService,
-    private _wasteTypeService: WasteTypeService) { }
+    private _wasteTypeService: WasteTypeService,
+    private translate: TranslateService,
+    private _translateServiceLang : TranslateLangService) {
+
+      this.Language= this._translateServiceLang.currentLanguageActive;
+     }
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -116,13 +125,13 @@ export class DialogEditWasteDataEntry implements OnInit {
             if (this.data.id == null) {
 
               console.log('Waste data inserted!');
-              this.snackBar.open("Waste data ", " inserted!", {
+              this.snackBar.open(this.translate.instant('new_energy-waste-dataEntry-data'), this.translate.instant('new_energy-inserted'), {
                 duration: 4000,
               });
 
             } else {
               console.log('Waste data updated!');
-              this.snackBar.open("Waste data ", " updated!", {
+              this.snackBar.open(this.translate.instant('new_energy-waste-dataEntry-data'), this.translate.instant('new_energy-updated'), {
                 duration: 4000,
               });
 

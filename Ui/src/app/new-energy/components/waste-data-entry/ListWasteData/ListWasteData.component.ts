@@ -5,6 +5,8 @@ import { MatTableDataSource, MatPaginator, MatSort, MatDialog } from '@angular/m
 import { DialogEditWasteDataEntry } from '../DialogEditWasteDataEntry/DialogEditWasteDataEntry.component';
 import { WasteDataEntry } from '../WasteDataEntry.class';
 import { DialogDeleteQuestionComponent } from '../../DialogDeleteQuestion/DialogDeleteQuestion.component';
+import { TranslateLangService } from '../../../TranslateLangService.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-ListWasteData',
@@ -13,6 +15,7 @@ import { DialogDeleteQuestionComponent } from '../../DialogDeleteQuestion/Dialog
 })
 export class ListWasteDataComponent implements OnInit {
 
+  Language= 'en';
   wasteList: any;
   dataSource = new MatTableDataSource();
   //displayedColumns is array of strings,and every string is representation of one column in table.
@@ -25,8 +28,11 @@ export class ListWasteDataComponent implements OnInit {
   constructor(private changeDetectorRefs: ChangeDetectorRef,
               private authService: AuthService,
               private _wasteDataEntryService: WasteDataEntryService,
-              public dialog: MatDialog ) {
+              public dialog: MatDialog,
+              private translate: TranslateService,
+              private _translateServiceLang : TranslateLangService ) {
 
+                this.Language= this._translateServiceLang.currentLanguageActive;
      this.authService.setRole.subscribe((value) => {
           this.ROLE = value;
           if (value == 'ROLE_WASTE_OWNER') {
@@ -110,7 +116,7 @@ export class ListWasteDataComponent implements OnInit {
   deleteWasteData(id){
     let dialogRef = this.dialog.open(DialogDeleteQuestionComponent, {
       width: '300px', height: '300px',
-      data: { "text": "Waste data", "restName": "/api/removewastedata/", "entity_id": id }
+      data: { "text": this.translate.instant('new_energy-waste-dataEntry-data'), "restName": "/api/removewastedata/", "entity_id": id }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result != null) {
