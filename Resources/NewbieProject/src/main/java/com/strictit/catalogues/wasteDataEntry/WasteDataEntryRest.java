@@ -21,13 +21,9 @@ import com.strictit.catalogues.wasteType.WasteTypeFilter;
 import com.strictit.catalogues.wasteType.WasteTypeRepository;
 import com.strictit.catalogues.wasteType.WasteTypeSearch;
 import com.strictit.config.MongoClientConfig;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import javax.print.attribute.standard.MediaSize;
-import jdk.nashorn.internal.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -38,7 +34,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.util.Date;
 /**
  *
  * @author daisy
@@ -136,11 +136,14 @@ public class WasteDataEntryRest {
         // create a list of and Querys for the ANDed criteria
         List<BasicDBObject> andQuery = new ArrayList();
         
+        // instance of current time to be used in filter query
+           Date currentDate = new Date();
         andQuery.add(new BasicDBObject("wasteTypeId", new BasicDBObject("$in",wasteTypeIds)));
         if (filterData.isInFuture()){
-         //   andQuery.add(new BasicDBObject("validityDateStart", new BasicDBObject( "$gt", LocalDate.now() )));
+            andQuery.add(new BasicDBObject("validityDateStart", new BasicDBObject( "$gt", currentDate )));
+            System.out.println("current time" + currentDate);
         } else {
-         //   andQuery.add(new BasicDBObject("validityDateStart", new BasicDBObject( "$lt", LocalDate.now() )));
+          andQuery.add(new BasicDBObject("validityDateStart", new BasicDBObject( "$lt", currentDate )));
         }
         andQuery.add(new BasicDBObject("expired", new BasicDBObject("$eq", false )));
         // put the andQuery into the data query                       
@@ -153,12 +156,12 @@ public class WasteDataEntryRest {
 
             WasteData localWasteData = new WasteData();
               //here waste data base information is set 
-            DBObject tempDBObject = cursor.next();
+            BasicDBObject tempDBObject =(BasicDBObject) cursor.next();
 
             String sTemp;
             sTemp = gsonObj.toJson(tempDBObject);
             WasteDataEntry tempWasteDataEntry = gsonObj.fromJson(sTemp, WasteDataEntry.class );
-            
+             tempWasteDataEntry.setId(tempDBObject.getObjectId("_id").toString());
             localWasteData.setWasteDataEntry((WasteDataEntry) tempWasteDataEntry);
 
             //here we retreive location of waste data and add it to waste data object

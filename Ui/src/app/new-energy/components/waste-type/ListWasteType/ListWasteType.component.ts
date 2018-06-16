@@ -92,7 +92,7 @@ export class ListWasteTypeComponent implements OnInit {
     let dialogRef = this.dialog.open(DialogEditWasteTypeComponent, {
     //  disableClose: true,
       autoFocus: true,
-      width: '400px', height: '350px', data: { 
+      width: '450px', height: '500px', data: { 
         "id": null,
         "localWasteType":localWasteTypeToAdd
        }
@@ -117,7 +117,7 @@ export class ListWasteTypeComponent implements OnInit {
     let dialogRef = this.dialog.open(DialogEditWasteTypeComponent, {
      // disableClose: true,
       autoFocus: true,
-      width: '400px', height: '350px',
+      width: '450px', height: '500px',
       data: {
         "id": elementData.id,
         "localWasteType": localWasteTypeToEdit

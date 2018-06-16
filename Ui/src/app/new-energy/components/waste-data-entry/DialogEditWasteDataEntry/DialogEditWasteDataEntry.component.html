@@ -7,18 +7,16 @@
 <form #dataEntryForm="ngForm">
   <div class="example-container">
     <hr>
-    <mat-form-field *ngIf="data?.edit">
-      <mat-label translate="new_energy-expired">Expired</mat-label>
-      <mat-select [(ngModel)]="data?.localWasteDataEntry.expired"
-                  name="expired" 
-                  #expired="ngModel"
-                   >
-          
-          <mat-option >--</mat-option>
-          <mat-option value="true" >Expired</mat-option>
-          <mat-option value="false" >Active</mat-option>
-        </mat-select>
-      </mat-form-field>
+        <mat-checkbox *ngIf="data?.edit" [checked]="data?.localWasteDataEntry.expired" 
+                      [(ngModel)]="data?.localWasteDataEntry.expired"
+                      name="expired"
+                      #expired="ngModel">
+             <span translate="new_energy-expired">
+               Expired
+            </span>
+        </mat-checkbox>
+        <br>
+      
     <!-- If waste owner is logged in this field is populated and hidden and waste owner can automaticly choose his locations-->
       <mat-form-field *ngIf="role =='ROLE_WASTE_OWNER'">
         <input matInput hidden

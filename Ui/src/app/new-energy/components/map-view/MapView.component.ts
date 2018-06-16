@@ -39,7 +39,9 @@ export class MapViewComponent implements OnInit {
 
   filterData:WasteTypeFilter;
   lastevent: Date = new Date();
-  dataSource = new MatTableDataSource();
+  
+  dataSource = new MatTableDataSource(); //grid view data source
+  energyviewSource = new MatTableDataSource(); //energy view data source
 
   markerSpiderfier: OverlappingMarkerSpiderfier;
   iw : google.maps.InfoWindow;
@@ -50,7 +52,9 @@ export class MapViewComponent implements OnInit {
   refreshTimer: any;
   //displayedColumns is array of strings,and every string is representation of one column in table.
 
-  displayedColumns = [];
+  displayedColumns = []; //grid view displayed columns
+  displayedEnergyViewColumns = [];
+
   // summed waste type data for energy tab
   EnergyData: WasteDataTypeSum[] = [];
 
@@ -62,6 +66,7 @@ export class MapViewComponent implements OnInit {
 
   @ViewChild('AgmMap') agmMap: AgmMap;
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild('energyViewTable', {read: MatPaginator}) energyViewPaginator : MatPaginator;
 
   constructor(private _wasteOwnerService: WasteOwnerService,
     private changeDetectorRefs: ChangeDetectorRef,
@@ -79,21 +84,30 @@ export class MapViewComponent implements OnInit {
     this.authService.setRole.subscribe((value) => {
       this.ROLE = value;
       if (value == 'ROLE_WASTE_USER') {
+           //here we set grid view table columns if role waste user dont show action buttons
         this.displayedColumns = ['wasteOwner', 'location', 'wasteType', 'amount',
           'validityDate', /*'actionsColumn'*/];
+
+           //here we set energy view table columns 
+        this.displayedEnergyViewColumns =['wasteType','sumAmount','count'];  
       }
       if (value == 'ROLE_ADMIN' || value == 'ROLE_CONTENT_MNGR') {
+          //here we set energy view table columns
         this.displayedColumns = ['wasteOwner', 'location', 'wasteType', 'amount',
           'validityDate', 'actionsColumn'];
+
+          //here we set energy view table columns
+          this.displayedEnergyViewColumns =['wasteType','sumAmount','count',];
       }
     });
     
   }
 
   ngAfterViewInit() {
+    //add paginator to grid view table
     this.dataSource.paginator = this.paginator;
-   
-
+    //add paginator to energy view table
+    this.energyviewSource.paginator = this.energyViewPaginator;
   }
   
 
@@ -112,6 +126,8 @@ export class MapViewComponent implements OnInit {
           // push the temp instance into our filterData.wasteTypeSearch array
           this.filterData.wasteTypeSearch.push(tempWasteTypeSearch);
          }
+       
+         
       });
 
       // now wait for the map to be ready for using
@@ -242,6 +258,7 @@ DrawMarkers(map){
 
       var marker = new google.maps.Marker({
         position: latLng,
+        icon : this.markerColor(iterationWasteData.wasteType.color), //here is marker filled with custom color
         map: map
         });
 
@@ -315,11 +332,24 @@ DrawMarkers(map){
       // add all markers to the spiderfier 
       this.markerSpiderfier.addMarker(marker,  function(marker) {console.log('neki klick')});  // Adds the Marker to OverlappingMarkerSpiderfier
     };
+      //fill energy view data soruce
+    this.energyviewSource.data = this.EnergyData;
+
     this.Log(this.EnergyData);
     this.markerCluster.addMarkers(markers);
 
 }
-
+// method markerColor fiil marker with custom color ion create markers
+markerColor(color) {
+  return {
+      path: 'M 0,0 C -2,-20 -10,-22 -10,-30 A 10,10 0 1,1 10,-30 C 10,-22 2,-20 0,0 z M -2,-30 a 2,2 0 1,1 4,0 2,2 0 1,1 -4,0',
+      fillColor: color,
+      fillOpacity: 1,
+      strokeColor: '#000',
+      strokeWeight: 2,
+      scale: 1,
+ };
+}
 
 
 Log(data){
@@ -327,13 +357,13 @@ Log(data){
 }
  
  
-editWasteData(elementData) {
+editWasteData(id) {
   let dialogRef = this.dialog.open(DialogEditWasteDataEntry, {
     // disableClose: true,
     autoFocus: true,
     width: '800px', height: '550px',
     data: {
-      "id": elementData.wasteDataEntry.id,
+      "id": id,
       "localWasteDataEntry": WasteDataEntry,
       "edit": true,
 

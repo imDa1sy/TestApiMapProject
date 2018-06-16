@@ -99,7 +99,7 @@
     "new_energy-valid-from":"Valid from",
     "new_energy-expire-date":"Expire date",
     "new_energy-expired":"Expired",
-
+    "new_energy-waste-in-future":"Waste in future",
 
     "new_energy-username":"Username",
     "new_energy-password":"Password",
@@ -148,7 +148,10 @@
 
     "new_energy-inserted":"Inserted!",
     "new_energy-updated":"Updated!",
-    "new_energy-deleted":"Deleted!"
+    "new_energy-deleted":"Deleted!",
+
+    "new_energy-gasVolume":"Total gas volume",
+    "new_energy-sumAmount":"Sum amount"
 
   
 }
