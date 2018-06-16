@@ -1,23 +1,22 @@
 import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
-import { WasteOwnerService } from '../waste-owner/WasteOwner.service';
+import { WasteOwnerService } from '../../waste-owner/WasteOwner.service';
 import { MapViewService } from './MapView.service';
 import { MatTableDataSource, MatPaginator, MatDialog } from '@angular/material';
-import { AuthService } from '../auth/auth.service';
-import { WasteDataEntryService } from '../waste-data-entry/WasteDataEntry.service';
-import { DialogEditWasteDataEntry } from '../waste-data-entry/DialogEditWasteDataEntry/DialogEditWasteDataEntry.component';
-import { WasteDataEntry, WasteData, WasteDataTypeSum, VolumeToPower } from '../waste-data-entry/WasteDataEntry.class';
-import { DialogDeleteQuestionComponent } from '../DialogDeleteQuestion/DialogDeleteQuestion.component';
+import { AuthService } from '../../auth/auth.service';
+import { WasteDataEntryService } from '../../waste-data-entry/WasteDataEntry.service';
+import { DialogEditWasteDataEntry } from '../../waste-data-entry/DialogEditWasteDataEntry/DialogEditWasteDataEntry.component';
+import { WasteDataEntry, WasteData, WasteDataTypeSum, VolumeToPower } from '../../waste-data-entry/WasteDataEntry.class';
+import { DialogDeleteQuestionComponent } from '../../DialogDeleteQuestion/DialogDeleteQuestion.component';
 import { AgmMap, LatLngBounds } from '@agm/core';
 import { AgmMarkerCluster } from '@agm/js-marker-clusterer';
 import {OverlappingMarkerSpiderfier} from 'ts-overlapping-marker-spiderfier'
-import { WasteTypeService } from '../waste-type/Wastetype.service';
-import { WasteType, WasteTypeSearch, WasteTypeFilter } from '../waste-type/WasteType.class';
+import { WasteTypeService } from '../../waste-type/Wastetype.service';
+import { WasteType, WasteTypeSearch, WasteTypeFilter } from '../../waste-type/WasteType.class';
 
-import { restConfig } from '../restConfig';
-import { TranslateLangService } from '../../TranslateLangService.service';
 import { TranslateService } from '@ngx-translate/core';
+import { TranslateLangService } from '../../../TranslateLangService.service';
 
-
+ 
 
 declare var google: any;
 declare var MarkerClusterer: any;

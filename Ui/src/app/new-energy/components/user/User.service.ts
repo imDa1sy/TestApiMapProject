@@ -4,10 +4,6 @@ import { Observable } from "rxjs/internal/Observable";
 import { restConfig } from "../restConfig";
 import { User } from "./User.class";
 
-
-
-
-
 @Injectable()
 export class UserService {
 

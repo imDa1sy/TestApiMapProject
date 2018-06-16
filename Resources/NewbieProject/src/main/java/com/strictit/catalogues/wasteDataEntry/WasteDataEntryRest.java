@@ -138,11 +138,14 @@ public class WasteDataEntryRest {
         
         // instance of current time to be used in filter query
            Date currentDate = new Date();
+         //addQuery filter to display data  by array of wasteTypeIds
         andQuery.add(new BasicDBObject("wasteTypeId", new BasicDBObject("$in",wasteTypeIds)));
         if (filterData.isInFuture()){
+            // if isFuture true addQuery filter to display data which date is grater then current date.
             andQuery.add(new BasicDBObject("validityDateStart", new BasicDBObject( "$gt", currentDate )));
             System.out.println("current time" + currentDate);
         } else {
+            // if isFuture false addQuery filter to display data which date is lesser then current date.
           andQuery.add(new BasicDBObject("validityDateStart", new BasicDBObject( "$lt", currentDate )));
         }
         andQuery.add(new BasicDBObject("expired", new BasicDBObject("$eq", false )));

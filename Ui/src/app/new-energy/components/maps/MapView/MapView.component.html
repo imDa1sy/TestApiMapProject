@@ -46,7 +46,7 @@
     </button>
   </td>
   <td class="row">
-  <mat-tab-group >
+  <mat-tab-group [dynamicHeight]="dynamicHeight">
     <mat-tab label="Map view">
       <agm-map #AgmMap [latitude]="latitude" [longitude]="longitude" [maxZoom]="14" [zoom]="zoom"
       [fullscreenControl]='true' [mapTypeControl]='true'>
@@ -234,7 +234,7 @@
                 <mat-header-row *matHeaderRowDef="displayedEnergyViewColumns"></mat-header-row>
                 <mat-row *matRowDef="let row; columns: displayedEnergyViewColumns;"></mat-row>
             </mat-table>
-            <mat-paginator #energyViewPaginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 50]">
+            <mat-paginator #energyViewTable [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 50]">
             </mat-paginator>
             </div>
       

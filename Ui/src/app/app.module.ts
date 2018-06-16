@@ -33,7 +33,8 @@ import {
   MatPaginatorModule,
   MatDatepickerModule,
   MatNativeDateModule,
-  MatTabsModule
+  MatTabsModule,
+  MAT_DATE_LOCALE
 } from '@angular/material';
 
 import { router } from './app.router';
@@ -63,14 +64,17 @@ import { ListWasteUserComponent } from './new-energy/components/waste-user/ListW
 import { WasteUserService } from './new-energy/components/waste-user/WasteUser.service';
 import { UserService } from './new-energy/components/user/User.service';
 import { DialogEditUserComponent } from './new-energy/components/user/DialogEditUser/DialogEditUsercomponent';
-import { MapViewComponent } from './new-energy/components/map-view/MapView.component';
 import { HomeComponent } from './new-energy/components/home/home.component';
 import { DialogEditWasteDataEntry } from './new-energy/components/waste-data-entry/DialogEditWasteDataEntry/DialogEditWasteDataEntry.component';
 import { EqualValidator } from './new-energy/components/user/EqualValidator.directive';
 import { ListWasteDataComponent } from './new-energy/components/waste-data-entry/ListWasteData/ListWasteData.component';
 import { WasteDataEntryService } from './new-energy/components/waste-data-entry/WasteDataEntry.service';
-import { MapViewService } from './new-energy/components/map-view/MapView.service';
+
 import { TranslateLangService } from './new-energy/TranslateLangService.service';
+import { MapViewComponent } from './new-energy/components/maps/MapView/MapView.component';
+import { MapinputComponent } from './new-energy/components/maps/MapInput/mapinput.component';
+import { MapViewService } from './new-energy/components/maps/MapView/MapView.service';
+import { MapInputService } from './new-energy/components/maps/MapInput/mapInput.service';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -99,7 +103,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     DialogEditWasteDataEntry,
     HomeComponent,
     EqualValidator,
-    ListWasteDataComponent
+    ListWasteDataComponent,
+    MapinputComponent
    
   ],
   imports: [
@@ -151,11 +156,12 @@ export function HttpLoaderFactory(http: HttpClient) {
                      DialogEditWasteOwnerComponent,
                      DialogEditWasteUserComponent,
                      DialogEditUserComponent,
-                     DialogEditWasteDataEntry
+                     DialogEditWasteDataEntry,
+                     MapinputComponent
    ],
   providers: [WasteOwnerService, WasteUserService,WasteTypeService,
-              UserService, WasteDataEntryService, MapViewService,TranslateLangService,
-              AuthService, AuthGuard, MatNativeDateModule ],
+              UserService, WasteDataEntryService, MapViewService,MapInputService,TranslateLangService,
+              AuthService, AuthGuard, MatNativeDateModule,{provide: MAT_DATE_LOCALE, useValue: 'en-GB'} ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
