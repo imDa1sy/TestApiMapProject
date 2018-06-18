@@ -98,6 +98,8 @@
     "new_energy-valid-from":"Valabil de la",
     "new_energy-expire-date":"Data de expirare",
     "new_energy-expired":"Expirat",
+    "new_energy-waste-in-future":"Deșeuri în viitor",
+
 
     "new_energy-username":"Nume de utilizator",
     "new_energy-password":"Parola",
@@ -147,7 +149,11 @@
 
     "new_energy-inserted":"Inserat!",
     "new_energy-updated":"Actualizat!",
-    "new_energy-deleted":"Șters!"
+    "new_energy-deleted":"Șters!",
+
+    "new_energy-gasVolume":"Volumul total de gaz",
+    "new_energy-sumAmount":"Sumă totală"
+
 
   
    }

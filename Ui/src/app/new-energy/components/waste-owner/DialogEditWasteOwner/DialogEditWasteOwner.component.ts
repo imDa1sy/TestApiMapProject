@@ -8,6 +8,8 @@ import { WasteOwner } from '../WasteOwner.class';
 import { DialogDeleteQuestionComponent } from '../../DialogDeleteQuestion/DialogDeleteQuestion.component';
 import { FormPatterns } from '../../FormPatterns';
 import { TranslateService } from '@ngx-translate/core';
+import { MapinputComponent } from '../../maps/MapInput/mapinput.component';
+import { MapInputService } from '../../maps/MapInput/mapInput.service';
 
 @Component({
   selector: 'app-DialogEditWasteOwner',
@@ -25,6 +27,7 @@ export class DialogEditWasteOwnerComponent implements OnInit {
     private http: Http, private snackBar: MatSnackBar,
     public dialog: MatDialog,
     private _wasteOwnerService: WasteOwnerService,
+    private _mapInputService :MapInputService,
     private translate: TranslateService) {
       
      this.loadWasteOwnerData();
@@ -43,6 +46,7 @@ export class DialogEditWasteOwnerComponent implements OnInit {
   onNoClick(): void {
     this.dialogRef.close();
   }
+
   addLocations() {
     //creates new form fields in DialogEditWasteUser for creating new location
     this.data.localWasteOwner.locations.push({
@@ -53,6 +57,25 @@ export class DialogEditWasteOwnerComponent implements OnInit {
       "latitude": '',
       "longitude": ''
     });
+  }
+
+  addLatLng(index) {
+    //call mapInputComponent and get coords 
+    let dialogRef = this.dialog.open(MapinputComponent, {
+      width: '700px', height: '600px',
+      data: { }
+    });
+    //creates new form fields in DialogEditWasteOwner for creating new location
+    dialogRef.afterClosed().subscribe(result => {
+      //if coords are selected create location with that coords else do nothing 
+      if (result != null) {
+        //insert latitude in form
+    this.data.localWasteOwner.locations[index].latitude = this._mapInputService._latitude;
+    //insert longitude in form
+    this.data.localWasteOwner.locations[index].longitude = this._mapInputService.longitude;
+    
+  }
+  });
   }
 
   deactivateLocation($event, item, i) {

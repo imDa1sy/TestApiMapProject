@@ -7,7 +7,7 @@
   <mat-checkbox [checked]="" [(ngModel)]="filterData.inFuture" 
     name="inFuture"
     #inFuture="ngModel">
- Waste in future
+ <span translate="new_energy-waste-in-future">Waste in future</span>
 </mat-checkbox><hr>
 <div *ngFor="let wt of filterData.wasteTypeSearch ; let i = index">
   <mat-checkbox [checked]="wt.search" [(ngModel)]="filterData.wasteTypeSearch[i].search" 
@@ -23,22 +23,30 @@
         mat-raised-button  (click)="FilterSearch()">
           <mat-icon>search</mat-icon>
         </button>
-        &nbsp; &nbsp;
-        <!--button color="warn" mat-raised-button type="reset">
-          <mat-icon>close</mat-icon>
-        </button-->
+      
       </div>
 </form>
-{{gasVolume}}
-</mat-sidenav>
+  <br>
+    <table class="table">
+    <tr>
+      <td>
+         <span translate="new_energy-gasVolume">Total Gas volume:</span>
+      </td>
+      <td>
+          <strong>{{gasVolume}}</strong>
+      </td>
+    </tr>
+  </table>
+
+ </mat-sidenav>
 <table><tr>
-<td style="width:30px;vertical-align:top;padding-left:3px">
+<td style="width:2%;vertical-align:top;padding-left:0.5%">
   <button mat-mini-fab (click)="sidenav.toggle()" matTooltip="Map Options">
       <mat-icon>swap_horiz</mat-icon>
     </button>
   </td>
   <td class="row">
-  <mat-tab-group>
+  <mat-tab-group [dynamicHeight]="dynamicHeight">
     <mat-tab label="Map view">
       <agm-map #AgmMap [latitude]="latitude" [longitude]="longitude" [maxZoom]="14" [zoom]="zoom"
       [fullscreenControl]='true' [mapTypeControl]='true'>
@@ -98,9 +106,9 @@
         </div--> 
       </agm-map>
     </mat-tab>
-    <mat-tab translate="new_energy-grid-view" label="Grid view">
+    <mat-tab translate="new_energy-grid-view" label="Grid view"  >
         <div class="containers">
-        <div class="example-container mat-elevation-z8">
+       
 
             <mat-table #table [dataSource]="dataSource" matSort>
     
@@ -177,7 +185,7 @@
                       <span translate="new_energy-actions"> Actions </span>     
                   </mat-header-cell>
                   <mat-cell *matCellDef="let row">
-                    <button mat-button (click)="editWasteData(row)" color="accent"  matTooltip="Edit">
+                    <button mat-button (click)="editWasteData(row.wasteDataEntry.id)" color="accent"  matTooltip="Edit">
                       <mat-icon>edit</mat-icon>
                     </button>
                     <button mat-button (click)="deleteWasteData(row.wasteDataEntry.id)" color="warn" matTooltip="Delete">
@@ -192,7 +200,44 @@
             <mat-paginator #paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 50]">
             </mat-paginator>
             </div>
-        </div>
+      
+    </mat-tab>
+    <mat-tab label="Energy view">
+        <div class="containers">
+       
+
+            <mat-table #energyViewTable [dataSource]="energyviewSource" matSort>
+    
+                <ng-container matColumnDef="wasteType">
+                    <mat-header-cell *matHeaderCellDef>
+                        <span translate="new_energy-waste-type-header">Waste type </span>
+                    </mat-header-cell>
+                        <mat-cell  *matCellDef="let element"> 
+                            <span *ngIf="Language == 'ro'">{{element.wasteType.wasteType.ro}}</span>
+                            <span *ngIf="Language == 'en'">{{element.wasteType.wasteType.en}}</span>
+                        </mat-cell>
+                </ng-container>
+    
+                <ng-container matColumnDef="sumAmount">
+                    <mat-header-cell *matHeaderCellDef>
+                        <span translate="new_energy-sumAmount" >Sum amount </span>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.sumAmount}} kg</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="count">
+                    <mat-header-cell *matHeaderCellDef>
+                        <span translate="new_energy-locations">Locations</span>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.count}} </mat-cell>
+                </ng-container>              
+    
+                <mat-header-row *matHeaderRowDef="displayedEnergyViewColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedEnergyViewColumns;"></mat-row>
+            </mat-table>
+            <mat-paginator #energyViewTable [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 50]">
+            </mat-paginator>
+            </div>
+      
     </mat-tab>
   </mat-tab-group>
 </td></tr></table>
