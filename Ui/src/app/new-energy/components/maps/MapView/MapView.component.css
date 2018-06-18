@@ -14,7 +14,7 @@ mat-sidenav {
     overflow-x: hidden;
     
     width: 15%;
-    max-width: 600px;
+    max-width: 700px;
     min-width: 280px;
     height: 100%;
     padding: 8px;
@@ -26,3 +26,4 @@ mat-sidenav {
   .containers {
     margin: 3%;
   }
+  

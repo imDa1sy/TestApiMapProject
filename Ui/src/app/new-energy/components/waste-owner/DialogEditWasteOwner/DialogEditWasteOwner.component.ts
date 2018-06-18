@@ -62,7 +62,7 @@ export class DialogEditWasteOwnerComponent implements OnInit {
   addLatLng(index) {
     //call mapInputComponent and get coords 
     let dialogRef = this.dialog.open(MapinputComponent, {
-      width: '700px', height: '600px',
+      width: '700px', height: '650px',
       data: { }
     });
     //creates new form fields in DialogEditWasteOwner for creating new location

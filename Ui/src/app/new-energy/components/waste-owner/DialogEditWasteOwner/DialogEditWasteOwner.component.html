@@ -229,7 +229,7 @@
                   name="confirmPassword{{i+1}}" 
                   validateEqual="password"
                   #confirmPassword="ngModel"
-                  validateEqual="password" reverse="false"
+                  [pattern]="data.localWasteOwner?.users[i].password"
                   minlength="8" maxlength="32" 
                   required >
           </mat-form-field>

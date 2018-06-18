@@ -63,7 +63,7 @@
           </span>
         </li>
         <li>
-          <span *ngIf="ROLE == 'ROLE_ADMIN' || ROLE == 'ROLE_WASTE_USER' || ROLE == 'ROLE_CONTENT_MNGR' ">
+          <span *ngIf="ROLE == 'ROLE_ADMIN' || ROLE == 'ROLE_WASTE_USER' || ROLE == 'ROLE_WASTE_OWNER' || ROLE == 'ROLE_CONTENT_MNGR' ">
             <button mat-button [routerLink]="['map-view']">
               <span translate="new_energy-MapView"> MAP VIEW</span>
             </button>

@@ -1,6 +1,40 @@
 <mat-sidenav-container>
     <mat-sidenav #sidenav mode="side" [opened]="true">
         <h2>In development!</h2>
+        <form #filterForm="ngForm">
+                <div class="example-container">
+                <!--mat-checkbox [checked]="" [(ngModel)]="filterData.inFuture" 
+                  name="inFuture"
+                  #inFuture="ngModel">
+              <span translate="new_energy-waste-in-future">Waste in future</span>
+              </mat-checkbox--><hr>
+              <div *ngFor="let wt of filterData.wasteTypeSearch ; let i = index">
+                  <table>
+                    <tr>
+                      <td>
+                          <mat-checkbox [checked]="wt.search" [(ngModel)]="filterData.wasteTypeSearch[i].search" 
+                          name="wt{{i+1}}"
+                          #wasteType="ngModel">
+                        <span *ngIf="Language == 'en'"> {{wt.wasteType.en}}</span>  <span *ngIf="Language == 'ro'">{{wt.wasteType.ro}} </span>
+                        </mat-checkbox>
+                      </td>
+                      <td align="right">
+                          <input type="color" value="{{wt.color}}" disabled>
+                      </td>
+                    </tr>
+                  </table>
+            
+              </div>
+              <br> 
+              </div>
+                    <div  align="end">
+                      <button color="accent" 
+                      mat-raised-button  (click)="FilterSearch()">
+                        <mat-icon>search</mat-icon>
+                      </button>
+                    
+                    </div>
+              </form>
 
     </mat-sidenav>
     <button mat-mini-fab (click)="sidenav.toggle()">
@@ -48,9 +82,9 @@
             </ng-container>
             <ng-container matColumnDef="amount">
                 <mat-header-cell *matHeaderCellDef>
-                    <span translate="new_energy-amount">Amount</span>
+                    <span translate="new_energy-amount">Amount</span>(kg)
                 </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.wasteDataEntry.amount}} kg </mat-cell>
+                <mat-cell *matCellDef="let element"> {{element.wasteDataEntry.amount}}  </mat-cell>
             </ng-container>
             <ng-container matColumnDef="wasteType">
                     <mat-header-cell *matHeaderCellDef mat-sort-header matTooltip="Sort by waste Type asc or desc"> 
@@ -65,7 +99,7 @@
             </ng-container>
             <ng-container matColumnDef="validityDate">
                 <mat-header-cell *matHeaderCellDef>
-                    <span translate="new_energy-validityDate"> validityDate</span>
+                    <span translate="new_energy-validityDate"> Validity</span>
                 </mat-header-cell>
                 <mat-cell *matCellDef="let element">
                     <table>

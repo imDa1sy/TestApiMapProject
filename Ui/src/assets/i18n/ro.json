@@ -94,7 +94,7 @@
     "new_energy-telephone":"Telefon",
     "new_energy-mobile":"Mobil",
     "new_energy-amount":"Cantitate",
-    "new_energy-validityDate":"Dată de validare",
+    "new_energy-validityDate":"Valabilitate",
     "new_energy-valid-from":"Valabil de la",
     "new_energy-expire-date":"Data de expirare",
     "new_energy-expired":"Expirat",
@@ -151,8 +151,13 @@
     "new_energy-updated":"Actualizat!",
     "new_energy-deleted":"Șters!",
 
-    "new_energy-gasVolume":"Volumul total de gaz",
-    "new_energy-sumAmount":"Sumă totală"
+    "new_energy-totalGasVolume":"Total gaz",
+    "new_energy-gasVolume":"Volumul gazului",
+    "new_energy-totalSumAmount":"Valoare totală",
+    "new_energy-sumAmount":"Cantitate",
+    "new_energy-Totalpower":"Putere totala",
+    "new_energy-power":"Putere"
+
 
 
   

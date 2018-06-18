@@ -2,8 +2,17 @@
 <form #newOwnerForm="ngForm">
     <agm-map #AgmMap [latitude]="latitude" [longitude]="longitude" [maxZoom]="16" [zoom]="zoom"
     [fullscreenControl]='true' [mapTypeControl]='true' (mapClick)="getLatLon($event)">
+    <agm-marker [latitude]="_mapInputService._latitude" [longitude]="_mapInputService._longitude" 
+                *ngIf="locationChosen"> 
+    </agm-marker>
     </agm-map>
-    
+    <br>
+    <div>
+        <p>
+          Latitude: <strong>{{_mapInputService._latitude}}</strong>,
+          Longitude: <strong>{{_mapInputService._longitude}}</strong>
+        </p>
+    </div>
     <div mat-dialog-actions align="end">
         <button color="accent" 
                 mat-raised-button [mat-dialog-close]="true" 

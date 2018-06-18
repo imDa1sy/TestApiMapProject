@@ -31,6 +31,8 @@ export class WasteDataTypeSum {
     wasteType: WasteType;
     sumAmount: number;
     count: number;
+    kw : number;
+    gasVolume : number;
 
     getgasVolume() {
         return this.sumAmount/1000 * this.wasteType.factor;

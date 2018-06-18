@@ -13,6 +13,7 @@ export class MapinputComponent implements OnInit {
   //default map center
   latitude: number = 46.98647344584873;
   longitude: number = 28.861747553664827;
+  locationChosen = false;
   //default zoom
   zoom: number = 8;
   constructor(public dialogRef: MatDialogRef<MapinputComponent>, 
@@ -31,6 +32,6 @@ export class MapinputComponent implements OnInit {
     // here we set location latitude and longitude to be ready to serve in wasteOwner and WasteUser component
     this._mapInputService._latitude = coordinates.coords.lat
     this._mapInputService._longitude = coordinates.coords.lng
-    console.log(coordinates)
+    this.locationChosen = true;
   }
 }

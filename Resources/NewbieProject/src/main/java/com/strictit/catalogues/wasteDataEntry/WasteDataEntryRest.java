@@ -69,28 +69,82 @@ public class WasteDataEntryRest {
         return ResponseEntity.ok().body(getTransationData);
     }
       // method is returning list of waste data for specific waste owner
-    @GetMapping(path = "/getallwastedatabyid/{wasteOwnerId}")
-    public List<WasteData> getAllWasteDataById(@PathVariable String wasteOwnerId) {
-        //add logic to get all waste data for current owner
-        List wasteList = new ArrayList();
+    @PutMapping(path = "/getallwastedatabyid/{wasteOwnerId}")
+    public ResponseEntity getAllWasteDataById(@PathVariable String wasteOwnerId,@RequestBody String filterDataString) {
+          
+        Gson gsonObj = new Gson();
+        WasteTypeFilter filterData = gsonObj.fromJson(filterDataString, WasteTypeFilter.class);
 
-        //here we retreive listo of waste data by owner id then we loop through it 
-        List<WasteDataEntry> listOfWasteDataEntrys = wasteDataEntryRepository.findByWasteOwnerId(wasteOwnerId);
-        for (WasteDataEntry wasteDataEntry : listOfWasteDataEntrys) {
+        // mongo database access definitions
+        // get mongoClient
+        MongoClient mongoClient = MongoClientConfig.getConnection();
+        // define databse
+        DB database = mongoClient.getDB("Biodeseuri");
+        // the collection we are going to access and search for
+        DBCollection collection = database.getCollection("WasteData");
+       
+        //result list for returning data
+        List wasteList = new ArrayList();
+        // list for searching waste types marked as parameters by isSearch() = true'
+        List wasteTypeIds = new ArrayList(); 
+       
+        // iterate through the filter data
+        // and get all the waste types we have to search for
+        for(WasteTypeSearch filterWt : filterData.getWasteTypeSearch()){
+            // if the search attribute is set then we have to search for it
+            if (filterWt.isSearch()){
+               wasteTypeIds.add(filterWt.getId());                
+            }
+         }
+        
+        // now it is time to define the query
+        BasicDBObject wasteDataquery = new BasicDBObject();  
+
+        // create a list of and Querys for the ANDed criteria
+        List<BasicDBObject> andQuery = new ArrayList();
+        
+        // instance of current time to be used in filter query
+           Date currentDate = new Date();
+            andQuery.add(new BasicDBObject("wasteOwnerId",wasteOwnerId));
+         //addQuery filter to display data  by array of wasteTypeIds
+        andQuery.add(new BasicDBObject("wasteTypeId", new BasicDBObject("$in",wasteTypeIds)));
+        if (filterData.isInFuture()){
+            // if isFuture true addQuery filter to display data which date is grater then current date.
+            andQuery.add(new BasicDBObject("validityDateStart", new BasicDBObject( "$gt", currentDate )));
+            System.out.println("current time" + currentDate);
+        } else {
+            // if isFuture false addQuery filter to display data which date is lesser then current date.
+          andQuery.add(new BasicDBObject("validityDateStart", new BasicDBObject( "$lt", currentDate )));
+        }
+        andQuery.add(new BasicDBObject("expired", new BasicDBObject("$eq", false )));
+        // put the andQuery into the data query                       
+         
+        wasteDataquery.put("$and",andQuery);     
+        //execute the query
+        DBCursor cursor = collection.find(wasteDataquery);
+       //iterate through the result documents
+        while (cursor.hasNext()) {
+
             WasteData localWasteData = new WasteData();
               //here waste data base information is set 
-            localWasteData.setWasteDataEntry(wasteDataEntry);
+            BasicDBObject tempDBObject =(BasicDBObject) cursor.next();
+
+            String sTemp;
+            sTemp = gsonObj.toJson(tempDBObject);
+            WasteDataEntry tempWasteDataEntry = gsonObj.fromJson(sTemp, WasteDataEntry.class );
+             tempWasteDataEntry.setId(tempDBObject.getObjectId("_id").toString());
+            localWasteData.setWasteDataEntry((WasteDataEntry) tempWasteDataEntry);
 
             //here we retreive current waste owner information and add it to waste data object
-            Optional<WasteOwnerData> wasteOwnerData = wasteOwnerRepository.findById(wasteDataEntry.getWasteOwnerId());
+            Optional<WasteOwnerData> wasteOwnerData = wasteOwnerRepository.findById(localWasteData.getWasteDataEntry().getWasteOwnerId());
             localWasteData.setWasteOwnerData(wasteOwnerData);
             
             //here we retreive location of waste data and add it to waste data object
-            Optional<Location> location = locationRepository.findById(wasteDataEntry.getWasteLocationId());
+            Optional<Location> location = locationRepository.findById(localWasteData.getWasteDataEntry().getWasteLocationId());
             //here we retreive waste type and add it to waste data object
             
             localWasteData.setLocation(location);
-            Optional<WasteType> wasteType = wasteTypeRepository.findById(wasteDataEntry.getWasteTypeId());
+            Optional<WasteType> wasteType = wasteTypeRepository.findById(localWasteData.getWasteDataEntry().getWasteTypeId());
 
             localWasteData.setWasteType(wasteType);
             //here waste object is populated and added to wasteList list to be sent
@@ -98,7 +152,7 @@ public class WasteDataEntryRest {
             wasteList.add(localWasteData);
 
         }
-        return wasteList;
+        return ResponseEntity.ok().body(wasteList);
     }
 
     //method is returning all waste data from all waste owners

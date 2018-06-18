@@ -25,9 +25,10 @@ export class WasteDataEntryService {
         return this.http.put<WasteData[]>('http://'+restConfig.Host+':'+restConfig.Port+'/api/getallactivewastedata',      
         JSON.stringify( filter ), {headers} );
     }
-    loadAllWasteDataById(id): Observable<WasteData> {
-        
-        return this.http.get<WasteData>('http://'+restConfig.Host+':'+restConfig.Port+'/api/getallwastedatabyid/'+id);
+    loadAllWasteDataById(id,filter: WasteTypeFilter): Observable<WasteData[]> {
+        const headers = new HttpHeaders().set("Content-Type", "application/json");
+        return this.http.put<WasteData[]>('http://'+restConfig.Host+':'+restConfig.Port+'/api/getallwastedatabyid/'+id,      
+        JSON.stringify( filter ), {headers} );
     }
     loadWasteDataById(id): Observable<WasteData> {
         

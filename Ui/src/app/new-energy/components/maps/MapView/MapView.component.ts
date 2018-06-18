@@ -15,6 +15,7 @@ import { WasteType, WasteTypeSearch, WasteTypeFilter } from '../../waste-type/Wa
 
 import { TranslateService } from '@ngx-translate/core';
 import { TranslateLangService } from '../../../TranslateLangService.service';
+import { ninvoke } from 'q';
 
  
 
@@ -45,8 +46,9 @@ export class MapViewComponent implements OnInit {
   markerSpiderfier: OverlappingMarkerSpiderfier;
   iw : google.maps.InfoWindow;
   markerCluster: any;
-  gasVolume: number = 0;
-  kw: number = 0;
+  TotalgasVolume: number = 0;
+  TotalSum: number = 0;
+  TotalPower: number = 0;
   // refresh timer for map backend calling
   refreshTimer: any;
   //displayedColumns is array of strings,and every string is representation of one column in table.
@@ -65,7 +67,7 @@ export class MapViewComponent implements OnInit {
 
   @ViewChild('AgmMap') agmMap: AgmMap;
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild('energyViewTable', {read: MatPaginator}) energyViewPaginator : MatPaginator;
+ 
 
   constructor(private _wasteOwnerService: WasteOwnerService,
     private changeDetectorRefs: ChangeDetectorRef,
@@ -82,13 +84,13 @@ export class MapViewComponent implements OnInit {
     //check  role and display table based on role
     this.authService.setRole.subscribe((value) => {
       this.ROLE = value;
-      if (value == 'ROLE_WASTE_USER') {
+      if (value == 'ROLE_WASTE_USER' || value == 'ROLE_WASTE_OWNER') {
            //here we set grid view table columns if role waste user dont show action buttons
         this.displayedColumns = ['wasteOwner', 'location', 'wasteType', 'amount',
           'validityDate', /*'actionsColumn'*/];
 
            //here we set energy view table columns 
-        this.displayedEnergyViewColumns =['wasteType','sumAmount','count'];  
+        this.displayedEnergyViewColumns =['count','wasteType','sumAmount','gasVolume','power'];  
       }
       if (value == 'ROLE_ADMIN' || value == 'ROLE_CONTENT_MNGR') {
           //here we set energy view table columns
@@ -96,7 +98,7 @@ export class MapViewComponent implements OnInit {
           'validityDate', 'actionsColumn'];
 
           //here we set energy view table columns
-          this.displayedEnergyViewColumns =['wasteType','sumAmount','count',];
+          this.displayedEnergyViewColumns =['count','wasteType','sumAmount','gasVolume','power'];
       }
     });
     
@@ -105,8 +107,7 @@ export class MapViewComponent implements OnInit {
   ngAfterViewInit() {
     //add paginator to grid view table
     this.dataSource.paginator = this.paginator;
-    //add paginator to energy view table
-    this.energyviewSource.paginator = this.energyViewPaginator;
+   
   }
   
 
@@ -234,13 +235,16 @@ DrawMarkers(map){
       var tempwasteDataTypeSum = new WasteDataTypeSum();
       tempwasteDataTypeSum.wasteType = iterator;
       tempwasteDataTypeSum.sumAmount = 0;
+      tempwasteDataTypeSum.gasVolume = 0;
+      tempwasteDataTypeSum.kw = 0;
       tempwasteDataTypeSum.count = 0;
       this.EnergyData.push(tempwasteDataTypeSum);  
       
     }
-    // reset gas volume
-    this.gasVolume = 0;
-    this.kw = 0;
+    // reset total gas volume,total sum and total power
+    this.TotalgasVolume = 0;
+    this.TotalSum = 0;
+    this.TotalPower = 0;
 
 
     // init spider objects
@@ -303,9 +307,10 @@ DrawMarkers(map){
       
 
       // calculation
-      this.gasVolume += iterationWasteData.wasteDataEntry.amount/1000 * iterationWasteData.wasteType.factor; 
-      this.kw += VolumeToPower( this.gasVolume );
-      console.log(this.gasVolume);
+      this.TotalgasVolume += iterationWasteData.wasteDataEntry.amount/1000 * iterationWasteData.wasteType.factor; 
+      this.TotalSum += iterationWasteData.wasteDataEntry.amount;
+      this.TotalPower += VolumeToPower( this.TotalgasVolume );
+      console.log(this.TotalgasVolume);
 
       // if in EnergyData we do not have an entry with the waste type
       // add it into the array
@@ -321,7 +326,13 @@ DrawMarkers(map){
         this.EnergyData.push(tempwasteDataTypeSum);
       } else {
         console.log( 'found ' + nIndex);
+        //set total amount for current waste type
         this.EnergyData[nIndex].sumAmount += iterationWasteData.wasteDataEntry.amount;
+        //set total gas volume for current waste type
+        this.EnergyData[nIndex].gasVolume += iterationWasteData.wasteDataEntry.amount/1000 * iterationWasteData.wasteType.factor;
+       // set total power for current waste type
+        this.EnergyData[nIndex].kw += VolumeToPower(this.EnergyData[nIndex].gasVolume);
+        //set total locations of current waste type
         this.EnergyData[nIndex].count ++;
       }
 
