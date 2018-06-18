@@ -1,10 +1,4 @@
-.logo {
-    width:auto;
-    height:auto;
-    max-width:100%;
-    max-height:100%;    
-  }
-  .containers {
+ .containers {
     margin-left: 8%;
     
   }
@@ -15,3 +9,9 @@
   .nav-listItems {
     margin-top: 3%;
   }
+  .navbar {
+    position: relative;
+    
+    margin-bottom: 0.1%;
+    
+}

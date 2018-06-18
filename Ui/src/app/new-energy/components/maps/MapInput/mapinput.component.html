@@ -1,0 +1,21 @@
+
+<form #newOwnerForm="ngForm">
+    <agm-map #AgmMap [latitude]="latitude" [longitude]="longitude" [maxZoom]="16" [zoom]="zoom"
+    [fullscreenControl]='true' [mapTypeControl]='true' (mapClick)="getLatLon($event)">
+    </agm-map>
+    
+    <div mat-dialog-actions align="end">
+        <button color="accent" 
+                mat-raised-button [mat-dialog-close]="true" 
+                >
+         <mat-icon>done</mat-icon>
+       </button>
+      &nbsp; &nbsp;
+      <button  color="warn" 
+               mat-raised-button 
+               (click)="onNoClick()">
+          <mat-icon>close</mat-icon>
+        </button>
+    </div>
+  </form>
+

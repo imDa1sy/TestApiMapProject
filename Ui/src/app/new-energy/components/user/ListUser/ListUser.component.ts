@@ -5,6 +5,7 @@ import { MatTableDataSource, MatPaginator, MatSort, MatDialog, MatSnackBar } fro
 import { UserService } from '../User.service';
 import { AuthService } from '../../auth/auth.service';
 import { User } from '../User.class';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-ListUser',
@@ -30,6 +31,7 @@ export class ListUserComponent implements OnInit {
    private _userService: UserService,
    public dialog: MatDialog,
    public snackBar: MatSnackBar,
+   private translate: TranslateService,
    private authService: AuthService) {
    this.authService.setRole.subscribe((value) => {
 
@@ -114,7 +116,7 @@ export class ListUserComponent implements OnInit {
  deleteUser(id) {
    let dialogRef = this.dialog.open(DialogDeleteQuestionComponent, {
      width: '300px', height: '300px',
-     data: { "text": "User", "restName": "/api/removeuser/", "entity_id": id }
+     data: { "text": this.translate.instant('new_energy-user-header'), "restName": "/api/removeuser/", "entity_id": id }
    });
    dialogRef.afterClosed().subscribe(result => {
      if (result != null) {

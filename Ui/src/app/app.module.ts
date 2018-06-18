@@ -8,13 +8,16 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { FormsModule }    from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AgmCoreModule } from '@agm/core';
+import { AgmJsMarkerClustererModule } from '@agm/js-marker-clusterer';
+
+
 import 'hammerjs';
 import {
   MatIconModule,
   MatButtonModule,
   MatSelectModule,
   MatInputModule,
-  MatDialogModule,
+  MatDialogModule, 
   MatTooltipModule,
   MatCheckboxModule,
   MatSidenavModule,
@@ -29,7 +32,9 @@ import {
   MatSortModule,
   MatPaginatorModule,
   MatDatepickerModule,
-  MatNativeDateModule
+  MatNativeDateModule,
+  MatTabsModule,
+  MAT_DATE_LOCALE
 } from '@angular/material';
 
 import { router } from './app.router';
@@ -59,10 +64,18 @@ import { ListWasteUserComponent } from './new-energy/components/waste-user/ListW
 import { WasteUserService } from './new-energy/components/waste-user/WasteUser.service';
 import { UserService } from './new-energy/components/user/User.service';
 import { DialogEditUserComponent } from './new-energy/components/user/DialogEditUser/DialogEditUsercomponent';
-import { MapViewComponent } from './new-energy/components/map-view/MapView.component';
 import { HomeComponent } from './new-energy/components/home/home.component';
 import { DialogEditWasteDataEntry } from './new-energy/components/waste-data-entry/DialogEditWasteDataEntry/DialogEditWasteDataEntry.component';
 import { EqualValidator } from './new-energy/components/user/EqualValidator.directive';
+import { ListWasteDataComponent } from './new-energy/components/waste-data-entry/ListWasteData/ListWasteData.component';
+import { WasteDataEntryService } from './new-energy/components/waste-data-entry/WasteDataEntry.service';
+
+import { TranslateLangService } from './new-energy/TranslateLangService.service';
+import { MapViewComponent } from './new-energy/components/maps/MapView/MapView.component';
+import { MapinputComponent } from './new-energy/components/maps/MapInput/mapinput.component';
+import { MapViewService } from './new-energy/components/maps/MapView/MapView.service';
+import { MapInputService } from './new-energy/components/maps/MapInput/mapInput.service';
+
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -89,14 +102,18 @@ export function HttpLoaderFactory(http: HttpClient) {
     MapViewComponent,
     DialogEditWasteDataEntry,
     HomeComponent,
-    EqualValidator
+    EqualValidator,
+    ListWasteDataComponent,
+    MapinputComponent
    
   ],
   imports: [
+
     RouterModule.forRoot(router),
     AgmCoreModule.forRoot({
       apiKey: ''
     }),
+    AgmJsMarkerClustererModule,
     BrowserModule,
     BrowserAnimationsModule,
     HttpModule,
@@ -106,7 +123,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         provide: TranslateLoader,
         useFactory: HttpLoaderFactory,
         deps: [HttpClient]
-      }
+      } 
+     
     }),
     FormsModule,
     ReactiveFormsModule,
@@ -129,7 +147,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatSortModule,
     MatPaginatorModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatTabsModule
   ],
   entryComponents: [ 
                      DialogDeleteQuestionComponent,
@@ -137,10 +156,12 @@ export function HttpLoaderFactory(http: HttpClient) {
                      DialogEditWasteOwnerComponent,
                      DialogEditWasteUserComponent,
                      DialogEditUserComponent,
-                     DialogEditWasteDataEntry
+                     DialogEditWasteDataEntry,
+                     MapinputComponent
    ],
-  providers: [WasteOwnerService, WasteUserService,WasteTypeService,UserService,
-    AuthService, AuthGuard, MatNativeDateModule],
+  providers: [WasteOwnerService, WasteUserService,WasteTypeService,
+              UserService, WasteDataEntryService, MapViewService,MapInputService,TranslateLangService,
+              AuthService, AuthGuard, MatNativeDateModule,{provide: MAT_DATE_LOCALE, useValue: 'en-GB'} ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

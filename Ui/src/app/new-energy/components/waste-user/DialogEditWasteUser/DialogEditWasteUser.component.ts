@@ -6,6 +6,9 @@ import { restConfig } from '../../restConfig';
 import { WasteUserService } from '../WasteUser.service';
 import { DialogDeleteQuestionComponent } from '../../DialogDeleteQuestion/DialogDeleteQuestion.component';
 import { FormPatterns } from '../../FormPatterns';
+import { TranslateService } from '@ngx-translate/core';
+import { MapinputComponent } from '../../maps/MapInput/mapinput.component';
+import { MapInputService } from '../../maps/MapInput/mapInput.service';
 
 @Component({
   selector: 'app-DialogEditWasteUser',
@@ -22,7 +25,9 @@ export class DialogEditWasteUserComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private http: Http, private snackBar: MatSnackBar,
     public dialog: MatDialog,
-    private _wastUserService: WasteUserService, ) {
+    private _wastUserService: WasteUserService,
+    private _mapInputService :MapInputService,
+    private translate: TranslateService ) {
 
       this.loadWasteUserData();
      }
@@ -43,9 +48,30 @@ export class DialogEditWasteUserComponent implements OnInit {
   ngOnInit() {
 
   }
+
   onNoClick(): void {
     this.dialogRef.close();
   }
+
+  addLatLng(index) {
+    //call mapInputComponent and get coords 
+    let dialogRef = this.dialog.open(MapinputComponent, {
+      width: '700px', height: '600px',
+      data: { }
+    });
+    //creates new form fields in DialogEditWasteUser for creating new location
+    dialogRef.afterClosed().subscribe(result => {
+      //if coords are selected create location with that coords else do nothing 
+      if (result != null) {
+        //insert latitude in form
+    this.data.localWasteUser.locations[index].latitude = this._mapInputService._latitude;
+    //insert longitude in form
+    this.data.localWasteUser.locations[index].longitude = this._mapInputService.longitude;
+    
+  }
+  });
+  }
+
   addUsers() {
     //creates new form fields in DialogEditWasteUser for creating new user
     this.data.localWasteUser.users.push({
@@ -106,13 +132,13 @@ export class DialogEditWasteUserComponent implements OnInit {
             if (this.data.id == null) {
 
               console.log('Waste user inserted!');
-              this.snackBar.open("Waste user ", " inserted!", {
+              this.snackBar.open(this.translate.instant('new_energy-waste-user-header'), this.translate.instant('new_energy-inserted'), {
                 duration: 4000,
               });
 
             } else {
               console.log('Waste user update!');
-              this.snackBar.open("Waste user ", " updated!", {
+              this.snackBar.open(this.translate.instant('new_energy-waste-user-header'), this.translate.instant('new_energy-updated'), {
                 duration: 4000,
               });
 

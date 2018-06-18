@@ -20,8 +20,9 @@ public class WasteType {
     
     private String name;
     private boolean active;
-    private String wasteType;
+    private MultiLanguageDescription wasteType;
     private String color;
+    private int factor;
 
     public String getId() {
         return id;
@@ -47,11 +48,11 @@ public class WasteType {
         this.active = active;
     }
 
-    public String getWasteType() {
+    public MultiLanguageDescription getWasteType() {
         return wasteType;
     }
 
-    public void setWasteType(String wasteType) {
+    public void setWasteType(MultiLanguageDescription wasteType) {
         this.wasteType = wasteType;
     }
 
@@ -63,10 +64,19 @@ public class WasteType {
         this.color = color;
     }
 
+    public int getFactor() {
+        return factor;
+    }
+
+    public void setFactor(int factor) {
+        this.factor = factor;
+    }
+
     @Override
     public String toString() {
-        return "WasteType{" + "id=" + id + ", name=" + name + ", active=" + active + ", wasteType=" + wasteType + ", color=" + color + '}';
+        return "WasteType{" + "id=" + id + ", name=" + name + ", active=" + active + ", wasteType=" + wasteType + ", color=" + color + ", factor=" + factor + '}';
     }
+
 
   
     

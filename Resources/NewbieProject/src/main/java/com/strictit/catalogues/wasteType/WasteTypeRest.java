@@ -42,6 +42,7 @@ public class WasteTypeRest {
     public List<WasteType> getAllActiveWasteTypes() {
         boolean active = true;
         List<WasteType> listOfActiveWasteTypes = wasteTypeRepository.findByActive(active);
+        System.out.println(listOfActiveWasteTypes);
         return listOfActiveWasteTypes;
     }
     

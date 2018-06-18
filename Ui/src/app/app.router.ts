@@ -12,8 +12,10 @@ import { ListWasteTypeComponent } from './new-energy/components/waste-type/ListW
 import { ListWasteOwnerComponent } from './new-energy/components/waste-owner/ListWasteOwner/ListWasteOwner.component';
 import { ListUserComponent } from './new-energy/components/user/ListUser/ListUser.component';
 import { ListWasteUserComponent } from './new-energy/components/waste-user/ListWasteUser/ListWasteUser.component';
-import { MapViewComponent } from './new-energy/components/map-view/MapView.component';
+
 import { HomeComponent } from './new-energy/components/home/home.component';
+import { ListWasteDataComponent } from './new-energy/components/waste-data-entry/ListWasteData/ListWasteData.component';
+import { MapViewComponent } from './new-energy/components/maps/MapView/MapView.component';
 
 export const router : Routes = [
  // za route aktivacija canActivate: [AuthGuard],
@@ -29,7 +31,7 @@ export const router : Routes = [
           { path : 'list-waste-users', component : ListWasteUserComponent,canActivate: [AuthGuard]},
           { path : 'list-waste-type',component : ListWasteTypeComponent,canActivate: [AuthGuard]},
           { path : 'list-user',component : ListUserComponent,canActivate: [AuthGuard]},
-        //  { path : 'list-waste-data-entry',component : WasteDataEntryComponent,canActivate: [AuthGuard]},
+          { path : 'list-waste-data',component : ListWasteDataComponent,canActivate: [AuthGuard]},
           { path : 'map-view',component : MapViewComponent,canActivate: [AuthGuard]}
 
         ] },

@@ -16,10 +16,14 @@ com\strictit\NewbieProjectApplication.class
 com\strictit\catalogues\locations\LocationRepository.class
 com\strictit\catalogues\wasteDataEntry\WasteDataEntry.class
 com\strictit\catalogues\User\UserRepository.class
+com\strictit\config\MongoClientConfig.class
 com\strictit\catalogues\locations\LocationRest.class
 com\strictit\catalogues\wasteOwner\WasteOwnerRepository.class
 com\strictit\catalogues\User\User.class
+com\strictit\catalogues\wasteDataEntry\WasteData.class
 com\strictit\catalogues\locations\Locations.class
 com\strictit\catalogues\User\UserRest.class
 com\strictit\catalogues\wasteOwner\WasteOwnerRest.class
+com\strictit\catalogues\wasteType\WasteTypeFilter.class
 com\strictit\catalogues\wasteUser\WasteUserRepository.class
+com\strictit\catalogues\wasteType\MultiLanguageDescription.class

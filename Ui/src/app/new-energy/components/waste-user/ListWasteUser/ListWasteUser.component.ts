@@ -6,6 +6,7 @@ import { MatTableDataSource, MatPaginator, MatSort, MatDialog, MatSnackBar } fro
 import { Http } from '@angular/http';
 import { WasteUserService } from '../WasteUser.service';
 import { AuthService } from '../../auth/auth.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-ListWasteUser',
@@ -32,7 +33,8 @@ export class ListWasteUserComponent implements OnInit {
     private _wasteUserService: WasteUserService,
     private authService: AuthService,
     public dialog: MatDialog,
-    public snackBar: MatSnackBar) {
+    public snackBar: MatSnackBar,
+    private translate: TranslateService) {
 
     this.authService.setRole.subscribe((value) => {  
       this.ROLE = value;
@@ -132,7 +134,7 @@ export class ListWasteUserComponent implements OnInit {
   deleteWasteUser(id) {
     let dialogRef = this.dialog.open(DialogDeleteQuestionComponent, {
       width: '300px', height: '300px',
-      data: { "text": "Waste user", "restName": "/api/removewasteuser/", "entity_id": id }
+      data: { "text": this.translate.instant('new_energy-waste-user-header'), "restName": "/api/removewasteuser/", "entity_id": id }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result != null) {

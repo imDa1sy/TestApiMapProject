@@ -7,7 +7,9 @@ import { restConfig } from '../../restConfig';
 import { DialogEditWasteTypeComponent } from '../DialogEditWasteType/DialogEditWasteType.component';
 import { DialogDeleteQuestionComponent } from '../../DialogDeleteQuestion/DialogDeleteQuestion.component';
 import { WasteTypeService } from '../Wastetype.service';
-import { WasteType } from '../WasteType.class';
+import { WasteType, MultiLanguageDescription } from '../WasteType.class';
+import { TranslateLangService } from '../../../TranslateLangService.service';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
@@ -17,11 +19,11 @@ import { WasteType } from '../WasteType.class';
 })
 export class ListWasteTypeComponent implements OnInit {
 
-  localWasteTypeToEdit: WasteType;
+  
   //=========================== ATTRIBUTES ==========================================
   WasteTypeList: any;
   dataSource = new MatTableDataSource();
-
+  Language='en';
   //displayedColumns is array of strings,and every string is representation of one column in table.
   displayedColumns = [];
   ROLE: string;
@@ -34,17 +36,22 @@ export class ListWasteTypeComponent implements OnInit {
     private _wasteTypeService: WasteTypeService,
     public dialog: MatDialog,
     public snackBar: MatSnackBar,
-    private authService: AuthService) {
-    this.authService.setRole.subscribe((value) => {
+    private authService: AuthService,
+    private translate: TranslateService,
+    private _translateServiceLang : TranslateLangService) {
 
+    this.authService.setRole.subscribe((value) => {
+      console.log(this._translateServiceLang.currentLanguageActive)
+      this.Language= this._translateServiceLang.currentLanguageActive;
       this.ROLE = value;
       if (value == 'ROLE_WASTE_OWNER') {
-        this.displayedColumns = [ 'wasteType','wasteColor'];
+        this.displayedColumns = [ 'wasteType','wasteColor','factor'];
       } if (value == 'ROLE_ADMIN') {
-        this.displayedColumns = [ 'wasteType','wasteColor', 'actionsColumn'];
+        this.displayedColumns = [ 'wasteType','wasteColor','factor', 'actionsColumn'];
       }
      
     });
+   
   }
 
   //============================ METHODS =============================================             
@@ -52,6 +59,7 @@ export class ListWasteTypeComponent implements OnInit {
     this._wasteTypeService.loadAllActiveWasteTypes().subscribe(
       data => {
         this.WasteTypeList = data;
+        console.log(this.WasteTypeList)
         this.dataSource.data = this.WasteTypeList;
       });
     this.changeDetectorRefs.detectChanges();
@@ -59,9 +67,11 @@ export class ListWasteTypeComponent implements OnInit {
   }
 
   searchElements(search: string = "") {
+    
     this.dataSource.filter = search.toLowerCase().trim();
   }
   ngAfterViewInit() {
+   
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
@@ -72,13 +82,17 @@ export class ListWasteTypeComponent implements OnInit {
 
     let localWasteTypeToAdd={
       active:true,
-      wasteType : '',
-      color:''
+      wasteType : {
+          en:'' ,
+          ro:''
+        },
+      color:'',
+      factor:0
     }
     let dialogRef = this.dialog.open(DialogEditWasteTypeComponent, {
     //  disableClose: true,
       autoFocus: true,
-      width: '400px', height: '350px', data: { 
+      width: '450px', height: '500px', data: { 
         "id": null,
         "localWasteType":localWasteTypeToAdd
        }
@@ -91,14 +105,22 @@ export class ListWasteTypeComponent implements OnInit {
     });
   }
   editWasteType(elementData) {
-   
+   var localWasteTypeToEdit={
+      active:true,
+   wasteType : {
+       en:'' ,
+       ro:''
+     },
+   color:'',
+   factor:0
+ }
     let dialogRef = this.dialog.open(DialogEditWasteTypeComponent, {
      // disableClose: true,
       autoFocus: true,
-      width: '400px', height: '350px',
+      width: '450px', height: '500px',
       data: {
         "id": elementData.id,
-        "localWasteType": WasteType
+        "localWasteType": localWasteTypeToEdit
       
       }
     });
@@ -113,7 +135,7 @@ export class ListWasteTypeComponent implements OnInit {
   deleteWasteType(id) {
     let dialogRef = this.dialog.open(DialogDeleteQuestionComponent, {
       width: '300px', height: '300px',
-      data: { "text": "Waste type", "restName": "/api/removewastetype/", "entity_id": id }
+      data: { "text": this.translate.instant('new_energy-waste-type-header'), "restName": "/api/removewastetype/", "entity_id": id }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result != null) {
