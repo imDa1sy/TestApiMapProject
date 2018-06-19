@@ -10,6 +10,7 @@ import { FormPatterns } from '../../FormPatterns';
 import { TranslateService } from '@ngx-translate/core';
 import { MapinputComponent } from '../../maps/MapInput/mapinput.component';
 import { MapInputService } from '../../maps/MapInput/mapInput.service';
+import { UserService } from '../../user/User.service';
 
 @Component({
   selector: 'app-DialogEditWasteOwner',
@@ -18,20 +19,62 @@ import { MapInputService } from '../../maps/MapInput/mapInput.service';
 })
 export class DialogEditWasteOwnerComponent implements OnInit {
  
+  checkEmailAvailabilityList: any;
   emailPattern = FormPatterns.emailPattern;
   passwordPattern = FormPatterns.passwordPattern;
   usernamePattern = FormPatterns.usernamePattern;
 
+  emailAvailable: boolean = true;
+  userNameAvailable = [];
+  checkUserNameAvailabilityList: any;
+  counter;
   constructor(public dialogRef: MatDialogRef<DialogEditWasteOwnerComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private http: Http, private snackBar: MatSnackBar,
     public dialog: MatDialog,
     private _wasteOwnerService: WasteOwnerService,
     private _mapInputService :MapInputService,
+    private _userService: UserService,
     private translate: TranslateService) {
       
      this.loadWasteOwnerData();
   }
+
+  loadAllUserName(userName,i){
+    this.counter = i;
+  //load all users to check username  availability
+  this._userService.loadAllUsers().subscribe((data)=>{
+   this.checkUserNameAvailabilityList = data;
+   for (const iterator of this.checkUserNameAvailabilityList) {
+
+     if(userName == iterator.userName){
+       
+       this.userNameAvailable[i] = false;
+       break;
+    
+     }else {
+      this.userNameAvailable[i] = true;  
+     }
+   }  
+  });
+}
+loadAllUserEmail(email){
+ 
+//load all users to  email availability
+this._wasteOwnerService.loadAllWasteOwners().subscribe((data)=>{
+ this.checkEmailAvailabilityList = data;
+ for (const iterator of this.checkEmailAvailabilityList) {
+  
+   if(email == iterator.contact.email){
+     this.emailAvailable = false;
+     break;
+     
+   }else{
+     this.emailAvailable = true;
+   }
+ }
+});
+}
   loadWasteOwnerData() {
     if (this.data.id == null) {
 
@@ -89,7 +132,7 @@ export class DialogEditWasteOwnerComponent implements OnInit {
         if (this.data.localWasteOwner.locations[i].description == '' || this.data.localWasteOwner.locations[i].latitude == 0 || this.data.localWasteOwner.locations[i].longitude == 0) {
           $event.preventDefault();
           $event.stopPropagation();
-          this.data.localWasteOwner.locations.splice(this.data.localWasteOwner.locations.indexOf(item), 1);
+          this.data.localWasteOwner.locations.splice(this.data.localWasteOwner.locations.indexOf(i), 1);
 
         } else {
           //set selected location active status to false if form had data
@@ -103,6 +146,8 @@ export class DialogEditWasteOwnerComponent implements OnInit {
 
   addUsers() {
     //creates new form fields in DialogEditWasteOwner for creating new user
+   
+    this.userNameAvailable[this.counter];
     this.data.localWasteOwner.users.push({
       "enableUsername": true,
       "enableAddUser": true,
@@ -125,7 +170,7 @@ export class DialogEditWasteOwnerComponent implements OnInit {
         if (this.data.localWasteOwner.users[i].userName == '' || this.data.localWasteOwner.users[i].password == '') {
           $event.preventDefault();
           $event.stopPropagation();
-          this.data.localWasteOwner.users.splice(this.data.localWasteOwner.users.indexOf(item), 1);
+          this.data.localWasteOwner.users.splice(this.data.localWasteOwner.users.indexOf(i), 1);
 
         } else {
           //set selected user active status to false if form had data

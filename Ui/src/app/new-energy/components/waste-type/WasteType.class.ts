@@ -32,6 +32,7 @@ export class WasteTypeSearch extends WasteType {
 export class WasteTypeFilter{
     constructor(){
         this.inFuture= false;
+        this.expired = false;
         this.NElon=0;
         this.NElat=0;
         this.SWlon=0;
@@ -39,6 +40,7 @@ export class WasteTypeFilter{
         this.wasteTypeSearch=[];
     }
     inFuture : boolean;
+    expired : boolean;
     NElon:number;
     NElat:number;
     SWlon:number;

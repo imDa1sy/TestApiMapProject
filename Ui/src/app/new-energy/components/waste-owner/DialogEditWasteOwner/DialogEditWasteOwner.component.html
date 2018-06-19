@@ -86,13 +86,16 @@
         </div>
         <mat-form-field>
           <mat-label translate="new_energy-email">E-mail</mat-label>
-          <input matInput
+          <input matInput (keyup)='loadAllUserEmail(data.localWasteOwner?.wasteOwnerData.contact.email,i)'
                 [(ngModel)]="data.localWasteOwner?.wasteOwnerData.contact.email" 
                 type="email"
                 name="email" #email="ngModel" 
                 email [pattern]="emailPattern"
                 required >
         </mat-form-field>
+        <div *ngIf="emailAvailable == false">
+            Email is not available!
+          </div>
         <div [hidden]="email.valid || email.pristine" class="alert alert-danger"
         >
         <div [hidden]="!email.hasError('required')" translate="new_energy-form-req-email"> 
@@ -183,9 +186,9 @@
           <!-- here is checked if user is active  show it else is hidden-->
             <div class="example-container" *ngIf="data.localWasteOwner?.users[i].active">
           <mat-label><span translate="new_energy-user-header">User</span></mat-label>
-          <mat-form-field>
+          <mat-form-field >
             <mat-label translate="new_energy-username">Username</mat-label>
-            <input matInput 
+            <input matInput (keyup)='loadAllUserName(data.localWasteOwner?.users[i].userName,i)'
                   [(ngModel)]="data.localWasteOwner?.users[i].userName" 
                   [disabled]="!data.localWasteOwner?.users[i].enableUsername"
                   name="userName{{i+1}}" #userName="ngModel" 
@@ -193,6 +196,9 @@
                   [pattern]="usernamePattern" 
                   required >
           </mat-form-field>
+          <div *ngIf="userNameAvailable[i] == false">
+        username is not available!
+      </div>
           <div [hidden]="userName.valid || userName.pristine" class="alert alert-danger"
           >
           <div [hidden]="!userName.hasError('required')" translate="new_energy-form-req-username"> 
@@ -259,7 +265,7 @@
         <hr>
       </div>
       <div mat-dialog-actions align="end">
-          <button color="accent" [disabled]="!newOwnerForm.form.valid" 
+          <button color="accent" [disabled]="!newOwnerForm.form.valid || userNameAvailable[counter] == false || emailAvailable == false" 
                   mat-raised-button [mat-dialog-close]="true" 
                   (click)="SaveAndClose()">
           <mat-icon>done</mat-icon>

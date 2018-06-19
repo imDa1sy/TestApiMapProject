@@ -105,18 +105,34 @@ public class WasteDataEntryRest {
         
         // instance of current time to be used in filter query
            Date currentDate = new Date();
-            andQuery.add(new BasicDBObject("wasteOwnerId",wasteOwnerId));
+           //addQuery filter to display data by wasteOwnerId
+        andQuery.add(new BasicDBObject("wasteOwnerId",wasteOwnerId));
          //addQuery filter to display data  by array of wasteTypeIds
         andQuery.add(new BasicDBObject("wasteTypeId", new BasicDBObject("$in",wasteTypeIds)));
-        if (filterData.isInFuture()){
-            // if isFuture true addQuery filter to display data which date is grater then current date.
-            andQuery.add(new BasicDBObject("validityDateStart", new BasicDBObject( "$gt", currentDate )));
-            System.out.println("current time" + currentDate);
-        } else {
-            // if isFuture false addQuery filter to display data which date is lesser then current date.
-          andQuery.add(new BasicDBObject("validityDateStart", new BasicDBObject( "$lt", currentDate )));
-        }
-        andQuery.add(new BasicDBObject("expired", new BasicDBObject("$eq", false )));
+        if (!filterData.isExpired()){
+            
+            List<BasicDBObject> orQueryList = new ArrayList<>();
+                //add query filter to display validityDateEnd grater or equal then current date
+                orQueryList.add(new BasicDBObject("validityDateEnd", new BasicDBObject( "$gte", currentDate )));
+                //add query filter to display data that is not expired if validityDateEnd does not exist 
+                orQueryList.add(new BasicDBObject("validityDateEnd", new BasicDBObject( "$exists", false )));
+                // add query filter to display data if expired is false
+                andQuery.add(new BasicDBObject("expired", new BasicDBObject("$eq", false )));
+             
+             andQuery.add(new BasicDBObject()
+                  .append("$or", orQueryList));
+        
+        }else if(filterData.isExpired())  {
+                // if isExpired true or date is lesser than expire date
+                //addQuery filter to display data which date is expired or lesser then current date.
+            List<BasicDBObject> orQueryList = new ArrayList<>();
+                orQueryList.add(new BasicDBObject("validityDateEnd", new BasicDBObject( "$lt", currentDate )));
+                orQueryList.add(new BasicDBObject("expired", new BasicDBObject("$eq", true )));
+               
+             andQuery.add(new BasicDBObject()
+                  .append("$or", orQueryList));
+        } 
+        
         // put the andQuery into the data query                       
          
         wasteDataquery.put("$and",andQuery);     
@@ -202,7 +218,19 @@ public class WasteDataEntryRest {
             // if isFuture false addQuery filter to display data which date is lesser then current date.
           andQuery.add(new BasicDBObject("validityDateStart", new BasicDBObject( "$lt", currentDate )));
         }
-        andQuery.add(new BasicDBObject("expired", new BasicDBObject("$eq", false )));
+        //add $or list to query
+        List<BasicDBObject> orQueryList = new ArrayList<>();
+                //add query filter to display validityDateEnd grater or equal then current date
+                orQueryList.add(new BasicDBObject("validityDateEnd", new BasicDBObject( "$gte", currentDate )));
+                //add query filter to display data that is not expired if validityDateEnd does not exist 
+                orQueryList.add(new BasicDBObject("validityDateEnd", new BasicDBObject( "$exists", false )));
+                // add query filter to display data if expired is false
+                andQuery.add(new BasicDBObject("expired", new BasicDBObject("$eq", false )));
+             
+             andQuery.add(new BasicDBObject()
+                  .append("$or", orQueryList));
+        
+       // andQuery.add(new BasicDBObject("expired", new BasicDBObject("$eq", false )));
         // put the andQuery into the data query                       
          
         wasteDataquery.put("$and",andQuery);     

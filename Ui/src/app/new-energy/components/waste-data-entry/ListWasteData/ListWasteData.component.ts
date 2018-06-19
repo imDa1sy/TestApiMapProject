@@ -35,19 +35,62 @@ export class ListWasteDataComponent implements OnInit {
               public dialog: MatDialog,
               private translate: TranslateService,
               private _translateServiceLang : TranslateLangService ) {
+                
                 this.filterData = new WasteTypeFilter();
-                this.Language= this._translateServiceLang.currentLanguageActive;
+                // fill filter form with all waste types
+          // call backend
+          this._wasteTypeService.loadAllActiveWasteTypes().subscribe( data => {
+            // the data contains all the waste types
+            // iterate and put into our filterData.wasteTypeSearch array
+            for (const iterationWasteType of data) {
+              // create new instance of wasteTypeSearch
+              var tempWasteTypeSearch = new WasteTypeSearch();
+              // fill the wasteTypeSearch form WasteType got from iterator
+              tempWasteTypeSearch.copyFromWasteType(iterationWasteType);
+              // push the temp instance into our filterData.wasteTypeSearch array
+              this.filterData.wasteTypeSearch.push(tempWasteTypeSearch);
+            
+            }
+            //calls backend as soon as all waste types are load 
+            //so that all waste owner data can be showed on landing page with all checked types
+            this.refresh(this.filterData);
+            
+          });
+                      this.Language= this._translateServiceLang.currentLanguageActive;
      this.authService.setRole.subscribe((value) => {
           this.ROLE = value;
-          if (value == 'ROLE_WASTE_OWNER') {
            this.displayedColumns = ['location', 'wasteType', 'amount',
                                     'validityDate', 'actionsColumn'];
-          }
-          if (value == 'ROLE_ADMIN') {
-           this.displayedColumns = ['wasteOwner', 'location', 'wasteType', 'amount',
-                                    'validityDate',  'actionsColumn'];
-      }
+       
     });
+  }
+
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
+  FilterSearch(){
+    this.refresh(this.filterData);
+  }
+
+  ngOnInit() {
+    console.log(this.filterData)
+   
+  //this.refresh(this.filterData);
+  }
+
+  
+  refresh(filter:WasteTypeFilter) {
+    //load all waste data entryes with waste owner id 
+    this._wasteDataEntryService.loadAllWasteDataById(this.authService.wasteOwnerId,filter).subscribe(
+      data => {
+        this.wasteList = data;
+        this.dataSource.data = this.wasteList;
+        console.log(this.wasteList)
+      });
+    this.changeDetectorRefs.detectChanges();
   }
 
   newWasteDataEntry() {
@@ -73,52 +116,10 @@ export class ListWasteDataComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result != null) {
-        this.refresh();
+        this.refresh(this.filterData);
       }
     });
   }
-
-  refresh() {
-    //load all waste data entryes with waste owner id 
-    console.log(this.authService.wasteOwnerId+' u refreshu '+this.filterData)
-    console.log(this.filterData)
-    this._wasteDataEntryService.loadAllWasteDataById(this.authService.wasteOwnerId,this.filterData).subscribe(
-      data => {
-        this.wasteList = data;
-        this.dataSource.data = this.wasteList;
-        console.log(this.wasteList)
-      });
-    this.changeDetectorRefs.detectChanges();
-  }
-
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-  }
-  FilterSearch(){
-    console.log(this.filterData)
-    this.refresh();
-  }
-  ngOnInit() {
-    console.log(this.filterData)
-    this._wasteTypeService.loadAllActiveWasteTypes().subscribe( data => {
-      // the data contains all the waste types
-      // iterate and put into our filterData.wasteTypeSearch array
-      for (const iterationWasteType of data) {
-        // create new instance of wasteTypeSearch
-        var tempWasteTypeSearch = new WasteTypeSearch();
-        // fill the wasteTypeSearch form WasteType got from iterator
-        tempWasteTypeSearch.copyFromWasteType(iterationWasteType);
-        tempWasteTypeSearch.search=true;
-        // push the temp instance into our filterData.wasteTypeSearch array
-        this.filterData.wasteTypeSearch.push(tempWasteTypeSearch);
-       }
-     
-       
-    }); 
-    this.FilterSearch();
-  }
-
   editWasteData(elementData){
     let dialogRef = this.dialog.open(DialogEditWasteDataEntry, {
       // disableClose: true,
@@ -134,7 +135,7 @@ export class ListWasteDataComponent implements OnInit {
    
      dialogRef.afterClosed().subscribe(result => {
        if (result != null) {
-         this.refresh();
+         this.refresh(this.filterData);
        }
      });
   }
@@ -146,7 +147,7 @@ export class ListWasteDataComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result != null) {
-        this.refresh();
+        this.refresh(this.filterData);
       }
     });
   }

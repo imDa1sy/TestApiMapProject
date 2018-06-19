@@ -9,7 +9,7 @@
     <hr>
       <mat-form-field >
         <mat-label translate="new_energy-username">Username</mat-label>
-        <input matInput 
+        <input matInput #input (keyup)='loadAllUsers(input.value)'
                [(ngModel)]="data?.localUser.userName" 
                [disabled]="!data?.enableUsername" 
                name="userName" #userName="ngModel" 
@@ -17,6 +17,9 @@
                [pattern]="usernamePattern"
               required >
       </mat-form-field>
+      <div *ngIf="userNameAvailable == false">
+        username is not available!
+      </div>
       <div [hidden]="userName.valid || userName.pristine" class="alert alert-danger"
       >
       <div [hidden]="!userName.hasError('required')" translate="new_energy-form-req-username"> 
@@ -80,7 +83,7 @@
     <hr>
   </div>
   <div mat-dialog-actions align="end">
-    <button color="accent" [disabled]="!newUserForm.form.valid" 
+    <button color="accent" [disabled]="!newUserForm.form.valid || userNameAvailable == false" 
             mat-raised-button [mat-dialog-close]="true" 
            (click)="SaveAndClose()">
       <mat-icon>done</mat-icon>

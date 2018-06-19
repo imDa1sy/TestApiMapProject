@@ -11,9 +11,12 @@ p {
     max-height:100%;    
   }
   .col-sm-2 {
+
+    /*margin: 1%;*/
+    padding:20px;
     text-align: center;
     font-size: 15px;
-    width: 227px;
+    width: 270px;
     height: 274px;
     border: 20px  solid white;
     background-color:#e5fad1;
@@ -21,4 +24,7 @@ p {
   #energyc {
     background-color:#e5fad1; 
     padding: 5%;
+  }
+  .row{
+    margin: 1%;
   }

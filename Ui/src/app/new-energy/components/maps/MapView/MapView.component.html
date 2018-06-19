@@ -173,7 +173,7 @@
                       <mat-header-cell *matHeaderCellDef>
                           <span translate="new_energy-amount">Amount</span>(kg)
                       </mat-header-cell>
-                      <mat-cell *matCellDef="let element"> {{element.wasteDataEntry.amount}}</mat-cell>
+                      <mat-cell *matCellDef="let element"> {{element.wasteDataEntry.amount | number}}</mat-cell>
                   </ng-container>
                   <ng-container matColumnDef="wasteType">
                       <mat-header-cell *matHeaderCellDef> 
@@ -253,7 +253,7 @@
                       <mat-header-cell *matHeaderCellDef>
                           <span translate="new_energy-sumAmount" >Amount </span>(kg)
                       </mat-header-cell>
-                      <mat-cell *matCellDef="let element" > {{element.sumAmount}} </mat-cell>
+                      <mat-cell *matCellDef="let element" > {{element.sumAmount | number}} </mat-cell>
                   </ng-container>
                
                     <ng-container matColumnDef="gasVolume">

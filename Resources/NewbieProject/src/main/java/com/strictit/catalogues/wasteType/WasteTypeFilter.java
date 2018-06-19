@@ -12,6 +12,7 @@ package com.strictit.catalogues.wasteType;
 public class WasteTypeFilter {
 
     boolean inFuture;
+    boolean expired;
     double NElon;
     double NElat;
     double SWlon;
@@ -24,6 +25,14 @@ public class WasteTypeFilter {
 
     public void setInFuture(boolean inFuture) {
         this.inFuture = inFuture;
+    }
+
+    public boolean isExpired() {
+        return expired;
+    }
+
+    public void setExpired(boolean expired) {
+        this.expired = expired;
     }
 
     public double getNElon() {
@@ -68,7 +77,7 @@ public class WasteTypeFilter {
 
     @Override
     public String toString() {
-        return "WasteTypeFilter{" + "inFuture=" + inFuture + ", NElon=" + NElon + ", NElat=" + NElat + ", SWlon=" + SWlon + ", SWlat=" + SWlat + ", wasteTypeSearch=" + wasteTypeSearch + '}';
+        return "WasteTypeFilter{" + "inFuture=" + inFuture + ", expired=" + expired + ", NElon=" + NElon + ", NElat=" + NElat + ", SWlon=" + SWlon + ", SWlat=" + SWlat + ", wasteTypeSearch=" + wasteTypeSearch + '}';
     }
 
      

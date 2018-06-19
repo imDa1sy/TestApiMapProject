@@ -13,7 +13,7 @@ export class UserService {
 
     //===============================METHODS=======================================
     // getData() method returing all users
-    LoadAllUsers(): Observable<User[]> {
+    loadAllUsers(): Observable<User[]> {
         return this.http.get<User[]>('http://' + restConfig.Host + ':' + restConfig.Port + '/api/getallusers');
     }
     loadAllActiveUsers(): Observable<User[]> {
