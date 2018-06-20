@@ -95,7 +95,7 @@
     "new_energy-telephone":"Telephone",
     "new_energy-mobile":"Mobile",
     "new_energy-amount":"Amount",
-    "new_energy-validityDate":"Validity date",
+    "new_energy-validityDate":"Validity",
     "new_energy-valid-from":"Valid from",
     "new_energy-expire-date":"Expire date",
     "new_energy-expired":"Expired",
@@ -150,8 +150,12 @@
     "new_energy-updated":"Updated!",
     "new_energy-deleted":"Deleted!",
 
-    "new_energy-gasVolume":"Total gas volume",
-    "new_energy-sumAmount":"Sum amount"
+    "new_energy-totalGasVolume":"Total Gas",
+    "new_energy-gasVolume":"Gas volume",
+    "new_energy-totalSumAmount":"Total Amount",
+    "new_energy-sumAmount":"Amount",
+    "new_energy-Totalpower":" Total Power",
+    "new_energy-power":"Power"
 
   
 }

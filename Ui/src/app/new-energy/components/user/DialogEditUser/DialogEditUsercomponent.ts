@@ -16,6 +16,8 @@ import { TranslateService } from '@ngx-translate/core';
 export class DialogEditUserComponent implements OnInit {
 
 
+  userNameAvailable: boolean=true;
+  checkAvailabilityList: User[];
   passwordPattern = FormPatterns.passwordPattern;
   usernamePattern = FormPatterns.usernamePattern;
   
@@ -24,8 +26,10 @@ export class DialogEditUserComponent implements OnInit {
     private http: Http, private snackBar: MatSnackBar,
     private translate: TranslateService,
     private _userService: UserService) {
-
+     // this.loadAllUsers();
+    //in constructor is called method loadUserData so can be ready to insert data
     this.loadUserData();
+
   }
 
   ngOnInit() {
@@ -34,12 +38,32 @@ export class DialogEditUserComponent implements OnInit {
   onNoClick(): void {
     this.dialogRef.close();
   }
-  
+  loadAllUsers(userName){
+      console.log(userName)
+    //load all users to check username and email availability
+    this._userService.loadAllUsers().subscribe((data)=>{
+     this.checkAvailabilityList = data;
+     for (const iterator of this.checkAvailabilityList) {
+       if(userName == iterator.userName){
+         this.userNameAvailable = false;
+         break;
+      
+       }else {
+        this.userNameAvailable = true;
+       
+       }
+     }
+    
+   
+    });
+  }
   loadUserData() {
+    //loadUserData method if id is null do nothing else load userbyid
     if (this.data.id == null) {
-
+    //if is executed if add form is called
     }
     else {
+     //else is called if edit form is called
       this._userService.loadUserById(this.data.id).subscribe(data => {
         this.data.localUser = data;
         this.data.localUser.password = '';

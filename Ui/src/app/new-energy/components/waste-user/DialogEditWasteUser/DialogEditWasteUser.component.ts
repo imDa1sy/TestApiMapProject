@@ -56,7 +56,7 @@ export class DialogEditWasteUserComponent implements OnInit {
   addLatLng(index) {
     //call mapInputComponent and get coords 
     let dialogRef = this.dialog.open(MapinputComponent, {
-      width: '700px', height: '600px',
+      width: '700px', height: '650px',
       data: { }
     });
     //creates new form fields in DialogEditWasteUser for creating new location
@@ -96,7 +96,7 @@ export class DialogEditWasteUserComponent implements OnInit {
         if (this.data.localWasteUser.users[i].userName == '' || this.data.localWasteUser.users[i].password == '') {
           $event.preventDefault();
           $event.stopPropagation();
-          this.data.localWasteUser.users.splice(this.data.localWasteUser.users.indexOf(item), 1);
+          this.data.localWasteUser.users.splice(this.data.localWasteUser.users.indexOf(i), 1);
 
         } else {
           //set selected user active status to false if form had data
